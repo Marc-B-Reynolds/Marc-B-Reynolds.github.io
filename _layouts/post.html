@@ -1,0 +1,10 @@
+---
+layout: default
+---
+{% include post.html %}
+
+{% if site.disqus and page.comments %}
+  <div class="clearfix"></div>
+  <hr/>
+    {% include disqus.html %}
+{% endif %}

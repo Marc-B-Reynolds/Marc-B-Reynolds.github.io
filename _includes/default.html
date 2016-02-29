@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>{{ page.title }}</title>
+  {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+  {% endif %}
+  <meta name="author" content="{{ site.author.name }}">
+
+  <!-- Enable responsive viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- stylesheets -->
+  <link href="{{ site.baseurl }}/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ site.baseurl }}/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{{ site.baseurl }}/assets/resources/syntax/syntax.css" rel="stylesheet">
+  <link href="{{ site.baseurl }}/assets/css/style.css" rel="stylesheet">
+
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.baseurl }}/feed.xml">
+
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: 'none',
+    tex2jax: {
+      inlineMath: [['$','$']],
+      displayMath: [['$$','$$']],
+      processEnvironments: false
+    },
+    // show equation numbers
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    'HTML-CSS': {
+      imageFont: null
+    }
+  });
+</script>
+  
+  </head>
+
+<body>
+
+  <!-- nav-menu-dropdown -->
+  <div class="btn-group" id="nav-menu">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-bars"></i>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="{{ site.baseurl }}/"><i class="fa fa-home"></i>Home</a></li>
+      <li><a href="{{ site.baseurl }}/{{ site.categories_path }}"><i class="fa fa-folder"></i>Categories</a></li>
+      <li><a href="{{ site.baseurl }}/{{ site.tags_path }}"><i class="fa fa-tags"></i>Tags</a></li>
+      <li class="divider"></li>
+      <li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+    </ul>
+  </div>
+
+  <div class="col-sm-10 col-sm-offset-1">
+    {{ content }}
+
+    <footer>
+      <p style="text-align: center">
+        &copy; {{ site.time | date: '%Y' }} {{ site.author.name }}.
+      </p>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ site.baseurl }}/assets/js/app.js"></script>
+  <script>
+  <!-- shoot...this doesn't work -->
+  $(function () {
+    var hash = document.location.hash;
+    var prefix = "tab_";
+    if (hash) {
+      $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+    } 
+
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+      window.location.hash = e.target.hash.replace("#", "#" + prefix);
+      });
+  });
+</script>
+</body>
+</html>

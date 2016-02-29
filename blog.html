@@ -1,0 +1,47 @@
+---
+layout: page
+tagline: foo | bar
+---
+
+{% for post in paginator.posts %}
+
+  <div class="well">
+  <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+  <p>{{ post.description }}</p>
+  <span>
+  <hr><small>{{ post.date | date: "%Y%m%d" }}
+  <span style="float:right">
+    {% for tag in post.tags %} <span class="label label-default">{{ tag }}</span> {% endfor %}
+  </span></small></div>
+{% endfor %}
+
+<ul class="pager"> 
+  {% if paginator.previous_page %}
+  <li class="previous">
+    {% if paginator.previous_page == 1 %}
+    <a href="{{ site.baseurl }}/">&larr; Newer</a>
+    {% else %}
+    <a href="{{ site.baseurl }}/{{ site.paginate_path | replace: ':num', paginator.previous_page }}">&larr; Newer</a>
+    {% endif %}
+  </li>
+  {% else %}
+  <li class="previous disabled"><a>&larr; Newer</a></li>
+  {% endif %}
+  
+  <li>
+    <span class="page_number">Page: {{ paginator.page }}/{{ paginator.total_pages }}</span>
+  </li>
+
+  {% if paginator.next_page %}
+  <li class="next">
+    <a href="{{ site.baseurl }}/{{ site.paginate_path | replace: ':num', paginator.next_page }}">Older &rarr;</a>
+  </li>
+  {% else %}
+  <li class="next disabled">
+    <a>Older &rarr;</a>        
+  </li>
+  {% endif %}
+
+</ul>
+<div class="clearfix"></div>
+<div class="col-md-12"><hr/></div>

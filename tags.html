@@ -1,0 +1,44 @@
+---
+layout: page
+title:  Tags
+header: Posts By Tag
+group:  navigation
+---
+
+<!-- Clean-up -->
+
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
+<div class="col-sm-3 col-xs-6">
+    <ul class="nav nav-tabs-vertical">
+    {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+      {% capture TAG %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+      <li>
+          <a href="#{{ TAG | replace:' ','-' }}-ref" data-toggle="tab">
+            {{ TAG }}<span class="badge pull-right">{{ site.tags[TAG].size }}</span>
+         </a>
+      </li>
+   {% endunless %}{% endfor %}
+   </ul>
+</div>
+
+<!-- Tab panes -->
+<div class="tab-content col-sm-9 col-xs-6">
+  {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+    {% capture TAG %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+    <div class="tab-pane" id="{{ TAG | replace:' ','-' }}-ref">
+      <h2 style="margin-top: 0px">Posts tagged  with {{ TAG }}</h2>
+      <ul class="list-unstyled">
+        {% for post in site.tags[TAG] %}{% if post.title != null %}
+        <li style="line-height: 30px;">
+	  <span class="text-muted"> {{ post.date | date: "%Y%m%d" }} <i class="fa fa-caret-right"></i></span>
+	  <a href="{{ site.baseurl }}{{post.url}}">{{post.title}}</a>
+	</li>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+  {% endunless %}{% endfor %}
+</div>
+
+<div class="clearfix"></div>

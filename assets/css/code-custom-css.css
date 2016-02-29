@@ -1,0 +1,28 @@
+
+.highlight {
+    position: relative;
+}
+
+pre {
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+
+code[data-lang]::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  min-width: 1.5em;
+  padding: 0em 0.6em;
+  text-align: center;
+  font-size: 0.75em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+  color: #A8A8A8;
+  border-radius: 0px 6px;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.03);
+}

@@ -1,0 +1,43 @@
+# visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
+
+paginate: 10 # pagination based on number of posts
+paginate_path: "page:num"
+exclude: [README.md, src] # files to exclude
+highlighter: rouge
+markdown:    kramdown
+disqus:      mbrjnt
+comments:    true
+
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+    values:
+      title: MBR
+      comments:    true
+
+description:  blog-a-like
+
+author:
+  name:      Marc B. Reynolds
+  email:     marc.b.reynolds@gmail.com
+  github:    Marc-B-Reynolds
+  twitter:   marc_b_reynolds
+  linkedin:
+  bio:       jack of no trades
+
+kramdown:
+  input: GFM
+  math_engine: mathjax
+
+gems:
+  - jemoji
+  - jekyll-mentions
+  - jekyll-paginate
+
+rss_path: feed.xml
+categories_path: categories.html
+tags_path: tags.html
+copyright_path: copyright.html
+
+BASE_PATH:
