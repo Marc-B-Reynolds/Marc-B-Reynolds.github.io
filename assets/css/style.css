@@ -210,3 +210,9 @@ ul.dropdown-menu>li>a>i.fa {
   width: 1.3em;
 }
 
+.mathjax-tooltip {
+  display: none;
+  width: 100%;
+  position: absolute;
+}
+

@@ -23,27 +23,41 @@
   MathJax.Hub.Config({
     showProcessingMessages: false,
     messageStyle: 'none',
+
     tex2jax: {
       inlineMath: [['$','$']],
       displayMath: [['$$','$$']],
       processEnvironments: false
     },
-    // show equation numbers
+
+  // show equation numbers
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
+
+  MathMenu: {
+      showFontMenu: true
+    },
+
+    menuSettings:{
+      zoom: "None",
+      zscale: "150%"
+    },
     'HTML-CSS': {
       imageFont: null
     }
   });
-</script>
+  </script>
+
+  <!-- I've no idea what I'm doing
+  <script src="{{ site.baseurl }}/assets/js/mathjaxPreview.js" type="text/javascript"></script>
+  -->
   
   </head>
 
 <body>
-
   <!-- nav-menu-dropdown -->
   <div class="btn-group" id="nav-menu">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -71,13 +85,62 @@
   <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="{{ site.baseurl }}/assets/js/app.js"></script>
+  
+  
+  <script type="text/javascript">
+/*
+ * MathJax eqn preview for a tags
+ *
+ * Copyright (c) 2015 Mauricio Poppe
+ * Licensed under the MIT license.
+ */
+
+(function () {
+  var $container = $('.post-content');
+  var $tooltip = $('<div />').addClass('mathjax-tooltip');
+  $container.append($tooltip);
+console.log("mj foo");
+  function onMouseOver(ev) {
+    var a = ev.currentTarget;
+    var $number = $(a.hash);
+    var $root = $number.closest('.MathJax_Display');
+    var bounds = $(a).offset();
+    var containerBounds = $container.offset();
+
+    console.log("mj hover");
+    $tooltip.stop(true, true);
+    $tooltip.empty();
+    $tooltip.append($root.clone());
+    $tooltip.css({
+      top: bounds.top - containerBounds.top - $tooltip.height() - 5,
+      left: -1
+    });
+    $tooltip.addClass('active');
+  }
+
+  function onMouseOut(a) {
+    $tooltip.removeClass('active');
+  }
+
+  MathJax.Hub.Queue(function () {
+    $container.on('mouseover', 'a[href*="mjx-eqn-"]', onMouseOver);
+    $container.on('mouseout', 'a[href*="mjx-eqn-"]', onMouseOut);
+  });
+
+})();
+</script>
+  
+  
   <script>
   <!-- shoot...this doesn't work -->
   $(function () {
     var hash = document.location.hash;
     var prefix = "tab_";
+    //console.log(document.location);
+    
     if (hash) {
-      $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+    console.log("hash = " + hash.replace(prefix,"")+']');
+      $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show.bs.tab');
     } 
 
     // Change hash for page-reload
