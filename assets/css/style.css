@@ -3,6 +3,13 @@
 body {
   color: #2c3e50;
 }
+a.footnote:before {   
+ content: "[";
+}
+
+a.footnote:after {
+    content: "]";
+}
 
 .sidebar {
   position: fixed;
