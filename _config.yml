@@ -15,6 +15,7 @@ defaults:
     values:
       title: MBR
       comments:    true
+      hide:        false
 
 description:  blog-a-like
 

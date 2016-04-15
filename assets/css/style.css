@@ -11,6 +11,11 @@ a.footnote:after {
     content: "]";
 }
 
+code {
+  color: #2925C7;
+  background-color: #CFD4EC;
+}
+
 .sidebar {
   position: fixed;
   top: 0px;
