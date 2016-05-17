@@ -32,10 +32,15 @@
       processEnvironments: false
     },
 
-  // show equation numbers
     TeX: {
+      // show equation numbers
       equationNumbers: {
         autoNumber: "AMS"
+     },
+
+      Macros: {
+        abracket: ['{\\langle #1 \\rangle}', 1],
+        set:      ['{\\bigl #1 \\bigr}', 1]
       }
     },
 

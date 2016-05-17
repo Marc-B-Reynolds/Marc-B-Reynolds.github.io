@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Coded by Incnis Mrsi 2014, GFDL, attribution required.
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
+	width="600" height="690" viewBox="-55 -69 120 138" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <radialGradient id="ball_1">
+    <stop offset="0%" stop-color="#FFFFFF" />
+    <stop offset="100%" stop-color="#000000" />
+  </radialGradient>
+  <radialGradient id="ball_i">
+    <stop offset="0%" stop-color="#66AAFF" />
+    <stop offset="100%" stop-color="#003344" />
+  </radialGradient>
+  <radialGradient id="ball_j">
+    <stop offset="0%" stop-color="#AA66FF" />
+    <stop offset="100%" stop-color="#220033" />
+  </radialGradient>
+  <radialGradient id="ball_k">
+    <stop offset="0%" stop-color="#FF7F33" />
+    <stop offset="100%" stop-color="#663300" />
+  </radialGradient>
+  <style type="text/css">
+   <![CDATA[
+   circle {stroke:none; fill:url(#ball_1)}
+   line,polygon,path {stroke:#000000; stroke-width:0.75px; stroke-opacity:0.6; fill:none}
+   .over {fill:#FFFF00; fill-opacity:0.4; stroke:none}
+   .l_i {stroke:#0033FF; stroke-width:1px; stroke-opacity:1}
+   .l_j {stroke:#AA00FF; stroke-width:1px; stroke-opacity:1}
+   .l_k {stroke:#FF6600; stroke-width:1px; stroke-opacity:1}
+   .arrow_1 {stroke:#000000; stroke-width:1px; stroke-opacity:0.5; fill:#FFFFFF}
+   .arrow_i {stroke:#000000; stroke-width:1px; stroke-opacity:0.4; fill:#0033FF}
+   .arrow_j {stroke:#000000; stroke-width:1px; stroke-opacity:0.5; fill:#AA00FF}
+   .arrow_k {stroke:#000000; stroke-width:1px; stroke-opacity:0.5; fill:#FF6600}
+   .S2 {stroke:#00AA33; stroke-width:0.75px; stroke-opacity:1}
+   text {stroke:none; fill:#FFFF00; font-size:5px; font-family:serif; text-anchor:middle}
+   ]]>
+  </style>
+ </defs>
+
+<!-- the region around −1" -->
+
+ <path id="(−−−+)–−j" class="arrow_j"
+	d="M7.2,42.2 C-3,17,-4.7,13.3,-24.7,-6.7
+	L-26,-5 L-27,-10 L-22,-9 L-23.3,-7.7
+	C-3.3,12.3,-1,16,9,41.2"/>
+ <polyline id="k–(−+−+)" class="arrow_k" 
+	points="10,0 -5,22 -3,23 -8,25.5 -9,20 -7,21 8,-1"/>
+
+<!-- should be 6 distinct edges centered at −1; a dirty approximation -->
+ <line id="(−+−−)–(−−++)" x1="-20" y1="48" x2="20" y2="32"/>
+ <line id="(−+−+)–(−−+−)" x1="-10" y1="29" x2="10" y2="51"/>
+ <line id="(−++−)–(−−−+)" x1="-10" y1="35" x2="10" y2="45"/>
+
+ <circle id="(−−−+)" style="fill:url(#ball_j)" cx="10" cy="45" r="4"/>
+ <line id="(−+−+)–(−−−+)" x1="-7" y1="31.4" x2="7" y2="42.6"/>
+ <line id="(−−−−)–(−−−+)" x1="1" y1="62" x2="9" y2="48"/>
+ <line id="(−−−+)–(−−++)" class="l_j" x1="12" y1="42.4" x2="18" y2="34.6"/>
+ <path id="(−−−+)–k" d="M11,41.2 C14,28.1,14,12.1,11,0.8"/>
+
+ <polyline id="(−+++)–−1" class="arrow_1" points="1,20 1,31 3,31 0,35 -3,31 -1,31 -1,20"/>
+ <circle id="−1" cx="0" cy="40" r="5"/>
+ <polyline id="−1–(−−−−)" class="arrow_1" points="1,45 1,56 3,56 0,60 -3,56 -1,56 -1,45"/>
+ <polygon id="region −1" style="fill:#FF0000; fill-opacity:0.25"
+	points="0,16 20,32 10,51 0,64 -20,48 -10,29"/>
+ <text x="0" y="40.5">−1</text>
+
+ <circle id="(−−−−)" cx="0" cy="64" r="4"/>
+
+ <circle id="(−+−−)" style="fill:url(#ball_k)" cx="-20" cy="48" r="4"/>
+ <line id="(−+−−)–(−+−+)" class="l_k" x1="-18" y1="44.5" x2="-11.5" y2="32"/>
+ <path id="i–(−+−−)" d="M-22,3.5 C-28,16,-28,32,-22,44.5"/>
+ <path id="(−+−−)–(0+−−)" d="M-22.5,45.5 C-28,40,-42,16,-42,0"/>
+ <circle id="(−−+−)" style="fill:url(#ball_i)" cx="10" cy="51" r="4"/>
+ <line id="(−−+−)–(−++−)" class="l_i" x1="-7" y1="37.4" x2="7" y2="48.6"/>
+ <line id="(−++−)–(−+−−)" x1="-12" y1="37.6" x2="-18" y2="45.4"/>
+ <path id="(−−+−)–−i" class="arrow_i"
+	d="M14,50 L26,50 C30,50,34,48,37,42 L55,5 L52.5,4 L58,3
+	L58,8 L56.5,6.5 L39,43 C36,49,30,52,26,52 L14,52"/>
+
+ <circle id="(−+−+)" style="fill:url(#ball_k)" cx="-10" cy="29" r="4"/>
+ <line id="(−+−+)–i" x1="-11" y1="26" x2="-19" y2="3.5"/>
+
+ <circle id="(−++−)" style="fill:url(#ball_i)" cx="-10" cy="35" r="4"/>
+ <line id="(−+++)–(−++−)" x1="-1.5" y1="19" x2="-8.5" y2="31.5"/>
+ <polyline id="i–(−++−)" class="arrow_i"
+	points="-18,3 -11,27 -9,27 -11,31 -15,27 -13,27 -20,4"/>
+
+ <circle id="(−−++)" style="fill:url(#ball_j)" cx="20" cy="32" r="4"/>
+ <line id="(−−++)–k" x1="19.5" y1="29" x2="11.5" y2="0.7"/>
+ <path id="(−−++)–(0−++)" d="M22.4,28.6 C25,25,30,10,30,0"/>
+ <polyline id="j–(−−++)" class="arrow_j"
+	points="12,6 18,25 20,24 19,29 14,27 16,26 10,7"/>
+
+ <circle id="(−+++)" cx="0" cy="16" r="4"/>
+ <polyline id="(0+++)–(−+++)" class="arrow_1" points="1,0 1,8 3,8 0,12 -3,8 -1,8 -1,0"/>
+ <line id="i–(−+++)" x1="-17.5" y1="2" x2="-3" y2="14.4"/>
+ <line id="j–(−+++)" x1="8.8" y1="0" x2="1.2" y2="14"/>
+ <line id="k–(−+++)" x1="8.8" y1="6" x2="1.5" y2="13.8"/>
+ <line id="(−++−)–j" x1="-8" y1="32" x2="9" y2="6.5"/>
+ <path id="(−+−−)–−k" class="arrow_k"
+	d="M-23.5,46 C-26.5,43,-31,42,-31,37
+	L-31,20 L-33,20 L-30,16 L-27,20 L-29,20
+	L-29,38 C-29,40,-25,42,-22,45"/>
+
+<!-- zone of 3-vectors -->
+ <path id="(−−+−)–j" d="M11,47.2 C14,35.9,14,19.9,11,6.8"/>
+ <path id="vectors" class="over S2"
+ 	d="M-42,0 A41,6,0,1,1,21,-6.3 A40,6,0,0,1,21,6.3 A41,6,0,1,1,-42,0"/>
+
+ <path class="S2" d="M-21.96,0 A51.96,9,0,0,1,-15,-4.5
+	A51.96,9,0,0,1,30,0 A51.96,9,0,0,1,-15,4.5
+	L-30,12"/>
+
+ <line id="i–(0+−−)" class="S2" x1="-24" y1="0" x2="-42" y2="0"/>
+ <line id="k–(0−−+)" class="S2" x1="12" y1="-3.6" x2="21" y2="-6.3"/>
+ <g id="roundabout_back" transform="scale(1.8,0.32)">
+  <g id="arc">
+   <path style="stroke:#CC0000; stroke-width:1px; stroke-opacity:1; fill:none"
+	d="M-10.45,-17 A20,20,0,0,0,-19.9,-2"/>
+   <polyline style="fill:#CC0000; stroke:none" points="-17.5,-4 -20,0 -22,-4.5"/>
+  </g>
+  <use xlink:href="#arc" transform="rotate(60)"/>
+  <use xlink:href="#arc" transform="rotate(120)"/>
+ </g>
+
+ <g id="−j">
+	<circle style="fill:url(#ball_j)" cx="-30" cy="-12" r="4"/>
+	<path class="over" d="M-25.9,-11.8 A4.1,4.1,0,0,1,-34.1,-11.8 A5,3,0,0,0,-25.9,-11.8"/>
+	<text x="-30" y="-11">−j</text>
+ </g>
+ <line class="S2" id="(0+−+)–−j" x1="-15" y1="-4.5" x2="-27" y2="-10.5"/>
+
+ <g id="−k">
+	<circle style="fill:url(#ball_k)" cx="-30" cy="12" r="4"/>
+	<text x="-30" y="13">−k</text>
+ </g>
+
+ <g id="i">
+	<circle style="fill:url(#ball_i)" cx="-20" cy="0" r="4"/>
+	<path class="over" d="M-15.9,0.2 A4.1,4.1,0,0,1,-24.1,0.2 A5,3,0,0,0,-15.9,0.2"/>
+	<text x="-20" y="1">i</text>
+ </g>
+ <path class="S2" id="(0++−)–i" d="M-15,4.5 C-19,3.3,-20,3,-20,2"/>
+ <line id="(0+++)–i" class="S2" x1="0" y1="0" x2="-16" y2="0"/>
+
+ <g id="k">
+	<circle style="fill:url(#ball_k)" cx="10" cy="-3" r="4"/>
+	<path class="over" d="M14.1,-2.8 A4.1,4.1,0,0,1,5.9,-2.8 A5,3,0,0,0,14.1,-2.8"/>
+	<text x="11" y="-2">k</text>
+ </g>
+ <line id="(0+++)–k" class="S2" x1="0" y1="0" x2="8" y2="-2.4"/>
+ <path id="k–(+−−+)" d="M11,-47.2 C14,-35.9,14,-19.9,11,-6.8"/>
+
+ <line id="(0+++)–j" class="S2" x1="0" y1="0" x2="8" y2="2.4"/>
+ <g id="j">
+	<circle style="fill:url(#ball_j)" cx="10" cy="3" r="4"/>
+	<path class="over" d="M14.1,3.2 A4.1,4.1,0,0,1,5.9,3.2 A5,3,0,0,0,14.1,3.2"/>
+	<text x="10" y="4">j</text>
+ </g>
+ <line id="j–(0−+−)" class="S2" x1="12" y1="3.6" x2="21" y2="6.3"/>
+
+ <g id="−i">
+	<circle style="fill:url(#ball_i)" cx="60" cy="0" r="4"/>
+	<path class="over" d="M59.5,1 L58.2,3.6 A4.1,4.1,0,0,1,55.9,0.2"/>
+	<text x="60" y="1">−i</text>
+ </g>
+ <line id="−i–(0−++)" class="S2" x1="56" y1="0" x2="30" y2="0"/>
+
+ <use id="roundabout_front" xlink:href="#roundabout_back" transform="rotate(-180)"/>
+
+
+<!-- the region around 1 -->
+
+ <line id="versor–(++−+)" x1="-1.5" y1="-19" x2="-9" y2="-32"/>
+
+<!-- should be 6 distinct edges centered at 1; a dirty approximation -->
+ <line id="(++−−)–(+−++)" x1="-20" y1="-48" x2="20" y2="-32"/>
+ <line id="(+++−)–(+−−+)" x1="-10" y1="-29" x2="10" y2="-51"/>
+ <line id="(++−+)–(+−+−)" x1="-10" y1="-35" x2="10" y2="-45"/>
+
+ <line id="(++−+)–k" x1="-8" y1="-32" x2="9" y2="-6.5"/>
+
+ <circle id="(++−+)" style="fill:url(#ball_i)" cx="-10" cy="-35" r="4"/>
+ <polyline id="(++−+)–i" class="arrow_i" points="-11,-32 -18,-8 -16,-8 -20,-4 -22,-8 -20,-8 -13,-33"/>
+ <line id="(+−−+)–(++−+)" class="l_i" x1="-7" y1="-37.4" x2="7" y2="-48.6"/>
+ <line id="(++−+)–(++−−)" x1="-12" y1="-37.6" x2="-18" y2="-45.4"/>
+
+ <polyline id="1–versor" class="arrow_1" points="1,-35 1,-24 3,-24 0,-20 -3,-24 -1,-24 -1,-35"/>
+ <circle id="1" cx="0" cy="-40" r="5"/>
+ <polyline id="antiversor–1" class="arrow_1" points="1,-60 1,-49 3,-49 0,-45 -3,-49 -1,-49 -1,-60"/>
+
+ <polygon id="region 1" style="fill:#00FF00; fill-opacity:0.25"
+	points="0,-16 -10,-29 -20,-48 0,-64 10,-51 20,-32"/>
+ <text x="-0.5" y="-39">1</text>
+
+ <polyline class="arrow_1" points="-1,0 -1,-13 1,-13 1,0"/>
+ <circle id="versor" cx="0" cy="-16" r="4"/><!-- the same as (++++) -->
+ <line id="i–versor" x1="-17.5" y1="-2" x2="-3" y2="-14.4"/>
+ <line id="j–versor" x1="8.8" y1="0" x2="1.2" y2="-14"/>
+ <line id="k–versor" x1="8.8" y1="-6" x2="1.5" y2="-13.8"/>
+
+ <circle id="(+++−)" style="fill:url(#ball_j)" cx="-10" cy="-29" r="4"/>
+ <line id="(+++−)–i" x1="-11.5" y1="-25.5" x2="-19" y2="-3.5"/>
+ <polyline id="(+++−)–j" class="arrow_j" points="-8,-26 7,-4 9,-5 8,0 3,-2 5,-3 -10,-25"/>
+
+ <circle id="(+−++)" style="fill:url(#ball_k)" cx="20" cy="-32" r="4"/>
+ <polyline id="(+−++)–k" class="arrow_k" points="20,-28 13,-10 15,-9 11,-6.5 9,-12 11,-11 18,-29"/>
+ <line id="(+−++)–j" x1="19.5" y1="-29" x2="11.5" y2="-0.7"/>
+ <path id="(+−++)–(0−++)" d="M22.4,-28.6 C25,-25,30,-10,30,0"/>
+
+ <circle id="(++−−)" style="fill:url(#ball_j)" cx="-20" cy="-48" r="4"/>
+ <line id="(++−−)–(+++−)" class="l_j" x1="-19" y1="-46" x2="-11.5" y2="-32"/>
+ <path id="−j–(++−−)" class="arrow_j" d="M-31,-16 C-31,-33,-30,-42,-27,-45 L-28.5,-46.5 L-23,-46.5
+	L-24,-42 L-25,-43 C-28,-40,-29,-36,-29,-16"/>
+ <path id="i–(++−−)" d="M-22,-3.5 C-28,-16,-28,-32,-22,-44.5"/>
+ <path id="(++−−)–(0+−−)" d="M-22.5,-45.5 C-28,-40,-42,-16,-42,0"/>
+
+ <circle id="(+−−+)" style="fill:url(#ball_i)" cx="10" cy="-51" r="4"/>
+ <path id="−i–(+−−+)" class="arrow_i"
+	d="M57,-2 L37,-42 C34,-48,30,-50,26,-50
+	L18,-50 L18,-48 L14,-51 L18,-54 L18,-52
+	L26,-52 C30,-52,36,-49,39,-43 L59,-3"/>
+
+ <circle id="(+−+−)" style="fill:url(#ball_k)" cx="10" cy="-45" r="4"/>
+ <line id="(+++−)–(+−+−)" x1="-7" y1="-31.4" x2="7" y2="-42.6"/>
+ <line id="(+−+−)–(+−++)" class="l_k" x1="12.5" y1="-42" x2="18" y2="-34.6"/>
+ <path id="(+−+−)–j" d="M11,-41.2 C14,-28.1,14,-12.1,11,-0.8"/>
+
+ <circle id="antiversor" cx="0" cy="-64" r="4"/><!-- the same as (+−−−) -->
+ <line id="antiversor–(+−+−)" x1="1" y1="-62" x2="8.5" y2="-48.5"/>
+
+</svg>

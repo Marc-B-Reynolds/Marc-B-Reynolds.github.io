@@ -11,6 +11,12 @@ a.footnote:after {
     content: "]";
 }
 
+.center-image
+{
+  margin: 0 auto;
+  display: block;
+}
+
 code {
   color: #2925C7;
   background-color: #CFD4EC;
@@ -122,6 +128,14 @@ article {
 
 article {
   padding: 0 5% 0;
+}
+
+.media-body {
+  width: 100%;
+
+  .media-inline & {
+    width: auto;
+  }
 }
 
 article.home div a, article.home pre a { color: #2c3e50; }
