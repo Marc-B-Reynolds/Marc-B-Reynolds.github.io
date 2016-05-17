@@ -4,7 +4,7 @@ title:        Quaternion rotation visualization
 tagline:      
 categories:   [quaternions]
 tags:         [foundation, viz]
-description:  foo
+description:  using visualizating as an exercise to note some quaternion properties
 ---
 
 Currently the Wikipedia page on quaternion rotations gives you this helpful figure to explain $Q\mathbf{p}$ portion of $ \eqref{xform} $ when the rotation angle is $\frac{\pi}{3}$.   I will try to do a little better.
