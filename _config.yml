@@ -36,6 +36,8 @@ gems:
   - jekyll-mentions
   - jekyll-paginate
 
+google_analytics: UA-77902817-1
+
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
