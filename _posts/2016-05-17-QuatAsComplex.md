@@ -21,6 +21,7 @@ $ \newcommand{\set}[1]{\left\{ #1 \right\}} $
 
 Preliminaries <small>the really boring part</small>
 ------
+{:#complexPlane}
 
 \\
 The short version of this section is: $\forall Q \in \mathbb{H}$ the {1, Q}-plane forms a commutative subalgebra of $\mathbb{H}$ isomorphic to $\mathbb{C}$.
