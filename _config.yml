@@ -16,6 +16,7 @@ defaults:
       title: MBR
       comments:    true
       hide:        false
+      plotly:      false
 
 description:  blog-a-like
 
