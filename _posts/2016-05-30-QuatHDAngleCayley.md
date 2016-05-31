@@ -220,7 +220,7 @@ f\left(a+b~\mathbf{i}\right) & = &
 Like $\log$ the result is a bivector.  In polar form we have:
 
 $$
-f\left(\cos\left(\theta\right)+\sin\left(\theta\right)~\mathbf{i}\right)  =  \frac{\sin\left(\theta\right)}{\cos\left(\theta\right)+1}~\mathbf{i}
+f\left(\cos\left(\theta\right)+\sin\left(\theta\right)~\mathbf{i}\right)  =  \frac{\sin\left(\theta\right)}{1+\cos\left(\theta\right)}~\mathbf{i}
  =  \tan\left(\frac{\theta}{2}\right)~\mathbf{i}
 $$
 
@@ -238,6 +238,9 @@ After the forward transform we have:
 
 * $ a = 0 $
 * $ b \in \left[0, 1\right] $
+
+
+<iframe width="400" height="400" src="http://www.shadertoy.com/view/XsGXDm" frameborder="0" allowfullscreen></i>
 
 For the space as a whole we are mapping our 4D unit half-sphere input to the 3D unit ball.  If we were to apply the forward transform above to the negative 4D half-sphere it maps to all of the 3D space outside of the unit ball.  Inverting the original transforms is the opposite transform pair (negative to unit ball, positive to outside). So we have two equivalent coordinates in this space as well $Q$ and $Q^{-1}$.
 
