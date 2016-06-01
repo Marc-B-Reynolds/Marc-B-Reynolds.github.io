@@ -239,8 +239,18 @@ After the forward transform we have:
 * $ a = 0 $
 * $ b \in \left[0, 1\right] $
 
+The following is a shadertoy to illistrate the Cayley transform and some basic concepts up to this point.  It starts paused..XXX
 
-<iframe width="400" height="400" src="http://www.shadertoy.com/view/XsGXDm" frameborder="0" allowfullscreen></i>
+* a
+* b
+* c
+
+
+<br>
+
+<iframe width="400" height="400" src="http://www.shadertoy.com/embed/XsGXDm" frameborder="0" allowfullscreen></i></iframe>
+
+<br>
 
 For the space as a whole we are mapping our 4D unit half-sphere input to the 3D unit ball.  If we were to apply the forward transform above to the negative 4D half-sphere it maps to all of the 3D space outside of the unit ball.  Inverting the original transforms is the opposite transform pair (negative to unit ball, positive to outside). So we have two equivalent coordinates in this space as well $Q$ and $Q^{-1}$.
 
@@ -256,26 +266,6 @@ vec4 q_cayley(vec3 v) {
 }
 
 {% endhighlight %}
-
-<br>
-
-------
-
-Bivector part
-------
-{:#bivectorPart}
-
-None of these transforms effect the implied unit bivector $u$. XXX
-<br>
-
-$$ \begin{eqnarray*}
- x \in \left[\frac{1}{\sqrt{3}},~1\right] & \approx & \left[0.57735,~1\right] \\
- y \in \left[0,\frac{1}{\sqrt{2}}\right]  & \approx & \left[0,~.70711\right] \\
- z \in \left[0,\frac{1}{\sqrt{3}}\right] & \approx & \left[0,~0.57735\right]
-\end{eqnarray*} $$
-
-XXX
-
 
 <br>
 
@@ -301,10 +291,31 @@ The second figure is the same as the first with simply the linear part subtracte
 \\
 We can think of the first figure as being plots of cumulative density where the $y$ value is "how many" and the corresponding $x$ is "where".  As an example if we are linearly quantizing ($N$ samples) and examine $x$ at 0.5 then the $y$ value of each plot is a multiplier $m$ and $mN$ is the number of samples on normalized angle range [0, 0.5].  Or examine the $y$ at 0.5 and then $x$ tells us how far along the angle range the first half of samples represents.
 
-\\
 By taking the derivative we can examine localized density which gives a much better picture of how samples are distributed across the full range.  Like the second figure the shape of the plots do not change much when adding a cap to maximum implied angle.
 
 <div id="fig3" style="width:100%"></div>
+
+<br>
+
+------
+
+Bivector part
+------
+{:#bivectorPart}
+
+\\
+None of these transforms effect the implied unit bivector $u$. Accounting for symmetry we can consider the unit bivector $u = (x,y,z)$ where $x\geq y\geq z \geq 0$, then we have:
+<br>
+
+$$ \begin{eqnarray*}
+ x \in \left[\frac{1}{\sqrt{3}},~1\right] & \approx & \left[0.57735,~1\right] \\
+ y \in \left[0,\frac{1}{\sqrt{2}}\right]  & \approx & \left[0,~.70711\right] \\
+ z \in \left[0,\frac{1}{\sqrt{3}}\right] & \approx & \left[0,~0.57735\right]
+\end{eqnarray*} $$
+
+\\
+so the largest magnitude part of the bivector has the smallest range ($1-\frac{1}{\sqrt{3}} \approx 0.42265$)
+
 
 <br>
 
