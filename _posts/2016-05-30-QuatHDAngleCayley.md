@@ -11,7 +11,7 @@ plotly:       true
 DRAFT: come back later
 </div>
 
-This post is about two transform pairs of quaternion that reduce the working domain which are not commonly discussed.  Specifically they both reduce the implied angle in quaternion space.  This allows storing a quaternion value with three elements more attractive, but more importantly reduces the range of the implied angle. This angle reduction can be useful for both interpolation and quantization for example.  The usefulness of these maps depend on the target error bound and maximum implied angle the system allows.  There are relatively well known techniques which use unit magnitude and that $Q$ and $-Q$ are equivalent for alternate storage and/or quantization.  I will later examine the case of interpolation and will focus on the basic properties and present some simple quantization.
+This post is about two transform pairs of quaternion that reduce the working domain which are not commonly discussed.  Specifically they both reduce the implied angle in quaternion space.  This allows storing a quaternion value with three elements more attractive, but more importantly reduces the range of the implied angle. This angle reduction can be useful for interpolation, quantization and shaping distributions for example.  The usefulness of these maps for quantization and interpolation depend on the target error bound and maximum implied angle the system allows.  There are relatively well known techniques which use unit magnitude and that $Q$ and $-Q$ are equivalent for alternate storage and/or quantization.  I will later examine the case of interpolation and will focus on the basic properties and present some simple quantization.
 
 Once we get past the preliminary junk we'll be almost entirely talking about a 2D plane and complex numbers.  I will also drop most of the formalism.  I'm also going to skip on actually defining the sets and will simply note how I name them and they are hopefully obvious by context.
 
@@ -30,7 +30,7 @@ Q = a + \left(x,~y,~z\right)
 \end{equation} $$
 
 \\
-Where I will call "$a$" the scalar part and $(x,y,z)$ the bivector part. For our purposes here we can consider a 3D bivector to be equivalent to a 3D vector.
+Where I will call "$a$" the scalar part[^scalar] and $(x,y,z)$ the bivector part. For our purposes here we can consider a 3D bivector to be equivalent to a 3D vector.
 
 We will also want to express a quaternion in terms of some implied unit bivector $\mathbf{u}$ $\left( \mathbb{S}^{2} \right) $ with implied magnitude $b$:
 
@@ -46,7 +46,7 @@ Q = \cos\left(\theta\right)+\sin\left(\theta\right)~\mathbf{u}
 \end{equation} $$ 
 
 \\
-Since all non-zero scalar multiples of a quaternion represent the same rotation (projective line $sQ$, for unit quaternion $Q$ and non-zero scalar $s$) so we can restrict ourselves to unit quaternions.  Equation $\eqref{eq:qpolar}$ already makes this assumption.  This gives the four dimension unit sphere $\left( \mathbb{S}^{3} \right) $ as a working domain.
+Since all non-zero scalar multiples of a quaternion represent the same rotation (projective line[^projLine] $sQ$, for unit quaternion $Q$ and non-zero scalar $s$) so we can restrict ourselves to unit quaternions.  Equation $\eqref{eq:qpolar}$ already makes this assumption.  This gives the four dimension unit sphere $\left( \mathbb{S}^{3} \right) $ as a working domain.
 
 The projective line intersects the unit-sphere at $Q$ and $-Q$, so we can further restrict ourself to quaternions with scalars part that are zero or positive $\left( a \geq 0 \right)$.  In axis-angle think this is negating the angle and reversing the axis.  The reduces the working domain to the half sphere $\left( \mathbb{S}^{3+} \right) $. $ \newcommand{\hcomplex}[1]{\mathbb{C}_{#1}} $  So far all standard fare.
 
@@ -81,7 +81,9 @@ $$ \begin{equation*}
 \end{equation*} $$ 
 
 \\
-where the unit vector $\hat{u}$ and unit bivector $u$ are the same $(x,y,z)$ values.  In turn this half-angle representation is doubled when we apply the similarity transform[^rotViz] (the rotation matrix conversion is the similarity transform applied to an orthonormal basis).
+where the unit vector $\hat{u}$ and unit bivector $u$ are the same $(x,y,z)$ values. I will from now on use $\alpha$ to indicate an angle measure in 3D and continue to use $\theta$ for in quaternion space with $\theta = \frac{\alpha}{2}$ and $\alpha = 2\theta$ in the standard (untransformed) representation.
+
+In turn this half-angle representation is doubled when we apply the similarity transform[^rotViz] (the rotation matrix conversion is the similarity transform applied to an orthonormal basis).
 
 $$ \begin{eqnarray*}
 A & = & QAQ^{-1} \\
@@ -178,7 +180,7 @@ $$ \begin{eqnarray*}
 \end{eqnarray*} $$
 
 \\
-which is simply another (and common) way to express the polar form.  Notice that $\log$ is implicitly the conversion from an axis-angle representation and is sometime called *Euler form*.  Basically it is simply a connection between the algebra and trig operations.  Since we are on a limited range for both transforms we could use a combination of trig identities and function approximation to come up with reasonably accurate and fast versions, however here we are only going to consider these as the "ideal target" transforms since $\log$ perfectly linearizes the angle where we have:
+which is simply another (and common) way to express the polar form.  Notice that $\log$ is implicitly the conversion from an axis-angle representation and is sometime called *Euler form*[^eulerform].  Basically it is simply a connection between the algebra and trig operations.  Since we are on a limited range for both transforms we could use a combination of trig identities and function approximation to come up with reasonably accurate and fast versions, however here we are only going to consider these as the "ideal target" transforms since $\log$ perfectly linearizes the angle where we have:
 
 * $ a = 0 $
 * $ b \in \left[0, \frac{\pi}{2}\right] $
@@ -195,7 +197,10 @@ Cayley transform
 {:#cayley}
 
 \\
-The Cayley transform dates back to the 1840s.  It is a special case of a stereographic projection and it is a Mobius transformation (linear fractional transformation).  It is also the connection between the Lie algebra and group and is related to tangent half-angle substitution.  If we call the forward transform $f$ and the reverse $g$ then we have:
+The Cayley transform[^cayleyWiki] dates back to the 1840s[^cayleyPaper].  It is a special case of a stereographic projection[^stereo] and it is a Möbius transformation[^mobius] (linear fractional transformation).  It is also the connection between the Lie algebra and group and is related to tangent half-angle substitution[^Weierstrass].  Representing rotations as the Cayley transform of unit quaternions is called Cayley-Klein parameters[^eulerform].
+
+
+If we call the forward transform $f$ and the reverse $g$ then we have:
 
 $$ \begin{eqnarray*}
 f\left(z\right) & = &  \frac{z-1}{z+1} \\
@@ -233,26 +238,16 @@ g\left(b~\mathbf{i}\right) & = &  \frac{\left(1+b~\mathbf{i}\right)\left(1+b~\ma
                 & = &  \frac{2}{1+b^2} - 1 + \frac{2}{1+b^2}b~\mathbf{i}
 \end{eqnarray*} $$
 
+
 \\
+NOTE: In general (since the quaternion product does not commute) division is an ill defined operation.  It can mean either a product on the left or right by the inverse.  However in this case we have a "complex function" so the product does commute and there is no ambiguity: $\left(Q-1\right)\left(Q+1\right)^{-1} = \left(Q+1\right)^{-1}\left(Q-1\right)$. Some text incorrectly state otherwise.  I chose the division form since we should be thinking in complex numbers.
+
 After the forward transform we have:
 
 * $ a = 0 $
 * $ b \in \left[0, 1\right] $
 
-The following is a shadertoy to illistrate the Cayley transform and some basic concepts up to this point.  It starts paused..XXX
-
-* a
-* b
-* c
-
-
-<br>
-
-<iframe width="400" height="400" src="http://www.shadertoy.com/embed/XsGXDm" frameborder="0" allowfullscreen></i></iframe>
-
-<br>
-
-For the space as a whole we are mapping our 4D unit half-sphere input to the 3D unit ball.  If we were to apply the forward transform above to the negative 4D half-sphere it maps to all of the 3D space outside of the unit ball.  Inverting the original transforms is the opposite transform pair (negative to unit ball, positive to outside). So we have two equivalent coordinates in this space as well $Q$ and $Q^{-1}$.
+For the space as a whole we are mapping our 4D unit half-sphere input to the 3D unit ball.  If we were to apply the forward transform above to the negative 4D half-sphere it maps to all of the 3D space outside of the unit ball.  Inverting the original transforms is the opposite transform pair (negative to unit ball, positive to outside).
 
 <br>
 
@@ -268,6 +263,41 @@ vec4 q_cayley(vec3 v) {
 {% endhighlight %}
 
 <br>
+
+------
+
+Recap and Cayley visualization
+------
+
+\\
+The following is a shadertoy to illistrate the Cayley transform and some basic concepts up to this point.  It starts paused. Left-mouse down normalizes the direction to the pointer and set $Q$ to that point on the circle/sphere.
+
+<br>
+
+#### Recap
+
+* The plane of the figure is our complex plane $\hcomplex{u}$, with $u$ is in the positive $y$ direction and positive reals in the positive $x$ direction.
+* The unit circle is the intersection of the 4D unit sphere with this plane.
+* All rotations about $u$ are in this plane.
+* The two illustrated points on the circle are two unit quaternions $Q$ and $-Q$.
+  * The point colored blue has a positive or zero scalar part.  The one colored red has a negative scalar part.
+  * They are initially $\pm 1$ so they are in all of the complex planes of the space.
+  * The line between these points (except the origin) are all equvalient.
+  * When the blue point is negative in $y$ we are logically working with $-u$ instead (our figure is upside down)
+
+<br>
+
+<iframe width="400" height="400" src="http://www.shadertoy.com/embed/XsGXDm" frameborder="0" allowfullscreen></i></iframe>
+
+<br>
+
+#### Cayley
+The forward function $f$ is the stereographic projection from $(-1,0)$ onto line $x=0$ ($y$-axis). If we mouse-down and move in a counter-clockwise manner we have a blue line from $(-1,0)$ to our blue point.  Where the line crosses the $y$ axis is a green point which is $f\left(Q\right)$.  These two points meet at $\frac{\pi}{2}$. If we continue on the blue point changes to red and that green point exits the circle.  If we repeat this process there is a second blue line through the red point which is $f\left(-Q\right)$. (If the two blue or magenta lines aren't orthogonal it's me being sloppy in the shader...move the mouse a bit). This second line does not appear at $\pm 1$, artistic choice (the red point is at infinity) or I'm being sloppy with the math in the shader, you choose.  As we start to approach $\frac{\pi}{2}$ this second green point appears at the bottom of the screen and enters the circle when the red point changes to blue.
+
+The magenta lines are the sterographic projection $(1,0)$ onto the $y$-axis, which are $\frac{1}{f\left(\pm Q\right)}$ respectively. As an aside we have: $f\left(Q\right) = \frac{1}{f\left( -Q\right) ^{*}}$
+
+<br>
+
 
 ------
 
@@ -294,6 +324,11 @@ We can think of the first figure as being plots of cumulative density where the 
 By taking the derivative we can examine localized density which gives a much better picture of how samples are distributed across the full range.  Like the second figure the shape of the plots do not change much when adding a cap to maximum implied angle.
 
 <div id="fig3" style="width:100%"></div>
+
+The density plots show representation behaves locally (in the neighboorhood) of a given angle. For quantization if we linearly quantize the magnitude of the bivector these show the distribution of samples. 
+
+Since $\log$ perfectly linearizes the angle we have a nice constant value of one and any samples are equidistributed across the range.  The untransformed "standard" representation has a high density around zero and drops to zero at $\alpha = \pi$
+
 
 <br>
 
@@ -332,10 +367,16 @@ Strawman examples
 References and Footnotes
 ------
 
+[^scalar]: *scalar* locally just means a real value more generally its the working base field.
 [^polar]: Some text prefer $e^{u\theta} $. 
 [^rotViz]: Quaternion rotation visualization: ([local post]({{site.base}}/quaternions/2016/05/17/VisualizeQuatRot.html))
-[^plotly]: Some text prefer $e^{u\theta} $. 
-
+[^projLine]:    Projective line: [Wikipedia](http://en.wikipedia.org/wiki/Projective_line)
+[^cayleyWiki]:  Cayley transform: [Wikipedia](http://en.wikipedia.org/wiki/Cayley_transform)
+[^cayleyPaper]: *"Sur quelques propriétés des déterminants gauches."* Journal für die reine und angewandte Mathematik 32, 1846, Arthur Cayley. Reproduced in *"The collected mathematical papers of Arthur Cayley, Volume 1"*, 1889.
+[^stereo]:      Stereographic projection: [Wikipedia](http://en.wikipedia.org/wiki/Stereographic_projection)
+[^Weierstrass]: Tangent half-angle substitution: [Wikipedia](http://en.wikipedia.org/wiki/Tangent_half-angle_substitution)
+[^mobius]:      Möbius transformation: [Wikipedia](https://en.wikipedia.org/wiki/M%C3%B6bius_transformation)
+[^eulerform]:   *"Euler form"* and *"Cayley-Klein parameters"* are often grouped with *"Euler angle"* like representations, but the later are totally ad-hoc systems and the former are not.
 
 
 <script>
