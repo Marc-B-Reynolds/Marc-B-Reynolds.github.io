@@ -7,10 +7,6 @@ description:  a note on two transform pairs which reduce the working domain in q
 plotly:       true
 ---
 
-<div class="alert alert-warning" role="alert" markdown="1">
-DRAFT: come back later
-</div>
-
 This post is about two transform pairs of quaternion that reduce the working domain which are not commonly discussed.  Specifically they both reduce the implied angle in quaternion space.  This allows storing a quaternion value with three elements more attractive, but more importantly reduces the range of the implied angle. This angle reduction can be useful for interpolation, quantization and shaping distributions for example.  The usefulness of these maps for quantization and interpolation depend on the target error bound and maximum implied angle the system allows.  There are relatively well known techniques which use unit magnitude and that $Q$ and $-Q$ are equivalent for alternate storage and/or quantization.  I will later examine the case of interpolation and will focus on the basic properties and present some simple quantization.
 
 Once we get past the preliminary junk we'll be almost entirely talking about a 2D plane and complex numbers.  I will also drop most of the formalism.  I'm also going to skip on actually defining the sets and will simply note how I name them and they are hopefully obvious by context.
@@ -325,10 +321,16 @@ By taking the derivative we can examine localized density which gives a much bet
 
 <div id="fig3" style="width:100%"></div>
 
-The density plots show representation behaves locally (in the neighboorhood) of a given angle. For quantization if we linearly quantize the magnitude of the bivector these show the distribution of samples. 
+The density plots show how the representations behaves locally (in the neighboorhood) of a given angle. For quantization if we linearly quantize the magnitude of the bivector these show the distribution of samples. 
 
-Since $\log$ perfectly linearizes the angle we have a nice constant value of one and any samples are equidistributed across the range.  The untransformed "standard" representation has a high density around zero and drops to zero at $\alpha = \pi$
+Since $\log$ perfectly linearizes the angle we have a nice constant value of one and any samples are equidistributed across the range.  The untransformed "standard" representation has a high density around zero and approaches zero at $\alpha = \pi$. The "half-angle" slight favors small angles and "Cayley" prefers large angles.
 
+To be able to "eyeball" how density values change if you place a cap on maximum angle the following show how the untransformed range behaves.  Notice the values at .5 vs the endpoints of "half-angle" above.  And the "half/half" and "half/Cayley" plots are more to give a feel for evolution of density than to suggest actual usage.
+
+<div id="fig4" style="width:100%"></div>
+
+<br>
+The "take-away" from these should indicate that the "ideal" situation is not use a transform for quantization.  The better solution in terms of minimizing quantization error is to have good content, prediction/dead-reckoning and store/transmit relative quaternions which are composed.
 
 <br>
 
@@ -350,14 +352,6 @@ $$ \begin{eqnarray*}
 
 \\
 so the largest magnitude part of the bivector has the smallest range ($1-\frac{1}{\sqrt{3}} \approx 0.42265$)
-
-
-<br>
-
-------
-
-Strawman examples
-------
 
 
 <br>
@@ -1292,3 +1286,71 @@ Plotly.newPlot('fig3', data, layout, {displaylogo: false, autosizable: true});
 </script>
 
 
+<script>
+var plot0 = {
+x:[0.1, 0.100276, 0.100552, 0.101104, 0.102208, 0.104416, 0.108833, 
+0.117666, 0.136818, 0.1547, 0.172232, 0.19125, 0.208998, 0.228233, 
+0.247116, 0.264731, 0.283832, 0.301663, 0.319144, 0.33811, 0.355808, 
+0.374991, 0.393824, 0.411387, 0.430436, 0.448217, 0.467483, 0.486398, 
+0.504044, 0.523176, 0.54104, 0.558552, 0.57755, 0.595279, 0.614494, 
+0.633358, 0.650953, 0.670034, 0.687846, 0.705307, 0.724254, 0.741932, 
+0.761096, 0.77899, 0.796534, 0.815564, 0.833325, 0.852571, 0.871467, 
+0.889094, 0.908207, 0.92605, 0.943543, 0.962521, 0.980231, 0.98054, 
+0.980849, 0.981466, 0.982702, 0.985173, 0.990115, 0.990424, 0.990733, 
+0.991351, 0.992587, 0.995058, 0.995367, 0.995675, 0.996293, 0.997529, 
+0.997838, 0.998147, 0.998764, 0.999073, 0.999382, 0.999691, 1.],
+y:[1.00412, 1.00415, 1.00417, 1.00422, 1.00431, 1.0045, 1.00489, 
+1.00572, 1.00774, 1.00991, 1.0123, 1.0152, 1.01819, 1.02175, 1.02556, 
+1.02941, 1.03391, 1.03843, 1.04315, 1.04861, 1.05402, 1.06026, 
+1.06675, 1.07314, 1.08046, 1.08766, 1.09586, 1.10435, 1.11266, 
+1.12211, 1.13136, 1.14083, 1.15159, 1.16209, 1.17399, 1.18622, 
+1.19814, 1.21162, 1.22477, 1.2382, 1.25341, 1.2682, 1.28495, 1.30127, 
+1.31793, 1.33679, 1.35516, 1.37595, 1.39728, 1.41805, 1.44157, 
+1.46451, 1.48796, 1.51455, 1.54049, 1.54095, 1.54141, 1.54234, 
+1.54419, 1.54793, 1.55546, 1.55593, 1.5564, 1.55735, 1.55926, 
+1.56308, 1.56356, 1.56404, 1.565, 1.56693, 1.56741, 1.56789, 1.56886, 
+1.56934, 1.56983, 1.57031, 1.5708],
+mode: 'lines',
+name: 'max'
+};
+
+var plot1 = {
+x:[0.1, 0.100276, 0.100552, 0.101104, 0.102208, 0.104416, 0.108833, 
+0.117666, 0.136818, 0.1547, 0.172232, 0.19125, 0.208998, 0.228233, 
+0.247116, 0.264731, 0.283832, 0.301663, 0.319144, 0.33811, 0.355808, 
+0.374991, 0.393824, 0.411387, 0.430436, 0.448217, 0.467483, 0.486398, 
+0.504044, 0.523176, 0.54104, 0.558552, 0.57755, 0.595279, 0.614494, 
+0.633358, 0.650953, 0.670034, 0.687846, 0.705307, 0.724254, 0.741932, 
+0.761096, 0.77899, 0.796534, 0.815564, 0.833325, 0.852571, 0.871467, 
+0.889094, 0.908207, 0.92605, 0.943543, 0.962521, 0.980231, 0.98054, 
+0.980849, 0.981466, 0.982702, 0.985173, 0.990115, 0.990424, 0.990733, 
+0.991351, 0.992587, 0.995058, 0.995367, 0.995675, 0.996293, 0.997529, 
+0.997838, 0.998147, 0.998764, 0.999073, 0.999382, 0.999691, 1.],
+y:[0.991762, 0.991716, 0.99167, 0.991579, 0.991393, 0.991017, 
+0.990239, 0.988587, 0.984557, 0.980239, 0.975483, 0.969735, 0.963814, 
+0.956786, 0.949263, 0.941684, 0.932847, 0.92401, 0.914792, 0.90416, 
+0.893642, 0.881579, 0.86906, 0.856771, 0.842761, 0.829036, 0.813446, 
+0.797399, 0.781755, 0.764045, 0.746792, 0.729193, 0.709316, 0.690014, 
+0.668256, 0.646025, 0.624494, 0.600253, 0.576766, 0.552915, 0.526084, 
+0.50013, 0.470964, 0.442729, 0.414081, 0.381889, 0.35076, 0.315802, 
+0.280196, 0.245792, 0.207138, 0.169735, 0.131784, 0.089112, 
+0.0478295, 0.0470965, 0.0463631, 0.0448949, 0.0419532, 0.0360479, 
+0.0241501, 0.0234026, 0.0226546, 0.0211573, 0.0181572, 0.0121346, 
+0.0113797, 0.0106243, 0.0091122, 0.00608231, 0.00532367, 0.00456456, 
+0.00304493, 0.00228442, 0.00152343, 0.000761972, 4.53196e-8],
+mode: 'lines',
+name: 'min'
+};
+
+var data = [plot0,plot1];
+
+var layout = {
+  title:  'untransform density range vs. max angle',
+  xaxis: { nticks: 10 },
+  yaxis: { nticks: 20 },
+  height: 376,
+  width:  626
+};
+
+Plotly.newPlot('fig4', data, layout, {displaylogo: false, autosizable: true});
+</script>
