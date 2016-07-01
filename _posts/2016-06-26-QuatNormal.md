@@ -294,4 +294,4 @@ References and Footnotes
 [^complexfunc]: []({{site.base}}/quaternions/2016/05/17/QuatAsComplex.html#complexFunction)
 [^halfAngle]: Quaternion half/double angle and Cayley transforms ([local post]({{site.base}}quaternions/2016/05/30/QuatHDAngleCayley.html))
 [^qrot]: Quaternion rotation visualization ([local post]({{site.base/quaternions/2016/05/17/VisualizeQuatRot.html}}))
-[^altForm]: This can also be expressed as: $$f\left(\mathbf{b}\mathbf{a}^*\right)\mathbf{a} $$
+[^altForm]: This can also be expressed as: $$\mathbf{a}~f\left(\mathbf{a}^{*}\mathbf{b}\right)$$ since the product generally doesn't commute.
