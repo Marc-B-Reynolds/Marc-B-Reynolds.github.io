@@ -197,6 +197,8 @@ Thanks to Stephen Hill for providing references to some existing methods and (be
 
 These methods are all roughly:  Given $\mathbf{v}$ inspect the components and choose vector $\bar{\mathbf{w}}$ based on them.  Cross product creates an orthgonal vector.  This effectively partitions the sphere into "combing" groups.
 
+The method above can be extended at increased computational complexity to shape how the normals are combed.  As an example we could add a twist in {$\\mathbf{x,y}$} like that found in a Wiechel projection or any of a number of craziness.
+
 <br>
 
 ------
