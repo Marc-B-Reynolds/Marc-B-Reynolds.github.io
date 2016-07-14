@@ -7,6 +7,8 @@ tags:         [graphics, interpolation, quantization, distribution]
 description:  two methods of computing an orthonormal basis from a unit (bi)vector.
 ---
 
+<iframe width="600" height="400" src="http://www.shadertoy.com/embed/lldGRM" frameborder="0" allowfullscreen></iframe>{: .center-image }
+
 \\
 This is a quick note about some methods for computing an orthonormal basis from a unit (bi)vector.  The math directly follows that in "[Implied normals (unit bivectors as rotations)]({{site.base}}/quaternions/2016/06/26/QuatNormal.html)". 
 
