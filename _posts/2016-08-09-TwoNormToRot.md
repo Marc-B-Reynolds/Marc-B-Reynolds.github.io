@@ -30,7 +30,7 @@ $$
 $$
 
 \\
-If you've read my previous few posts then this is *copy-n-paste* math, *beat-a-dead-horse* material.  The bullet points are:
+This is well-covered material and if you've read my previous few posts then it is *copy-n-paste* math, *beat-a-dead-horse* material.  The bullet points are:
 
 * The relative unit quaternion ($R$) between the unit bivectors is : $R=\mathbf{ba}^{-1}=...=\mathbf{a} \cdot \mathbf{b} + \mathbf{a} \times \mathbf{b}$. This maps the plane that spans $\mathbf{a},\mathbf{b}$ and 0 to the complex plane that spans ${1,R}$ such that $\mathbf{a}$ is mapped to 1.
 * All that is left is taking the square root (half-angle) of $R$, which is a complex function so the remainder of the derivation is simply over complex numbers.
