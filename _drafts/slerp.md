@@ -4,7 +4,7 @@ title:        On certain results of quaternionic interpolation
 tagline:      (or let's walk a 2D path)
 categories:   [quaternions]
 tags:         [interpolation]
-description:  slerp is dead! long live slerp!
+description:  basic interpolation 
 plotly:       true
 ---
 
@@ -23,6 +23,7 @@ The following shadertoy is a viz for three interpolations formulated directly in
 
 <iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/4tdGWB?gui=true&t=10&paused=false&muted=false" allowfullscreen></iframe>
 
+NOTE: As before all angle measurements are in the working space.  For quaternions that means we need to double the value for the equivalent measure in 3D.
 
 <br>
 
@@ -30,6 +31,7 @@ The following shadertoy is a viz for three interpolations formulated directly in
 
 From complex real powers <small>to the algebraic form of slerp</small>
 ------
+{:#slerp2D}
 
 \\
 Since quaternions are an extension of complex numbers let's first consider the complex case.  Given a unit complex number $z$ both in explict and polar form:
@@ -67,6 +69,7 @@ Which is the algebraic form of slerp in two-dimensions.
 
 SLERP <small>the dreaded small angle circular arc</small>
 ------
+{:#slerpH}
 
 \\
 Replacing $z$ with a unit quaternion:
@@ -106,8 +109,60 @@ Where $\eqref{slerp2}$ and $\eqref{slerp3}$ are simply reversing the points and 
 
 ------
 
+Basic analysis tools <small></small>
+------
+
+\\
+The action of slerp is defined by the principle real power $\eqref{power}$ and is bound to a complex plane.  So we can reason about it as walking a path[^notquite] from $\left(1,0\right) $ to $\left(a,b\right) = \left(\cos \theta,\sin \theta\right)$.  If the coordinate in the plane is described by:
+
+$$ \begin{equation} \label{eq:fpoint}
+p\left(t\right) = \left(p_x\!\left(t\right),~p_y\!\left(t\right)\right)
+\end{equation} $$
+
+\\
+Then the angle at $t$ is:
+
+$$ \begin{equation} \label{eq:fangle}
+\phi\left(t\right) =\text{atan}\left(p_y\!\left(t\right), ~p_x\!\left(t\right)\right)
+\end{equation} $$
+
+\\
+From $\phi\left(t\right)$ we can compute other quantites such as angular velocity $\left(\omega=\frac{d\phi}{dt}\right)$ and acceleration $\left(\alpha=\frac{d\omega}{dt}\right)$.
+
+Taking the values for slerp $\eqref{power}$ and pluging them in we get the expected:
+
+$$
+\begin{eqnarray*}
+  p\left(t\right) & = & \left( \cos\left(t\theta\right), ~\sin\left(t\theta\right)\right)  \\
+  \phi\left(t\right) & = & \text{atan}\left( \sin\left(t\theta\right) , ~\cos\left(t\theta\right)\right) = t \theta \\
+  \omega\left(t\right) & = & \theta \\
+  \alpha\left(t\right) & = & 0
+\end{eqnarray*}
+$$
+
+\\
+This give a simple framework for computing errors which ignore the impact of floating-point computation.  We can also stick with a two-dimensional model for performing empirical testing
+
+\\
+Given some approximation of slerp we can compute the function $T$ to correct to constant angular velocity:
+
+$$
+\begin{eqnarray}
+  \text{atan}\left(\frac{p_y\left(T(t)\right)}{p_x\left(T(t)\right)}\right) = t \theta \nonumber \\
+  \frac{p_y\left(T(t)\right)}{p_x\left(T(t)\right)} = \tan\left(t \theta\right) \label{reparam} \\
+\end{eqnarray}
+$$
+
+\\
+by solving for $T$.
+
+<br>
+
+------
+
 Algebraic to geometric form <small>the version you almost always see</small>
 ------
+{:#algebraic}
 
 \\
 A skippable sketch of a grind through the math (longer than needed by not having a table of operators and identities):
@@ -192,6 +247,7 @@ Ken Shoemake's 1985 paper[^shoemake85] gives $\eqref{slerp1}$ and $\eqref{gdavis
 
 Reference formulation of slerp <small>one forward trig op is enough</small>
 ------
+{:#reference}
 
 \\
 Starting from $\eqref{srecon}$, replace $A\cdot B$ by $d$ and collecting terms gives:
@@ -214,18 +270,19 @@ s(t) & = & \left\{\sqrt{1-s_t^2}-d \frac{s_t}{\sqrt{1-d^2}},~\frac{s_t}{\sqrt{1-
 $$
 
 \\
-This leaves the computation of theta. I'll paritially dismiss (directly) using $\text{acos}$ and $\text{asin}$ as being *nearly* hopeless functions[^approx] and given the range of inputs we don't need to yet distinguish between one and two parameter $\text{atan}$.  There are a fair number of ways we can express $\theta$ via $\text{atan}$ and here are three of them:
+This leaves the computation of theta. I'll paritially dismiss (directly) using $\text{acos}$ and $\text{asin}$ as being *nearly* hopeless functions[^approx] and given the range of inputs we don't need to yet distinguish between one and two parameter $\text{atan}$.  There are a fair number of ways we can express $\theta$ via $\text{atan}$ and here are four of them:
 
 $$
 \begin{eqnarray}
 \theta & = & \text{atan}\left( \frac{\sqrt{1-d^2}}{d} \right) \label{acos} \\
        & = & \frac{\pi}{2} - \text{ atan}\left( \frac{d}{\sqrt{1-d^2}} \right) \label{asin} \\
-       & = & 2 \text{ atan}\left( \frac{\sqrt{1-d^2}}{1+d} \right) \label{hacos} 
+       & = & 2 \text{ atan}\left( \frac{1-d}{\sqrt{1-d^2}} \right) \label{hacos} \\
+       & = & 2 \text{ atan}\left( \frac{\sqrt{1-d^2}}{1+d} \right) \label{hacos2}
 \end{eqnarray}
 $$
 
 \\
-where $\eqref{acos}$ and $\eqref{asin}$ are simply $\text{acos}$ and $\text{asin}$ in $\text{atan}$ form and $\eqref{hacos}$ is half-angle applied to $\eqref{acos}$.
+where $\eqref{acos}$ and $\eqref{asin}$ are simply $\text{acos}$ and $\text{asin}$ in $\text{atan}$ form and $\eqref{hacos}$ $\eqref{hacos2}$ are applying half-angle to $\eqref{acos}$ in two forms.
 
 Now for some practical considerations. By *reference* we can go two ways: close enough to detect problems in actually used methods or minimal error with respect to representable so we can accurately measure errors.  I'm going with the former.  Also we have to decide the meaning of a negative dot product.
 
@@ -271,31 +328,28 @@ This leaves a fair number of thing we can know to the compiler to deduce and hop
 {% highlight c %}
     // toy code: slerp_ref_1
     t += t;                      // account for half-angle atan
-    float s2 = 1.f-d*d;
-    float i  = recip_nr(1.f+d);  // ~x^-1  to at least 12-bit, 1 NR step
+    float s2 = 1.0-d*d;
     float rs = rsqrt_nr(s2);     // ~x^-.5 to at least 12-bit, 1 NR step
-    float y  = s2*rs;          
-    float a  = atanf(y*i);       // still range reduction :(
-    float s  = sinf(t*a);        // still range reduction :(
-    float c  = sqrtf(1.f-s*s);   // can't ~1/sqrt(x) if max angle allowed
+    float y  = 1-d;
+    float a  = atanf(y*rs);      // still range reduction
+    float s  = sinf(t*a);        // still range reduction
+    float c  = sqrtf(1.f-s*s);   // can't go through ~1/sqrt if max angle allowed
     s1 = s*rs;                   // sgn*s1*B can be computed while c in progress
     s0 = c-d*s1;
 {% endhighlight %}
 
 \\
-Showing the use of approximation plus one step of newton-raphson for $x^{-\frac{1}{2}}$ and $x^{-1}$ since it has minimal impact on accuracy. Good idea or not is a different story.  Likewise for removing either of the forward trig ops.
+Showing the use of approximation plus one step of newton-raphson for $x^{-\frac{1}{2}}$ since it has minimal impact on accuracy. Good idea or not is a different story.  Likewise for removing either of the forward trig ops.
 
 Let's inject some more polynomial approximations:
 
 {% highlight c %}
     // toy code: slerp_ref_3
-
     // set-up for atan
     float s2 = 1.f-d*d;
-    float i  = recip_nr(1.f+d);
-    float rs = rsqrt_nr(s2);
-    float y  = s2*rs;
-    float a  = atan_p(y*i);       // ~atan x on [0,1]
+    float rs = rsqrt_nr(s2);   
+    float y  = 1-d;
+    float a  = atan_9(y*rs);       // ~atan on [0,1]
     
     // forward trig approx (or root for one)
     float ta = t*a;
@@ -314,7 +368,7 @@ Let's inject some more polynomial approximations:
 \\
 This changes to performing double-angle after the forward trig function(s) which allows less terms in these approximations.  Both are needed before we can continue so I'm showing performing both.  I'm not going to bother with trade-off comments anymore and will assume it's understood that I'm attempting to show various possible choices.
 
-The only difficult to approximate function (with a small error) left is the arctangent. From the sum-of-tangents identity:
+Although the range of arctan is narrow enough to directly approximate it requires a fair number of terms to achieve small error. From the sum-of-tangents identity:
 
 $$
 \text{atan}\left(a\right) + \text{atan}\left(b\right)
@@ -322,23 +376,26 @@ $$
 $$
 
 \\
-To halve our angle range set $b=1$ since $\text{atan}\left(1\right)=\frac{\pi}{4}$.  Giving us the following:
+To halve our angle range set $b=-1$ since $\text{atan}\left(-1\right)=-\frac{\pi}{4}$.  This allows us to use either $\eqref{hacos}$ or $\eqref{hacos2}$ when $d \in \left[ \frac{\sqrt{2}}{2}, 1 \right] $
+
+
+Giving us the following:
 
 $$
-\frac{1}{2}\theta = \begin{cases}
-\text{ atan}\left( \frac{\sqrt{1-d^2}-1}{d}\right)+\frac{\pi}{4}  & d \in
-\left[0, \frac{\sqrt{2}}{2}\right) \\
-\text{ atan}\left( \frac{\sqrt{1-d^2}}{1+d} \right) & d \in
-\left[ \frac{\sqrt{2}}{2}, 1 \right] \\
-
+\frac{\theta}{2} = \begin{cases}
+\text{ atan}\left( \frac{d}{\sqrt{1-d^2}+1}\right)+\frac{\pi}{4} \label{xx} \\
+\text{ atan}\left( \frac{\sqrt{1-d^2}+1}{d}\right)+\frac{\pi}{4}
 \end{cases}
 $$
 
 \\
-which limits the input to arctangent to $\left[0, \sqrt{2}-1\right]$
+which limits the arctangent input to $\left[0, \sqrt{2}-1\right]$.  The lower end case is good as d approaches zero, but is a poke in the eye for the extra division (which depends on the root).  It can be transformed into:
+
 
 {% highlight c %}
   // toy code: slerp_ref_4
+  d = (d > DOT_CLAMP) ? d : DOT_CLAMP;
+  ...
   float x  = (d < SQRT2_O_2) ? 1 : 0;  // select the range
   float ps = x*(PI*.25);               // multiply or select pi/4
   float s2 = 1.f-d*d;
@@ -349,7 +406,7 @@ which limits the input to arctangent to $\left[0, \sqrt{2}-1\right]$
 {% endhighlight %}
 
 \\
-Sadly this last version explodes when 'd' is approaching zero.  This is easy enough to fix but this section is already getting a bit ridiculous..and for that matter 'd' approaching zero is pretty ridiculous as well.  Let's move on.
+Sadly this last version explodes when 'd' is approaching zero[^refprob].  This is easy enough to fix but this section is already getting a bit ridiculous..and for that matter 'd' approaching zero is pretty ridiculous as well.  Let's move on.
 
 <br>
 
@@ -357,6 +414,7 @@ Sadly this last version explodes when 'd' is approaching zero.  This is easy eno
 
 Precomputation <small>a small tweak to reference</small>
 ------
+{:#precompbasis}
 
 \\
 A significant portion of the computational complexity in the previous section is computing values which are constant for fixed end-points.  Going back to $\eqref{slerpxy}$ we could instead precompute[^acos]:
@@ -364,11 +422,13 @@ A significant portion of the computational complexity in the previous section is
 $$ \begin{align*}
 \theta & = \text{acos}\left(\left|d\right|\right) \\
 X & = A \\
-Y & = \text{sgn}\left(d\right)\frac{B - dA}{\sqrt{1 -d^2}}
+Y & = \left\Vert B - \left(A \cdot B \right)A \right\Vert \\
+  & = \text{sgn}\left(d\right)\frac{B - dA}{\sqrt{1 -d^2}}
 \end{align*} $$
 
 \\
-which leaves using some method to calculate/approximate the two trig operations as before.  All the various computation choices from the reference section apply here as well so I'll just show the short version using standard functions:
+which leaves using some method to calculate/approximate the two trig operations as before.  All the various computation choices from the reference section apply here as well so I'll just show a short and slow version using standard functions:
+<br><br>
 
 {% highlight c %}
 typedef struct {
@@ -385,11 +445,12 @@ void slerp_pc_init_0(slerp_pc_t* k, quat_t* A, quat_t* B)
   quat_dup(&k->x, A);
 
   if (d < SLERP_CUT) {
+    // all of the options from reference section apply
     float s  = sqrtf(1-d*d);
     float a  = atan2f(s,d);
     float is = sgn/s;
     quat_wsum(&k->y, A, B, -d*is, is);
-    k->a = b;
+    k->a = a;
   }
   else {
     // can't be bothered to do this the right way
@@ -400,21 +461,25 @@ void slerp_pc_init_0(slerp_pc_t* k, quat_t* A, quat_t* B)
 
 void slerp_pc_0(quat_t* r, slerp_pc_t* k, float t)
 {
+  // all of the options from reference section apply
   float ta = t*k->a;
-
-  // all of the previous options apply
   float c  = cosf(ta);
   float s  = sqrt(1-c*c);
 
-  // or double the angle here
-
-  // compute the weighted sum
   quat_wsum(r, &k->x, &k->y, c, s);
 }
 {% endhighlight %}
 
+<br>
+
+------
+
+2D Basis + half-angle  <small>a tweak to the previous</small>
+------
+{:#precompHalfAngle}
+
 \\
-Another option is replace using $A$ as the reference direction to the bisector of the end points:
+Another option is to replace using $A$ as the reference direction to the bisector of the end points:
 
 $$ \begin{align*}
 \theta & = \frac{1}{2} \text{acos}\left(\left|d\right|\right) \\
@@ -423,70 +488,105 @@ $$ \begin{align*}
 \end{align*} $$
 
 \\
-and re-parameterize the input to $t' = t-.5$.  This transforms the range of $t\theta \in \left[-\frac{\pi}{4}, \frac{\pi}{4} \right]$, again to be polynomial approximation friendly.  This is equivalent to rotating the basis of the first option by $\frac{\theta}{2}$
-
+and re-parameterize the input to $t' = t-.5$.  This transforms the range of $t\theta \in \left[-\frac{\pi}{4}, \frac{\pi}{4} \right]$, again to be polynomial approximation friendly.  This is equivalent to rotating the basis of the first option by $\frac{\theta}{2}$.  The code is pretty much the same so I won't bother with it.
 
 
 <br>
 
 ------
 
-Basic analysis tools <small></small>
+2D Basis + fixed steps <small></small>
+------
+{:#precompFixedStep}
+
+\\
+Another option is for fixed increment 't' values.  Precompute the 2D basis as before and the rotation for each step.  At each update we apply the scale values and perform a complex product (rotate) to update to the next.
+
+{% highlight c %}
+typedef struct {
+  quat_t x,y;    // the 2D orthogonal basis
+  float  s0,s1;  // current scale values
+  float  d0,d1;  // rotation to next set
+} slerp_fs_t;
+
+// for 'n' steps: f=1/n
+void slerp_fs_init_0(slerp_fs_t* k, quat_t* A, quat_t* B, float f)
+{
+  // compute the 2D basis and angle 'a' code goes here
+  k->a  = a;
+  k->s0 = 1.f;
+  k->s1 = 0.f;
+  k->d0 = cosf(f*a);  // or approx and/or remove one
+  k->d1 = sinf(f*a);
+}
+
+void slerp_fs_0(quat_t* r, slerp_fs_t* k)
+{
+  float ta = t*k->a;
+  float s0 = k->s0;
+  float s1 = k->s1;
+  quat_wsum(r, &k->x, &k->y, s0, s1);
+  k->s0 = k->d0*s0 - k->d1*s1;
+  k->s1 = k->d1*s0 + k->d0*s1;
+}
+{% endhighlight %}
+
+\\
+Expanding the dataset by four floats for constant angular velocity seems like a big poke in the eye, but this has potential uses:
+
+* Subdividing pairs of logial end-points into sequences of end-points such that some maximal angle is never exceeded.
+* Fixed time-step prediction modeling.
+
+NOTE: These generated end-points will always have positive dot-products.
+
+<br>
+
+------
+
+Fixed steps <small>basis? we don't need no stinkin' basis!</small>
 ------
 
 \\
-The action of slerp is defined by the principle real power $\eqref{power}$ and is bound to a complex plane.  So we can reason about it as walking a path[^notquite] from $\left(1,0\right) $ to $\left(a,b\right) = \left(\cos \theta,\sin \theta\right)$.  If the coordinate in the plane is described by:
 
-$$ \begin{equation} \label{eq:fpoint}
-p\left(t\right) = \left(p_x\!\left(t\right),~p_y\!\left(t\right)\right)
-\end{equation} $$
+<br>
 
-\\
-Then the angle at $t$ is:
+------
 
-$$ \begin{equation} \label{eq:fangle}
-\phi\left(t\right) =\text{atan}\left(p_y\!\left(t\right), ~p_x\!\left(t\right)\right)
-\end{equation} $$
+LERP <small>and nlerp</small>
+------
 
 \\
-From $\phi\left(t\right)$ we can compute other quantites such as angular velocity $\left(\omega=\frac{d\phi}{dt}\right)$ and acceleration $\left(\alpha=\frac{d\omega}{dt}\right)$.
-
-Taking the values for slerp $\eqref{power}$ and pluging them in we get the expected:
+Going back to our reference formula written with trig operations:
 
 $$
 \begin{eqnarray*}
-  p\left(t\right) & = & \left( \cos\left(t\theta\right), ~\sin\left(t\theta\right)\right)  \\
-  \phi\left(t\right) & = & \text{atan}\left( \sin\left(t\theta\right) , ~\cos\left(t\theta\right)\right) = t \theta \\
-  \omega\left(t\right) & = & \theta \\
-  \alpha\left(t\right) & = & 0
+\left( \cos\left(t\theta\right)-\cos\left(\theta\right)\frac{\sin\left(t\theta\right)}{\sin\left(\theta\right)} \right) A + \frac{\sin\left(t\theta\right)}{\sin\left(\theta\right)}B
 \end{eqnarray*}
 $$
 
 \\
-This give a simple framework for computing errors which ignore the impact of floating-point computation.  We can also stick with a two-dimensional model for performing empirical testing
-
-\\
-Given some approximation of slerp we can compute the function $T$ to correct to constant angular velocity:
+The terms of the equation in the limit:
 
 $$
-\begin{eqnarray}
-  \text{atan}\left(\frac{p_y\left(T(t)\right)}{p_x\left(T(t)\right)}\right) = t \theta \nonumber \\
-  \frac{p_y\left(T(t)\right)}{p_x\left(T(t)\right)} = \tan\left(t \theta\right) \label{reparam} \\
-\end{eqnarray}
+\begin{eqnarray*}
+\lim_{\theta \to 0} \cos\left(t\theta\right) & = 1  \\
+\lim_{\theta \to 0} \frac{\sin\left(t\theta\right)}{\sin\left(\theta\right)} & = t
+\end{eqnarray*}
 $$
 
 \\
-by solving for $T$.
+yields linear interpolation as $\theta$ approaches zero:
 
-<br>
-
-------
-
-How good is LERP? <small> </small>
-------
+$$
+\begin{eqnarray*}
+\left(1-t \right) A + tB
+\end{eqnarray*}
+$$
 
 \\
-If we approximate slerp with lerp then we have:
+Or more simply the coord and arc approach being the same for small angles.
+
+Approximating with either lerp or nlerp produce the same angular error values.  Errors introduced by using a non-unit quaternion depend on how the consumer of the output is written (the simplifications made using unit magnitude as a given).  Plugging in the approximation we get:
 
 $$
 \begin{eqnarray*}
@@ -498,13 +598,63 @@ $$
 \end{eqnarray*}
 $$
 
-ff
+\\
+To get a quick feel let's examine the angle and angular velocity errors for some sample angles:  $ \frac{\pi}{2}, \frac{\pi}{4}, \frac{\pi}{8} $  (Rotations of: 180&#8304;, 90&#8304;, 45&#8304;).  First the absolute error of the angle at 't' (normalized Y axis):
+
+$$ \frac{1}{\pi} \left( t\theta - \phi_l \left(t \right)  \right) $$
 
 <div id="fig1" style="width:100%"></div>
 
-ff
+\\
+As expected the result is exact at the end points and at $t=\frac{1}{2}$.  The latter since a ray that bisects a coord bisects the arc.  We can see the error decreases fast and by progressively turning off traces (click the legend) eye-ball it around a factor of 10 each time we halve the angle.  Also the 't' of the peak error shifts to smaller values and appears to be slowing toward some final point.
+
+Now the angular velocity absolute error.  I've flipped the ordering so positive is too fast and negative is too slow:
+
+$$ \omega_l \left(t \right) - \theta $$
+
 
 <div id="fig2" style="width:100%"></div>
+
+\\
+We can form an expression for the $t$ value of the maximum angle error as a function of $\theta$ by solving for $\omega_l\left(t\right)=\theta$:
+
+$$
+  t_{\text{max}}\left(\theta\right) = \frac{1}{2} \left(1 - \sqrt{\frac{1 + \cos \theta  - \frac{2}{\theta} \sin \theta}{ \cos \theta -1 }}  \right)
+$$
+
+\\
+which is a very boring function.  Here are some sample values:
+
+$$
+\begin{align*}
+t_{\text{max}}\left(\frac{\pi}{2} \right) & = \frac{1}{2}\left( 1-\sqrt{\frac{4}{\pi}-1} \right)  & = \ \sim 0.238638 \\
+t_{\text{max}}\left(\frac{\pi}{4} \right) & =                                                     & = \ \sim 0.217459 \\
+t_{\text{max}}\left(\frac{\pi}{16} \right) & =                                                     & = \ \sim 0.211697  \\
+t_{\text{max}}\left(0\right)              & = \frac{1}{6}\left( 3-\sqrt{3} \right)                & = \ \sim 0.211325
+\end{align*}
+$$
+
+
+\\
+So the $t_{max}$ is rapidly approaching the fixed point $t_{max}(0)$.  The max error for angular velocity is always at $t=\frac{1}{2}$.  Choosing to examine the maximal angle range we have worst case error values of:
+
+$$
+\begin{align*}
+ \phi_{max}   & = \frac{\pi}{2} t_{max}\left( \frac{\pi}{2} \right) - \phi_l \left( t_{max}\left(\frac{\pi}{2} \right) \right) & = \ \sim  0.0711146 \\
+ \omega_{max} & = \omega_l \left(\frac{1}{2}\right) - \frac{\pi}{2} & = \ \sim 0.429204
+\end{align*}
+$$
+
+Normalizing the abs error by these and varying theta (also normalized) we can examine max error vs angle:
+
+<div id="fig3" style="width:100%"></div>
+
+\\
+And the same plot as a log/log plot:
+
+<div id="fig4" style="width:100%"></div>
+
+Since these are approximately linear in log-log implies the error terms are approximately monomials.
 
 <br>
 
@@ -513,19 +663,22 @@ ff
 Reparm LERP <small></small>
 ------
 
-Since the b
+\\
+Back in 2002 Jonathan Blow[^jblow] consider using a spline to reparameterizing the input to lerp to lower errors.  
+
+Arseny Kapoulkine[^zeux]
+
+
 
 $$
-  \frac{r(t)~\sin \left( \theta \right) }{1+r(t) \left( \cos \left( \theta \right)-1 \right)}  =  \tan \left(t \theta \right) 
+  \frac{T(t)~\sin \left( \theta \right) }{1+T(t) \left( \cos \left( \theta \right)-1 \right)}  =  \tan \left(t \theta \right) 
 $$
 
 \\
-Solving for $r(t)$:
+Solving for $T(t)$:
 
 
-$$ \frac{1}{\sqrt{1-d^2} \cot \left(t~\text{acos}(d)\right)-d+1} $$
-
-J Blow [^jblow] xxx Arseny Kapoulkine[^zeux]
+$$ T(t) = \frac{1}{\sqrt{1-d^2} \cot \left(t~\text{acos}(d)\right)-d+1} $$
 
 
 <br>
@@ -567,6 +720,7 @@ References and Footnotes
 
 [^shoemake85]: *"Animating Rotation with Quaternion Curves"*, Ken Shoemake, 1985. ([PDF](http://run.usc.edu/cs520-s12/assign2/p245-shoemake.pdf))
 
+[^refprob]:    and cancellation when adding pi/4.
 [^notquite]:   Actually any scalar multiple of the end-points is mathematically correct.
 [^nosign]:     no sign fix-up needed.
 [^zeux]:       *"Approximating slerp"*, Arseny Kapoulkine, 2015 ([PAGE](http://zeuxcg.org/2015/07/23/approximating-slerp/))
@@ -1066,7 +1220,7 @@ name: 'pi/8'
 var data = [plot0,plot1,plot2];
 
 var layout = {
-  title:  'angle error',
+  title:  'normalized abs angle error',
   xaxis: { nticks: 10 },
   yaxis: { nticks: 10 },
   height: 376,
@@ -1342,7 +1496,7 @@ y:[-0.0100156, -0.00999778, -0.00997993, -0.00994425, -0.009873,
 -0.00953911, -0.00969721, -0.00971702, -0.00973685, -0.00977654, 
 -0.00985606, -0.00987596, -0.00989588, -0.00993576, -0.00995571,
 -0.00997568, -0.00999566, -0.0100156],
-mode: 'lines'
+mode: 'lines',
 name: 'pi/8'
 };
 
@@ -1357,5 +1511,218 @@ var layout = {
 };
 
 Plotly.newPlot('fig2', data, layout, {displaylogo: false, autosizable: true});
+
+</script>
+
+<script>
+var plot0 = {
+x:[8.00128e-8, 0.000306777, 0.000613475, 0.000920172, 0.00122687,
+0.00153357, 0.00184026, 0.00214696, 0.00245366, 0.00276036,
+0.00306705, 0.00337375, 0.00368045, 0.00398715, 0.00429384,
+0.00460054, 0.00490724, 0.00521394, 0.00552063, 0.00582733,
+0.00613403, 0.00644073, 0.00674742, 0.00705412, 0.00736082,
+0.00766752, 0.00797421, 0.00828091, 0.00858761, 0.00889431, 0.009201,
+0.0098144, 0.0101211, 0.0104278, 0.0110412, 0.0113479, 0.0116546,
+0.012268, 0.0125747, 0.0128814, 0.0134948, 0.0138015, 0.0141082,
+0.0147216, 0.0150283, 0.015335, 0.0159483, 0.016255, 0.0165617,
+0.0171751, 0.0174818, 0.0177885, 0.0184019, 0.0196287, 0.0199612,
+0.0202937, 0.0209587, 0.0212912, 0.0216237, 0.0222887, 0.0226212,
+0.0229537, 0.0236187, 0.0249486, 0.0252811, 0.0256136, 0.0262786,
+0.0276086, 0.0279411, 0.0282736, 0.0289386, 0.0302686, 0.0306011,
+0.0309336, 0.0315985, 0.0329285, 0.033261, 0.0335935, 0.0342585,
+0.0355885, 0.035921, 0.0362535, 0.0369185, 0.0382485, 0.0409084,
+0.0412189, 0.0415293, 0.0421503, 0.0433921, 0.0458758, 0.0461863,
+0.0464967, 0.0471176, 0.0483595, 0.0508432, 0.0511536, 0.0514641,
+0.052085, 0.0533269, 0.0558106, 0.056121, 0.0564315, 0.0570524,
+0.0582942, 0.0607779, 0.0610823, 0.0613867, 0.0619954, 0.0632129,
+0.0656479, 0.0659522, 0.0662566, 0.0668654, 0.0680828, 0.0705178,
+0.0708222, 0.0711266, 0.0717353, 0.0729528, 0.0753878, 0.0802577,
+0.0805879, 0.080918, 0.0815784, 0.0828991, 0.0855404, 0.0908231,
+0.0911533, 0.0914834, 0.0921438, 0.0934645, 0.0961058, 0.101389,
+0.101697, 0.102005, 0.102621, 0.103854, 0.106319, 0.111249, 0.111557,
+0.111865, 0.112481, 0.113714, 0.116179, 0.121109, 0.121443, 0.121777,
+0.122445, 0.123781, 0.126452, 0.131795, 0.132129, 0.132463, 0.133131,
+0.134466, 0.137138, 0.142481, 0.142809, 0.143137, 0.143792, 0.145104,
+0.147726, 0.152972, 0.1533, 0.153628, 0.154283, 0.155595, 0.158217,
+0.163463, 0.163769, 0.164074, 0.164686, 0.165909, 0.168356, 0.173249,
+0.183035, 0.183366, 0.183698, 0.184361, 0.185687, 0.18834, 0.193646,
+0.204257, 0.204567, 0.204877, 0.205496, 0.206734, 0.209211, 0.214164,
+0.22407, 0.224374, 0.224677, 0.225284, 0.226498, 0.228926, 0.233782,
+0.243493, 0.264567, 0.284231, 0.305546, 0.326471, 0.345986, 0.367151,
+0.386907, 0.408314, 0.429331, 0.448938, 0.470196, 0.490044, 0.509502,
+0.530611, 0.55031, 0.57166, 0.59262, 0.61217, 0.633371, 0.653162,
+0.672563, 0.693616, 0.713258, 0.734551, 0.754434, 0.773927, 0.795071,
+0.814805, 0.83619, 0.857186, 0.876771, 0.898007, 0.917833, 0.93727,
+0.958357, 0.978034, 0.978377, 0.978721, 0.979407, 0.98078, 0.983526,
+0.989017, 0.98936, 0.989704, 0.99039, 0.991763, 0.994509, 0.994852,
+0.995195, 0.995881, 0.997254, 0.997597, 0.997941, 0.998627, 0.99897,
+0.999314, 0.999657, 1.],
+y:[5.11793e-22, 2.52353e-11, 2.01803e-10, 6.80997e-10, 1.61411e-9,
+3.15244e-9, 5.44727e-9, 8.6499e-9, 1.29116e-8, 1.83837e-8,
+2.52175e-8, 3.35643e-8, 4.35754e-8, 5.5402e-8, 6.91954e-8,
+8.51071e-8, 1.03288e-7, 1.2389e-7, 1.47064e-7, 1.72961e-7,
+2.01733e-7, 2.33531e-7, 2.68506e-7, 3.0681e-7, 3.48593e-7,
+3.94008e-7, 4.43205e-7, 4.96336e-7, 5.53552e-7, 6.15004e-7,
+6.80844e-7, 8.26293e-7, 9.06204e-7, 9.91107e-7, 1.1765e-6,
+1.27729e-6, 1.38368e-6, 1.61386e-6, 1.73795e-6, 1.86824e-6,
+2.14805e-6, 2.29786e-6, 2.45448e-6, 2.78876e-6, 2.96671e-6,
+3.15208e-6, 3.54567e-6, 3.75419e-6, 3.97073e-6, 4.42847e-6,
+4.66998e-6, 4.92011e-6, 5.44685e-6, 6.6105e-6, 6.95216e-6, 7.3054e-6,
+8.04737e-6, 8.43649e-6, 8.83796e-6, 9.6787e-6, 0.0000101184,
+0.0000105711, 0.0000115168, 0.0000135741, 0.0000141241, 0.0000146888,
+0.0000158629, 0.0000183955, 0.0000190682, 0.0000197571, 0.0000211843,
+0.0000242416, 0.0000250494, 0.0000258749, 0.0000275799, 0.0000312113,
+0.0000321665, 0.0000331409, 0.0000351484, 0.0000394034, 0.0000405183,
+0.000041654, 0.0000439887, 0.0000489167, 0.0000598501, 0.0000612233,
+0.0000626174, 0.0000654687, 0.0000714283, 0.0000844114, 0.0000861371,
+0.0000878861, 0.0000914549, 0.0000988799, 0.000114914, 0.000117033,
+0.000119177, 0.000123544, 0.000132595, 0.000152003, 0.000154555,
+0.000157135, 0.00016238, 0.000173219, 0.000196324, 0.000199289,
+0.000202284, 0.000208364, 0.000220886, 0.000247418, 0.000250876,
+0.000254367, 0.000261445, 0.000275994, 0.000306691, 0.000310681,
+0.000314705, 0.000322858, 0.000339585, 0.000374753, 0.000452213,
+0.00045782, 0.000463473, 0.000474919, 0.000498373, 0.000547575,
+0.000655494, 0.000662674, 0.000669906, 0.000684527, 0.000714407,
+0.000776751, 0.000912126, 0.000920475, 0.000928875, 0.000945827,
+0.000980349, 0.0010519, 0.00120528, 0.00121533, 0.00122544,
+0.00124583, 0.00128728, 0.00137292, 0.00155545, 0.00156837,
+0.00158135, 0.00160755, 0.0016608, 0.00177082, 0.00200524,
+0.00202054, 0.00203592, 0.00206692, 0.00212985, 0.00225954,
+0.00253453, 0.00255209, 0.00256974, 0.00260527, 0.00267733,
+0.00282542, 0.00313782, 0.00315808, 0.00317842, 0.00321937,
+0.00330233, 0.00347251, 0.00383027, 0.00385185, 0.00387352,
+0.0039171, 0.00400523, 0.00418546, 0.00456204, 0.00538191, 0.0054113,
+0.00544079, 0.0055001, 0.00562002, 0.00586507, 0.00637644, 0.0074871,
+0.00752132, 0.00755563, 0.00762458, 0.00776374, 0.00804714,
+0.00863459, 0.00989441, 0.00993484, 0.00997537, 0.0100568, 0.0102209,
+0.0105546, 0.0112437, 0.0127113, 0.0163273, 0.0202725, 0.0252235,
+0.0308198, 0.036744, 0.0439921, 0.0515794, 0.0607539, 0.0707846,
+0.0811097, 0.0934187, 0.106014, 0.119448, 0.135301, 0.151353,
+0.17019, 0.19021, 0.21031, 0.233737, 0.257203, 0.281771, 0.310255,
+0.338618, 0.371399, 0.404, 0.437905, 0.47695, 0.515606, 0.560014,
+0.606267, 0.651884, 0.704154, 0.755698, 0.808906, 0.869755, 0.929585,
+0.930656, 0.931727, 0.933872, 0.938175, 0.946824, 0.964304, 0.965405,
+0.966507, 0.968713, 0.973136, 0.982029, 0.983145, 0.984262, 0.986498,
+0.990983, 0.992107, 0.993232, 0.995484, 0.996611, 0.99774, 0.998869,
+1.],
+mode: 'lines',
+name: 'angle'
+};
+
+var plot1 = {
+x:[8.00128e-8, 0.000306777, 0.000613475, 0.000920172, 0.00122687,
+0.00153357, 0.00184026, 0.00214696, 0.00245366, 0.00276036,
+0.00306705, 0.00337375, 0.00368045, 0.00398715, 0.00429384,
+0.00460054, 0.00490724, 0.00521394, 0.00552063, 0.00582733,
+0.00613403, 0.00644073, 0.00674742, 0.00705412, 0.00736082,
+0.00766752, 0.00797421, 0.00828091, 0.00858761, 0.00889431, 0.009201,
+0.0098144, 0.0101211, 0.0104278, 0.0110412, 0.0113479, 0.0116546,
+0.012268, 0.0125747, 0.0128814, 0.0134948, 0.0138015, 0.0141082,
+0.0147216, 0.0150283, 0.015335, 0.0159483, 0.016255, 0.0165617,
+0.0171751, 0.0174818, 0.0177885, 0.0184019, 0.0196287, 0.0199612,
+0.0202937, 0.0209587, 0.0212912, 0.0216237, 0.0222887, 0.0226212,
+0.0229537, 0.0236187, 0.0249486, 0.0252811, 0.0256136, 0.0262786,
+0.0276086, 0.0279411, 0.0282736, 0.0289386, 0.0302686, 0.0306011,
+0.0309336, 0.0315985, 0.0329285, 0.033261, 0.0335935, 0.0342585,
+0.0355885, 0.035921, 0.0362535, 0.0369185, 0.0382485, 0.0409084,
+0.0412189, 0.0415293, 0.0421503, 0.0433921, 0.0458758, 0.0461863,
+0.0464967, 0.0471176, 0.0483595, 0.0508432, 0.0511536, 0.0514641,
+0.052085, 0.0533269, 0.0558106, 0.056121, 0.0564315, 0.0570524,
+0.0582942, 0.0607779, 0.0610823, 0.0613867, 0.0619954, 0.0632129,
+0.0656479, 0.0659522, 0.0662566, 0.0668654, 0.0680828, 0.0705178,
+0.0708222, 0.0711266, 0.0717353, 0.0729528, 0.0753878, 0.0802577,
+0.0805879, 0.080918, 0.0815784, 0.0828991, 0.0855404, 0.0908231,
+0.0911533, 0.0914834, 0.0921438, 0.0934645, 0.0961058, 0.101389,
+0.101697, 0.102005, 0.102621, 0.103854, 0.106319, 0.111249, 0.111557,
+0.111865, 0.112481, 0.113714, 0.116179, 0.121109, 0.121443, 0.121777,
+0.122445, 0.123781, 0.126452, 0.131795, 0.132129, 0.132463, 0.133131,
+0.134466, 0.137138, 0.142481, 0.142809, 0.143137, 0.143792, 0.145104,
+0.147726, 0.152972, 0.1533, 0.153628, 0.154283, 0.155595, 0.158217,
+0.163463, 0.163769, 0.164074, 0.164686, 0.165909, 0.168356, 0.173249,
+0.183035, 0.183366, 0.183698, 0.184361, 0.185687, 0.18834, 0.193646,
+0.204257, 0.204567, 0.204877, 0.205496, 0.206734, 0.209211, 0.214164,
+0.22407, 0.224374, 0.224677, 0.225284, 0.226498, 0.228926, 0.233782,
+0.243493, 0.264567, 0.284231, 0.305546, 0.326471, 0.345986, 0.367151,
+0.386907, 0.408314, 0.429331, 0.448938, 0.470196, 0.490044, 0.509502,
+0.530611, 0.55031, 0.57166, 0.59262, 0.61217, 0.633371, 0.653162,
+0.672563, 0.693616, 0.713258, 0.734551, 0.754434, 0.773927, 0.795071,
+0.814805, 0.83619, 0.857186, 0.876771, 0.898007, 0.917833, 0.93727,
+0.958357, 0.978034, 0.978377, 0.978721, 0.979407, 0.98078, 0.983526,
+0.989017, 0.98936, 0.989704, 0.99039, 0.991763, 0.994509, 0.994852,
+0.995195, 0.995881, 0.997254, 0.997597, 0.997941, 0.998627, 0.99897,
+0.999314, 0.999657, 1.],
+y:[3.70031e-22, 2.17263e-11, 1.73742e-10, 5.86304e-10, 1.38967e-9,
+2.71409e-9, 4.68982e-9, 7.44713e-9, 1.11163e-8, 1.58275e-8,
+2.1711e-8, 2.88972e-8, 3.75162e-8, 4.76984e-8, 5.95739e-8,
+7.32731e-8, 8.89261e-8, 1.06663e-7, 1.26615e-7, 1.48911e-7,
+1.73683e-7, 2.01059e-7, 2.31171e-7, 2.64149e-7, 3.00123e-7,
+3.39223e-7, 3.8158e-7, 4.27324e-7, 4.76584e-7, 5.29492e-7,
+5.86178e-7, 7.11404e-7, 7.80205e-7, 8.53304e-7, 1.01292e-6,
+1.0997e-6, 1.1913e-6, 1.38947e-6, 1.49631e-6, 1.60849e-6, 1.8494e-6,
+1.97839e-6, 2.11324e-6, 2.40104e-6, 2.55426e-6, 2.71386e-6,
+3.05274e-6, 3.23227e-6, 3.41871e-6, 3.81283e-6, 4.02077e-6,
+4.23613e-6, 4.68966e-6, 5.69157e-6, 5.98575e-6, 6.28989e-6,
+6.92875e-6, 7.2638e-6, 7.60947e-6, 8.33338e-6, 8.71195e-6,
+9.10181e-6, 9.91609e-6, 0.0000116875, 0.0000121611, 0.0000126473,
+0.0000136583, 0.0000158391, 0.0000164183, 0.0000170115, 0.0000182405,
+0.0000208732, 0.0000215687, 0.0000222796, 0.0000237478, 0.000026875,
+0.0000276975, 0.0000285366, 0.0000302654, 0.0000339296, 0.0000348898,
+0.0000358678, 0.0000378784, 0.0000421224, 0.0000515386, 0.0000527212,
+0.0000539218, 0.0000563775, 0.0000615104, 0.0000726928, 0.0000741791,
+0.0000756856, 0.0000787596, 0.0000851551, 0.0000989669, 0.000100792,
+0.000102639, 0.000106401, 0.000114198, 0.000130918, 0.000133116,
+0.000135338, 0.000139857, 0.000149196, 0.000169102, 0.000171657,
+0.000174237, 0.000179476, 0.000190266, 0.000213127, 0.000216108,
+0.000219116, 0.000225215, 0.000237753, 0.000264207, 0.000267646,
+0.000271115, 0.000278141, 0.000292558, 0.000322869, 0.000389642,
+0.000394476, 0.00039935, 0.000409217, 0.000429438, 0.000471861,
+0.000564923, 0.000571114, 0.000577352, 0.000589962, 0.000615732,
+0.000669507, 0.000786293, 0.000793496, 0.000800743, 0.000815369,
+0.000845156, 0.000906894, 0.00103927, 0.00104795, 0.00105668,
+0.00107427, 0.00111005, 0.00118399, 0.00134159, 0.00135275,
+0.00136396, 0.00138659, 0.00143258, 0.0015276, 0.00173012,
+0.00174335, 0.00175664, 0.00178342, 0.0018378, 0.00194988,
+0.00218759, 0.00220278, 0.00221803, 0.00224876, 0.00231106,
+0.00243912, 0.00270935, 0.00272687, 0.00274447, 0.0027799,
+0.00285168, 0.00299894, 0.0033086, 0.00332729, 0.00334605,
+0.00338378, 0.00346009, 0.00361616, 0.00394233, 0.00465286,
+0.00467833, 0.0047039, 0.00475532, 0.0048593, 0.00507181, 0.00551541,
+0.00647952, 0.00650923, 0.00653904, 0.00659892, 0.00671979,
+0.00696598, 0.00747647, 0.00857198, 0.00860715, 0.00864242,
+0.00871324, 0.00885607, 0.00914645, 0.00974637, 0.0110249, 0.0141804,
+0.0176309, 0.0219719, 0.0268921, 0.0321155, 0.0385254, 0.0452572,
+0.0534258, 0.0623906, 0.071654, 0.0827428, 0.0941383, 0.106347,
+0.12082, 0.135549, 0.152924, 0.171495, 0.190247, 0.212233, 0.234395,
+0.257742, 0.284994, 0.312322, 0.34414, 0.376029, 0.409451, 0.448259,
+0.487015, 0.531943, 0.579196, 0.626252, 0.680722, 0.735009, 0.791642,
+0.857147, 0.922321, 0.923494, 0.924668, 0.927021, 0.93174, 0.941241,
+0.960491, 0.961705, 0.96292, 0.965355, 0.97024, 0.980075, 0.98131,
+0.982547, 0.985024, 0.989994, 0.99124, 0.992488, 0.994986, 0.996238,
+0.99749, 0.998745, 1.],
+mode: 'lines',
+name: 'angular velocity'
+};
+
+var data = [plot0,plot1];
+
+var layout = {
+  title:  'max error vs. max angle',
+  xaxis: { nticks: 10 },
+  yaxis: { nticks: 10 },
+  height: 376,
+  width:  626
+};
+
+var logLayout = {
+  title:  'max error vs. max angle (log/log)',
+  xaxis: { type: 'log', nticks: 10 },
+  yaxis: { type: 'log', nticks: 10 },
+  height: 376,
+  width:  626
+};
+
+Plotly.newPlot('fig3', data, layout, {displaylogo: false, autosizable: true});
+
+Plotly.newPlot('fig4', data, logLayout, {displaylogo: false, autosizable: true});
 
 </script>
