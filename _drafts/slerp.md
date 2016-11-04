@@ -141,9 +141,8 @@ $$
 $$
 
 \\
-This give a simple framework for computing errors which ignore the impact of floating-point computation.  We can also stick with a two-dimensional model for performing empirical testing
+This give a simple framework for computing errors which ignore the impact of floating-point computation.
 
-\\
 Given some approximation of slerp we can compute the function $T$ to correct to constant angular velocity:
 
 $$
@@ -260,6 +259,27 @@ s(t) & = & \cos\left(t\theta\right)A + \sin\left(t\theta\right)\frac{B - dA}{\sq
 $$
 
 \\
+If we examine the terms in the limit:
+
+$$
+\begin{eqnarray*}
+\lim_{\theta \to 0} \ \ \cos\left(t\theta\right) & = 1  \\
+\lim_{\theta \to 0} \ \ \frac{\sin\left(t\theta\right)}{\sin\left(\theta\right)} & = t
+\end{eqnarray*}
+$$
+
+\\
+which yields linear interpolation as $\theta$ approaches zero ($d$ approaching one):
+
+$$
+\begin{eqnarray*}
+\left(1-t \right) A + tB
+\end{eqnarray*}
+$$
+
+\\
+Or more simply the coord and arc approach being the same for small angles.
+
 The two forward trig ops can be converted into one and given the range of both are positive[^nosign].  Showing both options as a pair of scale values where $s_t=\sin\left(t\theta\right)$ and $c_t=\cos\left(t\theta\right)$:
 
 $$
@@ -522,7 +542,6 @@ void slerp_fs_init_0(slerp_fs_t* k, quat_t* A, quat_t* B, float f)
 
 void slerp_fs_0(quat_t* r, slerp_fs_t* k)
 {
-  float ta = t*k->a;
   float s0 = k->s0;
   float s1 = k->s1;
   quat_wsum(r, &k->x, &k->y, s0, s1);
@@ -548,6 +567,52 @@ Fixed steps <small>basis? we don't need no stinkin' basis!</small>
 
 \\
 
+{% highlight c %}
+
+typedef struct {
+  quat_t q;       // current (not needed duplicate)
+  quat_t dq;      // the rotation
+} slerp_fr_t;
+
+// for 'n' steps: f=1/n
+void slerp_fr_init_0(slerp_fr_t* k, quat_t* A, quat_t* B, float f)
+{
+  float t = f;
+
+  // slerp_ref_1: cut-and-paste as example - same reductions apply
+  float d   = quat_dot(A,B);
+  float sgn = d >= 0 ? 1 : -1;
+  float s0,s1;
+
+  d = fabsf(d);
+
+  if (d < SLERP_CUT) {
+    t += t; 
+    float s2 = 1.0-d*d;
+    float i  = recip_nr(1.f+d);
+    float rs = rsqrt_nr(s2);
+    float y  = s2*rs;          
+    float a  = atanf(y*i);
+    float s  = sinf(t*a);
+    float c  = sqrtf(1.f-s*s);
+    s1 = s*rs;
+    s0 = c-d*s1;
+  } else {
+    s0 = 1.0f - t;
+    s1 = t;
+  }
+
+  quat_wsum(&k->dq, A, B, s0, sgn*s1);
+  quat_dup(&k->q, A);
+}
+
+void slerp_fr_0(quat_t* r, slerp_fr_t* k)
+{
+  quat_mul(&k->q, &k->q, &k->dq);
+  quat_dup(r, &k->q);
+}
+{% endhighlight %}
+
 <br>
 
 ------
@@ -564,27 +629,6 @@ $$
 \end{eqnarray*}
 $$
 
-\\
-The terms of the equation in the limit:
-
-$$
-\begin{eqnarray*}
-\lim_{\theta \to 0} \cos\left(t\theta\right) & = 1  \\
-\lim_{\theta \to 0} \frac{\sin\left(t\theta\right)}{\sin\left(\theta\right)} & = t
-\end{eqnarray*}
-$$
-
-\\
-yields linear interpolation as $\theta$ approaches zero:
-
-$$
-\begin{eqnarray*}
-\left(1-t \right) A + tB
-\end{eqnarray*}
-$$
-
-\\
-Or more simply the coord and arc approach being the same for small angles.
 
 Approximating with either lerp or nlerp produce the same angular error values.  Errors introduced by using a non-unit quaternion depend on how the consumer of the output is written (the simplifications made using unit magnitude as a given).  Plugging in the approximation we get:
 
