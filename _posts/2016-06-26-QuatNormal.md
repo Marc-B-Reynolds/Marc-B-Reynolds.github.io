@@ -167,7 +167,7 @@ $$
 and since the scale is applied twice on the reverse we multiply through by $\frac{1}{2}$:
 
 $$
-\left( x,~y \right) \rightarrow \left(x\sqrt{1-\left(x^2+y^2\right)},~y\sqrt{1-\left(x^2+y^2\right)},~\frac{1}{2}-\left(x^2+y^2\right)\right)
+\left( x,~y \right) \rightarrow \left(x\sqrt{2-\left(x^2+y^2\right)},~y\sqrt{2-\left(x^2+y^2\right)},~1-\left(x^2+y^2\right)\right)
 $$
 
 \\
