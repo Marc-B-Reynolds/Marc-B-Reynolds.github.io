@@ -164,7 +164,7 @@ $$
 $$
 
 \\
-and since the scale is applied twice on the reverse we multiply through by $\frac{1}{2}$:
+and we reverse this version by[^uniform]:
 
 $$
 \left( x,~y \right) \rightarrow \left(x\sqrt{2-\left(x^2+y^2\right)},~y\sqrt{2-\left(x^2+y^2\right)},~1-\left(x^2+y^2\right)\right)
@@ -294,4 +294,5 @@ References and Footnotes
 [^complexfunc]: []({{site.base}}/quaternions/2016/05/17/QuatAsComplex.html#complexFunction)
 [^halfAngle]: Quaternion half/double angle and Cayley transforms ([local post]({{site.base}}quaternions/2016/05/30/QuatHDAngleCayley.html))
 [^qrot]: Quaternion rotation visualization ([local post]({{site.base/quaternions/2016/05/17/VisualizeQuatRot.html}}))
+[^uniform]: Uniform points on disc, circle and sphere ([local post]({{site.base/distribution/2016/11/28/Uniform.html}}))
 [^altForm]: This can also be expressed as: $$\mathbf{a}~f\left(\mathbf{a}^{*}\mathbf{b}\right)$$ since the product generally doesn't commute.
