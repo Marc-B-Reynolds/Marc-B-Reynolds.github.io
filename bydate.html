@@ -1,0 +1,17 @@
+---
+layout:  page
+title:   Posts
+tagline: by date
+---
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+{% for post in site.posts %}
+  <div style="line-height: 12px;">
+    <span class="text-muted"> {{ post.date | date: "%Y%m%d" }} <i class="fa fa-caret-right"></i></span>
+    <a href="{{ site.baseurl }}{{post.url}}">{{post.title}}</a>
+  </div>
+{% endfor %}
+
+<div class="clearfix"></div>
+<div class="col-md-12"><hr/></div>

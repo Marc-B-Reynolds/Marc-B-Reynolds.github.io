@@ -21,6 +21,9 @@
 {% if page.plotly %}
   <script src="{{ site.baseurl }}/assets/js/plotly-latest.min.js"></script>
 {% endif %}
+{% if page.threejs %}
+  <script src="{{ site.baseurl }}/assets/js/three.js"></script>
+{% endif %}
 
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
 
@@ -79,6 +82,7 @@
     </button>
     <ul class="dropdown-menu" role="menu">
       <li><a href="{{ site.baseurl }}/"><i class="fa fa-list"></i>posts</a></li>
+      <li><a href="{{ site.baseurl }}/{{ "bydate.html" }}"><i class="fa fa-long-arrow-right"></i>short by date</a></li>
       <li><a href="{{ site.baseurl }}/{{ site.categories_path }}"><i class="fa fa-long-arrow-right"></i>categories</a></li>
       <li><a href="{{ site.baseurl }}/{{ site.tags_path }}"><i class="fa fa-tag"></i>tags</a></li>
       <li class="divider"></li>
