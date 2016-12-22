@@ -9,7 +9,7 @@ plotly: true
 
 This is a quick note about how the Pigeonhole Principle applies to mapping integers to a smaller set.
 
-Imagine we have a machine which has a large mixing bin.  Into this machine we put $b$ physically identical balls except one is blue and the remainder are red.  After sufficient mixing the balls drop into a long narrow transparent tube in single file.  Connected to the tube is a chute that can distribute the balls to $n$ bins and the machine is set-up to use some method to distribute the balls equally into the bins (of course numbered from 0 to $n-1$). After the distribution is complete we call the bin with the red ball the result.
+Imagine we have a machine which has a large mixing bin.  Into this machine we put $b$ physically identical balls except one is blue and the remainder are red.  After sufficient mixing the balls drop into a long narrow transparent tube in single file.  Connected to the tube is a chute that can distribute the balls to $n$ bins and the machine is set-up to use some method to distribute the balls equally into the bins (of course numbered from 0 to $n-1$). After the distribution is complete we call the bin with the blue ball the result.
 
 Let's say we have 16 balls and 4 bins, then after distribution each has 4 balls.  All is good.  Each bin has a 4 in 16 chance of getting the ball each run which is a probability of $\frac{1}{n}$.
 
