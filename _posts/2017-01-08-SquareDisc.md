@@ -9,7 +9,7 @@ plotly:       true
 
 This note is for some auxilary information on some maps between the disc and square.  A fair amount of the math is convered by Fong[^fong2015] [^fong2015a] and the survey by Lambers[^lambers].  Specifically this contains:
 
-* A pair of animated plots between various maps 
+* A pair of animated plots between the various maps 
 * Show the Jacobian matrices and determinates and visualize with interactive plots
 * Reduced complexity radial stretch in both directions
 * Reduced complexity concentric disc to square
@@ -47,7 +47,7 @@ Point set
 ------
 
 \\
-As an alternate visualization this plot take uniform point on the square and shows how the various square to disc mapping transform the point set.
+As an alternate visualization this plot take uniform points on the square and shows how the various square to disc mappings transform the point set.
 
 <div id="graph" style="width:100%"></div><br>
 
@@ -423,10 +423,9 @@ and the determinate:
 $$ \frac{1}{\sqrt{2-\frac{x^2}{y^2}}} $$
 
 \\
-and the heat map of area distortion.  All of the above plots use the same colormap range. Since this is on a much narrow range I'm breaking from that here.  Recall equal area value is $\frac{\pi}{4} \approx 0.785398$
+and the heat map of area distortion. Recall equal area value is $\frac{\pi}{4} \approx 0.785398$
 
 <div id="aheat" style="width:100%"></div>
-
 
 
 ------
@@ -434,9 +433,7 @@ and the heat map of area distortion.  All of the above plots use the same colorm
 References and Footnotes
 ------
 
-[^toy]:      Toy code ([here](http://github.com/Marc-B-Reynolds/Stand-alone-junk/blob/master/src/Posts/discsquare.c))
-
-[^eps]:      A reasonable(ish) epsilon for the funcs here under generic usage is smallest normal (single: $2^-126$).
+[^eps]:      A reasonable(ish) epsilon for the funcs here under generic usage is the smallest normal fp value (single: $2^{-126}$).
 
 [^jacobian]: *"Jacobian matrix and determinant"*, Wikipedia. ([link](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant))
 
@@ -465,7 +462,7 @@ var sqrt2o2 = 0.5*Math.sqrt(2.0);
 
 var options = {displaylogo: false, autosizable: true};
 
-var size = 512;
+var size = 1024;
 var dSize = 2.0/size;
 var sheatZ = new Array(size);
 var eheatZ = new Array(size);
@@ -497,19 +494,47 @@ for(var j=0; j<size; j++) {
   }
 }
 
-var heatColor = [
-	//
-    ['0.0',            'rgb(165,0,38)'],
-    ['0.6',            'rgb(100,100,38)'],
-    // equal area
-    ['0.78539816',     'rgb(255,255,255)'],
-	//
-    ['0.8',            'rgb(148,213,185)'],
-    ['0.9',            'rgb(30,60,152)'],
-    ['1.0',            'rgb( 9,30,90)']
-  ];
+var heatColor;
 
-heatColor = 'YIGnBu';
+var Blackbody =
+[
+  [0,   'rgb(0,0,0)'], 
+  [0.2, 'rgb(230,0,0)'],
+  [0.4, 'rgb(230,210,0)'],
+  [0.78539816, 'rgb(255,255,255)'],
+  [1,   'rgb(160,200,255)']
+];
+
+var BlackbodyH =
+[
+  [0,   'rgb(0,0,0)'], 
+  [0.2, 'rgb(230,0,0)'],
+  [0.4, 'rgb(230,210,0)'],
+  [0.78539816, 'rgb(255,255,255)'],
+  [1,   'rgb(160,200,255)']
+];
+
+var Bar = [
+  [0.,        'rgb(128,  0, 38)'],
+  [0.0981748, 'rgb(189,  0, 38)'],
+  [0.19635,   'rgb(227, 26, 28)'],
+  [0.294524,  'rgb(252, 78, 42)'],
+  [0.392699,  'rgb(253,141, 60)'],
+  [0.490874,  'rgb(254,178, 76)'],
+  [0.589049,  'rgb(254,217,118)'],
+  [0.78539816,'rgb(255,255,255)'],
+  [0.812223,  'rgb(199,233,180)'],
+  [0.839049,  'rgb(127,205,187)'],
+  [0.865874,  'rgb( 65,182,196)'],
+  [0.892699,  'rgb( 29,145,192)'],
+  [0.919524,  'rgb( 34, 94,168)'],
+  [0.94635,   'rgb( 37, 52,148)'],
+  [1,         'rgb(  8, 29, 88)'],
+];
+
+//heatColor = 'YIGnBu';
+heatColor = BlackbodyH;
+//heatColor = Bar;
 
 function makeDataUS(set)
 {
@@ -548,7 +573,7 @@ function makeData(set)
 var sheatData = makeData(sheatZ);
 var eheatData = makeData(eheatZ);
 var fheatData = makeData(fheatZ);
-var aheatData = makeDataUS(aheatZ);
+var aheatData = makeData(aheatZ);
 
 var heatLayout = { height: 600, width: 620 };
 
