@@ -155,7 +155,7 @@ float rng_toy_2()
   uint32_t u = lzc(rng_u32());
   uint32_t e,s;
   
-  if (e <= 8) {
+  if (u <= 8) {
     e  = 126-u;
     u &= 0x7FFFFF;  // 23 bit for significand
     return f32_from_bits(e<<23|u);
