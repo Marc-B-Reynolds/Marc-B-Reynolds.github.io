@@ -91,7 +91,7 @@ The Real Deal (arbitrary) <small>three degrees of freedom</small>
 {:#3dof}
 
 \\
-George Marsaglia in same paper[^gm] as uniform points on the 3D sphere $\left(\mathbb{S}^2\right)$ hand-wavingly presented a method for the 4D sphere $\left(\mathbb{S}^3\right)$.
+George Marsaglia in same paper[^gm] as uniform points on the 3D sphere $\left(\mathbb{S}^2\right)$ hand-wavingly[^pervognsen] presented a method for the 4D sphere $\left(\mathbb{S}^3\right)$.  
 
 Given two uniform points on the unit disc: $~p_0,~p_1$ and their norm: $d_n=p_n \cdot p_n$:
 
@@ -138,3 +138,4 @@ References and Footnotes
 [^sdisc]:    *"Square/Disc mappings"*, ([local post]({{site.base}}/math/2017/01/08/SquareDisc.html))
 [^inormals]: *"Implied normals (unit bivectors as rotations)"*, ([local post]({{site.base}}/quaternions/2016/06/26/QuatNormal.html))
 [^uniform]:  *"Uniform points on disc, circle, sphere and caps"*, ([local post]({{site.base}}/distribution/2016/11/28/Uniform.html))
+[^pervognsen]: Per Vognsen provides a simple justification in this gist: ([link](http://gist.github.com/pervognsen/32ec4841ef53346f65c5033c3bd262b6))
