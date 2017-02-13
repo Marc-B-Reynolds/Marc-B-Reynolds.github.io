@@ -242,3 +242,23 @@ ul.dropdown-menu>li>a>i.fa {
   position: absolute;
 }
 
+table.center {
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+th {
+  color:#FFF;
+  background-color:#88A;
+  border: 1px solid #e3e3ef;
+  padding:8px 15px 8px 15px
+}
+
+td {
+  padding:5px 15px 5px 15px;
+  border: 1px solid #e3e3ef;
+}
+
+tr:nth-child(even) {
+  background: #f5f5ff;
+}
