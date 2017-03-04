@@ -165,7 +165,7 @@ float rng_toy_2()
   // 64-bit: 2^-40 or ~9.1e-11% 
 
   // if we have the exponent we can complete
-  if (u != 0) {
+  if (u != 32) {
     e = 126-u;
     s = rng_u32() >> 9;
     return f32_from_bits((126-e)<<23|s);
