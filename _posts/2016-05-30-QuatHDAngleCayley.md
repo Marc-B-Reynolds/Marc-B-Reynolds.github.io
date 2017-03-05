@@ -331,7 +331,7 @@ To be able to "eyeball" how density values change if you place a cap on maximum 
 <div id="fig4" style="width:100%"></div>
 
 <br>
-The "take-away" from these should indicate that the "ideal" situation is not use a transform for quantization.  The better solution in terms of minimizing quantization error is to have good content, prediction/dead-reckoning and store/transmit relative quaternions which are composed.
+The "take-away" from these should indicate that the "ideal" situation is not use a transform for quantization.  The better solution in terms of minimizing quantization error is to have good context, prediction/dead-reckoning and store/transmit relative quaternions which are composed.
 
 <br>
 
