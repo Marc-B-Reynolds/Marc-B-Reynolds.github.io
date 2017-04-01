@@ -318,7 +318,7 @@ void ortho_basis_r1(vec3_t* v, vec3_t* xp, vec3_t* yp)
 {% endhighlight %}
 
 \\
-Note I'm only using X86 issues as a quick-n-dirty measure of goodness (easy to copy-n-past into godblot).
+Note I'm only using X86 issues as a quick-n-dirty measure of goodness (easy to copy-n-past into godbolt).
 
 A summary of results:
 
@@ -326,15 +326,15 @@ A summary of results:
 {: .center }
 | method    | x86-64 |  RMS  | rel-RMS | notes |
 |:----------|:------:|:-----:|:-------:|:-----:|
-| basis_2   |     28 | 2.5868&times;10<sup>-8</sup> | -7.028 |  |
-| basis_2a  |     32 | 2.5868&times;10<sup>-8</sup> | -7.028 |  |
+| basis_2   |     28 | 2.5868&times;10<sup>-8</sup> | -7.028% |  |
+| basis_2a  |     32 | 2.5868&times;10<sup>-8</sup> | -7.028% |  |
 | pixar     |     36 | 2.4170&times;10<sup>-8</sup> |    -   | as per paper |
 | pixar_r1  |     30 | 2.4170&times;10<sup>-8</sup> |    -   |  |
-| pixar_r2  |     29 | 2.4215&times;10<sup>-8</sup> | -0.003 |  |
+| pixar_r2  |     29 | 2.4215&times;10<sup>-8</sup> | -0.003% |  |
 | pixar_l1  |     28 | 2.4170&times;10<sup>-8</sup> |    -   |  |
-| pixar_l2  |     26 | 2.4215&times;10<sup>-8</sup> | -0.003 |  |
-| basis_r1  |     27 | 2.5868&times;10<sup>-8</sup> | -7.028 |  |
-| basis_l2  |     24 | 2.5868&times;10<sup>-8</sup> | -7.028 |  |
+| pixar_l2  |     26 | 2.4215&times;10<sup>-8</sup> | -0.003% |  |
+| basis_r1  |     27 | 2.5868&times;10<sup>-8</sup> | -7.028% |  |
+| basis_l2  |     24 | 2.5868&times;10<sup>-8</sup> | -7.028% |  |
 
 <br>
 
