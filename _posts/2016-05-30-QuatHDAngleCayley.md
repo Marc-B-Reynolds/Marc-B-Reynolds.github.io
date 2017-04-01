@@ -126,7 +126,7 @@ The half-angle transform does not effect angle measurements between bivectors so
 
 <br>
 
-{% highlight c %}
+{% highlight glsl %}
 // quaternion 'q' as vec4: q.w = scalar part 'a' , q.xyz = bivector part 'b'
 
 // sqrt(a + bu)
@@ -248,7 +248,7 @@ For the space as a whole we are mapping our 4D unit half-sphere input to the 3D 
 
 <br>
 
-{% highlight c %}
+{% highlight glsl %}
 
 vec3 q_cayley(vec4 q) { return q.xyz*(1.0/(1.0+q.w)); }
 

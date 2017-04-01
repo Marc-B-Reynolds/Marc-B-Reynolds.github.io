@@ -39,7 +39,7 @@ This is well-covered material and if you've read my previous few posts then it i
 \\
 Ignoring the degenerate case this translates into:
 
-{% highlight c %}
+{% highlight glsl %}
 vec4 q_from_normals(vec3 a, vec3 b)
 {
   float k = 1.0+dot(a,b);         // 1+d
