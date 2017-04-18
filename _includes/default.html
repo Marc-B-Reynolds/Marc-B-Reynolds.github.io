@@ -25,7 +25,12 @@
   <script src="{{ site.baseurl }}/assets/js/three.js"></script>
 {% endif %}
 
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
+{% if page.katex %}
+  <script src="{{ site.baseurl }}/assets/js/katex/katex.min.js" type="text/javascript"></script>
+  <link  href="{{ site.baseurl }}/assets/js/katex/katex.min.css" rel="stylesheet" type="text/css">
+  <script src="{{ site.baseurl }}/assets/js/katex/contrib/auto-render.min.js" type="text/javascript"></script>   
+{% else %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
 
   <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
@@ -64,6 +69,7 @@
     }
   });
   </script>
+{% endif %}  
   
 
   {% if jekyll.environment == 'production' %}
@@ -105,7 +111,24 @@
   <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="{{ site.baseurl }}/assets/js/app.js"></script>
+
+
+{% if page.katex %}
+  <script>
+    renderMathInElement(
+    document.getElementById("post"),
+    {
+     delimiters: [
+       {left: "$$", right: "$$", display: true},
+       {left: "\\[", right: "\\]", display: true},
+       {left: "$", right: "$", display: false},
+       {left: "\\(", right: "\\)", display: false}
+     ]
+    }
+   );
+  </script>
   
+{% else %}
   
   <script type="text/javascript">
 /*
@@ -149,7 +172,7 @@ console.log("mj foo");
 
 })();
 </script>
-  
+{% endif %}
   
   <script>
   <!-- shoot...this doesn't work -->

@@ -33,7 +33,6 @@ kramdown:
   math_engine: mathjax
 
 gems:
-  - jemoji
   - jekyll-mentions
   - jekyll-paginate
 
