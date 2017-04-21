@@ -353,8 +353,8 @@ $$
 Q    &=& e^{\frac{\gamma}{2}\mathbf{z}}e^{\frac{\beta}{2}\mathbf{x}}e^{\frac{\alpha}{2}\mathbf{z}} \nonumber \\
      &=& \cos\left(\frac{\gamma+\alpha}{2}\right)\cos\left(\frac{\beta}{2}\right) + 
 	 \left(
-	  \cos\left(\frac{\gamma-\alpha}{2}\right)\sin\left(\frac{\beta}{2}\right) + 
-	 ~\sin\left(\frac{\gamma-\alpha}{2}\right)\sin\left(\frac{\beta}{2}\right) + 
+	  \cos\left(\frac{\gamma-\alpha}{2}\right)\sin\left(\frac{\beta}{2}\right),
+	 ~\sin\left(\frac{\gamma-\alpha}{2}\right)\sin\left(\frac{\beta}{2}\right),
 	 ~\sin\left(\frac{\gamma+\alpha}{2}\right)\cos\left(\frac{\beta}{2}\right)
 	 \right) \label{zxz}
 \end{eqnarray}
