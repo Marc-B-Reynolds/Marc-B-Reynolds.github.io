@@ -1196,7 +1196,7 @@ var hars32t = {y:hars32, x:bax, name:'h-angle+rs' };
 
 var hars30a = [hars30t,hars30xt,hars30dt];
 var hars30l = [hars30t,em30t,hm30t];
-var hars31l = [hars31t,em31t,hm30t];
+var hars31l = [hars31t,em31t,hm31t];
 var hars32l = [hars32t,baemm,bazxz,bahmm];
 
 var harsLayout = {
