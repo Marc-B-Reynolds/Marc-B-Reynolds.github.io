@@ -141,7 +141,7 @@ Recall if we take the square-root of a unit quaternion ($Q$) we half its implied
 The forward and inverse transform pairs then become:
 
 $$
-Q = w + \left(x,~y,~z\right) \rightarrow \frac{1}{\sqrt{1+w^2}} \left(x,~y,~z\right) = p
+Q = w + \left(x,~y,~z\right) \rightarrow \frac{1}{\sqrt{1+w}} \left(x,~y,~z\right) = p
 $$
 
 $$

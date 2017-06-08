@@ -142,8 +142,9 @@
   var $container = $('.post-content');
   var $tooltip = $('<div />').addClass('mathjax-tooltip');
   $container.append($tooltip);
-console.log("mj foo");
+
   function onMouseOver(ev) {
+    console.log("over");
     var a = ev.currentTarget;
     var $number = $(a.hash);
     var $root = $number.closest('.MathJax_Display');
@@ -162,6 +163,7 @@ console.log("mj foo");
   }
 
   function onMouseOut(a) {
+    console.log("out");
     $tooltip.removeClass('active');
   }
 
