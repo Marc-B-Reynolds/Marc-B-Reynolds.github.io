@@ -63,9 +63,9 @@ and applying $Q$ to the standard orthonormal basis yields a rotation matrix:
 $$
 {
 \left( \begin{array}{ccc}
-1-r(y^2+z^2) & rxy-z        & rxz+y \\
-rxy+z        & 1-r(x^2+z^2) & ryz-x \\
-rxz-y        & ryz+x        & 1-r(x^2+y^2)
+1-r(y^2+z^2) & rxy+z        & rxz-y \\
+rxy-z        & 1-r(x^2+z^2) & ryz+x \\
+rxz+y        & ryz-x        & 1-r(x^2+y^2)
 \end{array} \right)
 }
 $$
@@ -76,9 +76,9 @@ The above is reduced in what I consider the most obvious way, but the diagonals 
 $$
 {
 \left( \begin{array}{ccc}
-d+rx^2 & rxy-z  & rxz+y \\
-rxy+z  & d+ry^2 & ryz-x \\
-rxz-y  & ryz+x  & d+rz^2
+d+rx^2 & rxy+z  & rxz-y \\
+rxy-z  & d+ry^2 & ryz+x \\
+rxz+y  & ryz-x  & d+rz^2
 \end{array} \right)
 }
 $$
