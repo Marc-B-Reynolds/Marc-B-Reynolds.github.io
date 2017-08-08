@@ -3,7 +3,7 @@ layout:       post
 title:        Uniform random 3D rotations
 tagline:      
 categories:   [distribution]
-tags:         [random, rotation]
+tags:         [random, rotations]
 description:  a brief note on generating random rotations in 3D
 ---
 

@@ -37,6 +37,7 @@ $$ \newcommand{\set}[1]{\left\{ #1 \right\}} $$
 
 Applying the factors as a global rotation sequence:  Rotating $\mathbf{z}$ by any rotation about $\mathbf{z}$ leaves it in place.  Then rotating about any axis in the $\set{\mathbf{xy}}$-plane sends it to $\mathbf{p}$.
 
+
 <br>
 
 ### Algebra brushstrokes

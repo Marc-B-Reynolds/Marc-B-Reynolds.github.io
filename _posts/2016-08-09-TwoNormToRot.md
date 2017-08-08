@@ -3,7 +3,7 @@ layout:       post
 title:        Minimum magnitude angle rotation between two normals
 tagline:      
 categories:   [quaternions]
-tags:         [rotation, normal, graphics]
+tags:         [rotations, normal, graphics]
 description:  Given two normals find the rotation from one to the other
 ---
 
