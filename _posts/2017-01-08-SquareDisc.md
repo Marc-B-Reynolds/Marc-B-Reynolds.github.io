@@ -499,10 +499,21 @@ The area distortion:
 <div id="bheat" style="width:100%"></div>
 
 \\
-asf
+For the disc to square map, start with a common term:
 
 $$
 t = \sqrt{u^2+v^2}
+$$
+
+\\
+then the map is:
+
+$$
+\left(x,~y \right) =
+\begin{cases}
+\left(u \sqrt{\frac{3t}{t+\abs{v}}}, ~\text{sgn}\left(v\right)t \right)  & \frac{5}{4}v^2 \geq u^2 \\[2ex]
+\left(\text{sgn}\left(u\right)t,~ \frac{3}{2}v\right)  & \frac{5}{4}v^2 < u^2
+\end{cases}
 $$
 
 
