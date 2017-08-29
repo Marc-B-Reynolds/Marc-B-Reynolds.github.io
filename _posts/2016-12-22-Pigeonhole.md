@@ -1,13 +1,15 @@
 ---
 layout: post
 title:  Pigeonhole principle bias
+tagline: and mapping integer sets
 categories: [math]
 tags : [bias, distribution, random]
 description : a note on bias introduced by the pigeonhold principle
 plotly: true
+revision: 20170809
 ---
 
-This is a quick note about how the Pigeonhole Principle applies to mapping integers to a smaller set.
+This is a quick note about how the Pigeonhole Principle applies to mapping integers to a smaller set. One usage is generating unbiased uniform random integers.
 
 Imagine we have a machine which has a large mixing bin.  Into this machine we put $b$ physically identical balls except one is blue and the remainder are red.  After sufficient mixing the balls drop into a long narrow transparent tube in single file.  Connected to the tube is a chute that can distribute the balls to $n$ bins and the machine is set-up to use some method to distribute the balls equally into the bins (of course numbered from 0 to $n-1$). After the distribution is complete we call the bin with the blue ball the result.
 
@@ -44,14 +46,17 @@ Math brushstrokes
 \\
 Given $b$ balls and $n$ bins with $b \geq n$, then each bin receives at least $a$ balls:
 
-$$ 
+$$ \begin{equation} \label{a}
 a = \left\lfloor \frac{b}{n} \right\rfloor 
-$$
+\end{equation} $$ 
 
 \\
 We have $e$ excess balls:
 
-$$ e = b \bmod n = b-n \left\lfloor \frac{b}{n} \right\rfloor $$
+$$ \begin{equation} \label{excess}
+e = b \bmod n = b-n \left\lfloor \frac{b}{n} \right\rfloor 
+\end{equation}
+$$
 
 \\
 which is zero if $b$ is equally divisible by $n$.  So we have $\left(n-e\right)$ bins with $a$ balls and $e$ bins with $\left(a+1\right)$.  We can express the bias (like the 11 bin example above) as:
@@ -99,7 +104,7 @@ $$ \begin{equation} \label{dibias}
 \end{equation} $$
 
 \\
-Solving $\eqref{dibias}$ for equals $k$:
+Solving ${f_i}^\prime\left(x\right) = k$ for $x$:
 
 $$ \begin{equation} \label{kdibias}
   \frac{1}{\sqrt{i+i^2+\frac{k}{2}}}
@@ -129,8 +134,25 @@ You have fixed $b$ and variable $n \leq n_{\text{max}}$
 
 $$ \text{bias} \leq \frac{n_{\text{max}}}{2b} $$
 
-One potential interest here is random number generation.  The typical (a.k.a all I've ever seen) rejection method is implemented using two modulo instructions.  One is removable for fixed $n$ but the other must remain for that method.  Too bad we could use something else.  Like lead-zero counting...humm...
+\\
+Another converative measure is a "stair-step" function that bounds the bias. Determine the furthest to right lobe of the range: $i = 1+w-\{LeadZeroCount}\left(n_{max}\right)$, where $w$ is the number of bits in working word.
 
+The slope is zero when $\eqref{dibias}$ is zero:
+
+$$ x = \left(i+i^2\right)^{-\frac{1}{2}} $$
+
+\\
+Plugging this back into the piecewise bias function yields:
+
+$$ 2\left(1+2\left(i-\sqrt{i\left(i+1\right)}\right) \right) $$
+
+\\
+then the first 128 lobe peaks are:
+
+
+<div id="plot" style="width:100%"></div>
+
+<br>
 
 <script>
 
@@ -208,5 +230,21 @@ var ex1layout = {
 
 Plotly.newPlot('ex1', ex1data, ex1layout);
 
+var plotData;
+
+{
+  var ptwo=1;
+  var cX=[];
+  var cY=[];
+  for (var x=1; x<=128; x++) { 
+    cX.push(x); 
+	cY.push(2*(1+2*(x-Math.sqrt(x+x*x))));
+	ptwo *= 2;
+  }
+  plotData = [{x:cX, y:cY, type:'scatter', mode:'markers', marker:{size:4}}];
+}
+
+var layout = {title: 'max bias', yaxis:{type: 'log', hoverformat:'e' } };
+Plotly.newPlot('plot', plotData, layout, {showLink:false });
 
 </script>
