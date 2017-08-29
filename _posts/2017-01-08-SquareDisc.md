@@ -428,6 +428,86 @@ and the heat map of area distortion. Recall equal area value is $\frac{\pi}{4} \
 <div id="aheat" style="width:100%"></div>
 
 
+<br>
+
+------
+
+Approximate area preserving (variant 2)
+------
+
+\\
+In another post[^ballcube] we have a volume preserving map between cylinder and sphere which breaks the space into two parts: point inside and outside of the embedded conic. We can take a planar slice through the cylinder's axis to form a square to disc map.  Reducing the 3D equation to the slice gives:
+
+$$
+\left(u,~v \right) =
+\begin{cases}
+\left(x \sqrt{1-\frac{4}{9}\frac{y^2}{x^2}},~\frac{2}{3}y \right)  & x^2 \geq y^2 \\[2ex]
+\left(x \sqrt{\frac{2}{3}-\frac{1}{9}\frac{x^2}{y^2}},~ y-\frac{1}{3}\frac{x^2}{y}\right)  & x^2  < y^2
+\end{cases}
+$$
+
+\\
+We can rewrite the $x^2 \geq y^2$ case to eliminate division (which can be zero) as:
+
+$$
+t = \frac{2}{3}y \\
+\left( \text{sgn}\left(x\right) \sqrt{x^2-t^2}, ~t\right)
+$$
+
+\\
+and re-express the $x^2<y^2$ case as:
+
+$$
+t = \frac{x}{3y} \\
+\left( x\sqrt{\frac{2}{3}-t^2}, ~y-xt\right)
+$$
+
+\\
+The Jacobian for for the cases are:
+
+$$
+\left(
+\begin{array}{cc}
+ \frac{3}{\sqrt{9-\frac{4 y^2}{x^2}}} &
+ -\frac{4y}{3 x \sqrt{9-\frac{4 y^2}{x^2}}} \\
+ 0 &
+ \frac{2}{3} \\
+\end{array}
+\right)
+$$
+
+$$
+\left(
+\begin{array}{cc}
+ \frac{6y^2-2x^2}{3\sqrt{6-y^2\frac{x^2}{y^2}}} & \frac{x^3}{3y^3\sqrt{6-\frac{x^2}{y^2}}} \\
+ -\frac{2x}{3y} & 1+\frac{x^2}{3y^2} \\
+\end{array}
+\right)
+$$
+
+\\
+with the determinates:
+
+$$
+\frac{2}{\sqrt{9-\frac{4y^2}{x^2}}} \\
+\frac{2}{\sqrt{6-\frac{x^2}{y^2}}} 
+$$
+
+\\
+The area distortion:
+
+<div id="bheat" style="width:100%"></div>
+
+\\
+asf
+
+$$
+t = \sqrt{u^2+v^2}
+$$
+
+
+<br>
+
 ------
 
 References and Footnotes
@@ -449,7 +529,7 @@ References and Footnotes
 
 [^nowell]:  *"Mapping a Square to a Circle"*, Philip Nowell, 2005. ([link](http://mathproofs.blogspot.fr/2005/07/mapping-square-to-circle.html))
 
-
+[^ballcube]: *Cube/cylinder/ball mappings*, ([post]({{site.base}}/math/2017/01/27/CubeBall.html))
 
 
 <script>
@@ -468,12 +548,14 @@ var sheatZ = new Array(size);
 var eheatZ = new Array(size);
 var fheatZ = new Array(size);
 var aheatZ = new Array(size);
+var bheatZ = new Array(size);
 
 for(var i=0; i<size; i++) {
  sheatZ[i] = new Array(size);
  eheatZ[i] = new Array(size);
  fheatZ[i] = new Array(size);
  aheatZ[i] = new Array(size);
+ bheatZ[i] = new Array(size);
 }
 
 for(var j=0; j<size; j++) {
@@ -487,10 +569,13 @@ for(var j=0; j<size; j++) {
     eheatZ[j][i] = (2.0-norm)/(Math.sqrt(2.0-x2)*Math.sqrt(2.0-y2)+ulp1);
     fheatZ[j][i] = 1.0-(2.0*x2*y2)/(norm+ulp1);
 	
-	if (x2 > y2)
+	if (x2 > y2) {
       aheatZ[j][i] = 1.0/Math.sqrt(2.0-y2/x2);
-    else
+      bheatZ[j][i] = 2.0/Math.sqrt(9.0-4*y2/x2);
+    } else {
       aheatZ[j][i] = 1.0/Math.sqrt(2.0-x2/(y2+ulp1));
+      bheatZ[j][i] = 2.0/Math.sqrt(6.0-x2/(y2+ulp1));
+    }
   }
 }
 
@@ -574,6 +659,7 @@ var sheatData = makeData(sheatZ);
 var eheatData = makeData(eheatZ);
 var fheatData = makeData(fheatZ);
 var aheatData = makeData(aheatZ);
+var bheatData = makeData(bheatZ);
 
 var heatLayout = { height: 600, width: 620 };
 
@@ -581,6 +667,7 @@ Plotly.newPlot('sheat', sheatData, heatLayout, options);
 Plotly.newPlot('eheat', eheatData, heatLayout, options);
 Plotly.newPlot('fheat', fheatData, heatLayout, options);
 Plotly.newPlot('aheat', aheatData, heatLayout, options);
+Plotly.newPlot('bheat', bheatData, heatLayout, options);
 
 var axisDef = { showgrid: false, showline: false, zeroline: false, range:[-1.2, 1.2], fixedrange: true };
 var markDef = { size:4, color:'6565FF'};
@@ -595,6 +682,7 @@ var frames = [
   {name: 'concentric', data: [{x: [], y: []}]},
   {name: 'elliptic',   data: [{x: [], y: []}]},
   {name: 'aea',        data: [{x: [], y: []}]},
+  {name: 'aea2',       data: [{x: [], y: []}]},
 ];
 
 
@@ -661,11 +749,17 @@ function buildPointSets()
 	  
       // approx equal area
       if (x2 > y2) {
+	    var t = 2/3*y;
         frames[5].data[0].x[i] = x*Math.sqrt(1.0-.5*(y2/x2));
         frames[5].data[0].y[i] = y*sqrt2o2;
+        frames[6].data[0].x[i] = sgn(x)*Math.sqrt(x2-t*t);
+        frames[6].data[0].y[i] = t;
        } else {
+	    var t = x/(3*y);
         frames[5].data[0].x[i] = x*sqrt2o2;
         frames[5].data[0].y[i] = y*Math.sqrt(1.0-.5*(x2/(y2+ulp1)));
+        frames[6].data[0].x[i] = x*Math.sqrt(2/3-t*t);
+        frames[6].data[0].y[i] = y-x*t;
        }
 
       i++;
@@ -694,6 +788,7 @@ Plotly.plot('graph', [{
       {method: 'animate', args: [['stretch']],    label: 'stretch'},
       {method: 'animate', args: [['concentric']], label: 'concentric'},
       {method: 'animate', args: [['aea']],        label: 'aea'},
+      {method: 'animate', args: [['aea2']],       label: 'aea2'},
       {method: 'animate', args: [['squircle']],   label: 'squircle'},
       {method: 'animate', args: [['elliptic']],   label: 'elliptic'}
     ]
