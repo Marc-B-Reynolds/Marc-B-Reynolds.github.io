@@ -62,7 +62,7 @@ Using the first one we now have:
 static inline uint32_t mod_inverse_2(uint32_t a)
 {
   uint32_t x,t;
-  x = (a*a)+a-1;     //  4 bits
+  x = (a*a)+a-1;     //  4 bits (For serial comment below: a*a & a-1 are independent) 
   x *= 2-a*x;        //  8
   x *= 2-a*x;        // 16
   x *= 2-a*x;        // 32
