@@ -77,7 +77,7 @@ Dumas carries through with the derivation (SEE: Section 3.3) to produce algorith
 {% highlight c %}
 static inline uint32_t mod_inverse_3(uint32_t a)
 {
-  uint32_t u = 2-i;
+  uint32_t u = 2-a;
   uint32_t i = a-1;
   i *= i; u *= i+1;
   i *= i; u *= i+1;
