@@ -7,7 +7,7 @@ description:  A short note on computing the modular multiplicative inverse of an
 ---
 
 \\
-I wanted to mention computing the multiplicative inverse via Newton's iteration in a post and to my suprise I couldn't find a simple overview which is publically available.  (We interrupt this post in final edit with just such a thing from Daniel Lemire[^lemire]).  For a formal presentation this 2016 paper[^newton]  by Jean-Guillaume Dumas is pretty concise and easy to understand. Note I'll use mod as an operator instead of for congruence and will only talk about power-of-two modulus (linked paper covers generalization). First let's define the function.  Given an odd integer $a$ we want to find integer $x$ such that:
+I wanted to mention computing the multiplicative inverse via Newton's iteration in a post and to my suprise I couldn't find a simple overview which is publically available.  (We interrupt this post in final edit with just such a thing from Daniel Lemire[^lemire]).  For a formal presentation this 2012 paper[^newton]  by Jean-Guillaume Dumas is pretty concise and easy to understand. Note I'll use mod as an operator instead of for congruence and will only talk about power-of-two modulus (linked paper covers generalization). First let's define the function.  Given an odd integer $a$ we want to find integer $x$ such that:
 
 $$ \begin{equation}
 \left(a~x\right) \bmod 2^\beta = 1
@@ -50,10 +50,10 @@ static inline uint32_t mod_inverse_1(uint32_t a)
 \\
 Notice if we instead had 4 bits for our initial value we'd have after each successive step: $\left(8,16,32,64,128,\ldots\right)$ bits so we'd need only three iterations.  So if we can get an extra bit for cheaper than the cost of one step then we're ahead. There are two quadradic solutions:
 
-$$
-a + a^2 - 1 \\
-a - a^2 + 1
-$$
+$$ \begin{eqnarray}
+a^{-1} \bmod 16 & = & \left(a + a^2 - 1\right) \bmod 16 \\
+                & = & \left(a - a^2 + 1\right) \bmod 16
+\end{eqnarray}$$
 
 \\
 Using the first one we now have:
@@ -110,7 +110,7 @@ References and Footnotes
 ------
 
 [^nrmethod]:   *"Wikipedia: Newton's method"*, ([page](http://en.wikipedia.org/wiki/Newton%27s_method))
-[^newton]:     *"On Newton-Raphson iteration for multiplicative inverses modulo prime powers"*, Jean-Guillaume Dumas 2016 ([PDF](http://arxiv.org/pdf/1209.6626v2.pdf))
+[^newton]:     *"On Newton-Raphson iteration for multiplicative inverses modulo prime powers"*, Jean-Guillaume Dumas 2012 ([PDF](http://arxiv.org/pdf/1209.6626v2.pdf))
 [^hensel]:     *"Wikipdia: Hensel's lemma"*   ([page](https://en.wikipedia.org/wiki/Hensel%27s_lemma))
 [^lemire]:     *"Computing the inverse of odd integers"*, Daniel Lemire 2017 ([page](http://lemire.me/blog/2017/09/18/computing-the-inverse-of-odd-integers/))
 [^looks]:      AKA I've spent zero time really thinking about performance here.
