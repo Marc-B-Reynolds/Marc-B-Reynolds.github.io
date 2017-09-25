@@ -281,9 +281,7 @@ Now a sequence of half-spheres projections showing top and side.  Simple reconst
 ![CayleyHS]({{site.base}}/assets/figures/qnormal/CayleyHS.jpg   'Cayley half-sphere '){: .center-image }
 ![BreusingHS]({{site.base}}/assets/figures/qnormal/BreusingHS.jpg 'Breusing half-sphere '){: .center-image }
 
-
 <br>
-
 
 ------
 
@@ -293,6 +291,6 @@ References and Footnotes
 [^lambert]:     Lambert azimuthal equal-area projection [wikipedia](http://en.wikipedia.org/wiki/Lambert_azimuthal_equal-area_projection)
 [^complexfunc]: []({{site.base}}/quaternions/2016/05/17/QuatAsComplex.html#complexFunction)
 [^halfAngle]: Quaternion half/double angle and Cayley transforms ([local post]({{site.base}}quaternions/2016/05/30/QuatHDAngleCayley.html))
-[^qrot]: Quaternion rotation visualization ([local post]({{site.base/quaternions/2016/05/17/VisualizeQuatRot.html}}))
-[^uniform]: Uniform points on disc, circle and sphere ([local post]({{site.base/distribution/2016/11/28/Uniform.html}}))
+[^qrot]: Quaternion rotation visualization ([local post]({{site.base}}/quaternions/2016/05/17/VisualizeQuatRot.html))
+[^uniform]: Uniform points on disc, circle and sphere ([local post]({{site.base}}/distribution/2016/11/28/Uniform.html))
 [^altForm]: This can also be expressed as: $$\mathbf{a}~f\left(\mathbf{a}^{*}\mathbf{b}\right)$$ since the product generally doesn't commute.
