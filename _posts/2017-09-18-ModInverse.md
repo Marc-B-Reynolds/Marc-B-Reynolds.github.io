@@ -48,7 +48,7 @@ static inline uint32_t mod_inverse_1(uint32_t a)
 {% endhighlight %}
 
 \\
-Notice if we instead had 4 bits for our initial value we'd have after each successive step: $\left(8,16,32,64,128,\ldots\right)$ bits so we'd need only three iterations.  So if we can get an extra bit for cheaper than the cost of one step then we're ahead. There are two quadradic solutions:
+Notice if we instead had 4 bits for our initial value we'd have after each successive step: $\left(8,16,32,64,128,\ldots\right)$ bits so we'd need only three iterations.  So if we can get an extra bit for cheaper than the cost of one step then we're ahead. There are two quadradic solutions[^quadradic] :
 
 $$ \begin{eqnarray}
 a^{-1} \bmod 16 & = & \left(a + a^2 - 1\right) \bmod 16 \\
@@ -61,11 +61,26 @@ Using the first one we now have:
 {% highlight c %}
 static inline uint32_t mod_inverse_2(uint32_t a)
 {
-  uint32_t x,t;
+  uint32_t x;
   x = (a*a)+a-1;     //  4 bits (For serial comment below: a*a & a-1 are independent) 
   x *= 2-a*x;        //  8
   x *= 2-a*x;        // 16
   x *= 2-a*x;        // 32
+  return x;
+}
+{% endhighlight %}
+
+\\
+Another paper[^mmul] mentions a method for initial value good to 5 bits:
+
+{% highlight c %}
+uint32_t mod_inverse_3(uint32_t a)
+{
+  uint32_t x;
+  x = 3*a ^ 2;       //  5 bits
+  x *= 2-a*x;        // 10
+  x *= 2-a*x;        // 20
+  x *= 2-a*x;        // 40 -- 32 low bits
   return x;
 }
 {% endhighlight %}
@@ -75,7 +90,7 @@ static inline uint32_t mod_inverse_2(uint32_t a)
 Dumas carries through with the derivation (SEE: Section 3.3) to produce algorithm 3, which reworked looks like:
 
 {% highlight c %}
-static inline uint32_t mod_inverse_3(uint32_t a)
+static inline uint32_t mod_inverse_4(uint32_t a)
 {
   uint32_t u = 2-a;
   uint32_t i = a-1;
@@ -99,8 +114,6 @@ The first two variants are almost identical in structure so it looks[^looks] lik
      7: u *= t4
      (done)
 
-
-
 <br>
 
 ------
@@ -114,6 +127,8 @@ References and Footnotes
 [^hensel]:     *"Wikipdia: Hensel's lemma"*   ([page](https://en.wikipedia.org/wiki/Hensel%27s_lemma))
 [^lemire]:     *"Computing the inverse of odd integers"*, Daniel Lemire 2017 ([page](http://lemire.me/blog/2017/09/18/computing-the-inverse-of-odd-integers/))
 [^looks]:      AKA I've spent zero time really thinking about performance here.
+[^quadradic]:  I just brute forced this in Mathematica.
+[^mmul]:       *"Efficient long division via Montgomery multiply"*, Ernst W. Mayer, 2016 ([PDF](http://arxiv.org/abs/1303.0328))
 
 
 
