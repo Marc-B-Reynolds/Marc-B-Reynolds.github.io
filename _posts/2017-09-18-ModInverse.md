@@ -103,7 +103,7 @@ static inline uint32_t mod_inverse_4(uint32_t a)
 {% endhighlight %}
 
 \\
-The first two variants are almost identical in structure so it looks[^looks] like an architectural toss up on performance.  The third I find quite interesting.  The other two require every operation to be performed in serial order...not so for the third.  Renamed and with ops that can happen at the same time on the same line.
+The first three variants are almost identical in structure so it looks[^looks] like an architectural toss up on performance.  The last I find quite interesting.  The other two require every operation to be performed in serial order...not so for the third.  Renamed and with ops that can happen at the same time on the same line.
 
      1: u  = 2-a    i0 = a-1
      2: i1 = i0*i0
@@ -113,6 +113,10 @@ The first two variants are almost identical in structure so it looks[^looks] lik
      6: t4 = i4+1              u *= t3
      7: u *= t4
      (done)
+	 
+	 
+\\
+The Dumas version cannot drop any of the iteration steps, but all of the other can.  This is potentially interesting if there's a known bit-bound on input values.  We have choices between 3, 4 and 5 inital bits and must perform at least one step.
 
 <br>
 
