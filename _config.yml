@@ -21,6 +21,7 @@ defaults:
       comments:    true
       hide:        false
       plotly:      false
+      noTeX:       false
 
 description:  blog-a-like
 
