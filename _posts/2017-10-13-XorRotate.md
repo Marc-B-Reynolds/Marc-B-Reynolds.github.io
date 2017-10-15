@@ -62,7 +62,7 @@ M = I + \sum\limits_{i=1}^n C^{k_i} \label{genM}
 \end{equation} $$
 
 \\
-which is invertible if $i$ is even.  Transforms like:
+which is invertible if $i$ is even. Transforms like:
 
 $$ \begin{equation} 
 C^a + C^b + C^c \label{rot3}
@@ -77,7 +77,7 @@ C^a\left(I + C^{b-a} + C^{c-a}\right) \label{rot3f}
 \end{equation} $$
 
 \\
-We simply have a composition of $\eqref{M}$ followed by a bit-rotation.  As code
+We simply have a composition[^composition] of $\eqref{M}$ followed by a bit-rotation.  As code
 
 * $\eqref{rot3}$ `rot(x,a)^rot(x,b)^rot(x,c)` 
 * $\eqref{rot3f}$ `rot(x^rot(x,b-a)^rot(x,c-a), a)`
@@ -105,7 +105,6 @@ Some notes on equation manipulation:
 * Although working with matrix equations we limited to a commutative sub-algebra: $M_0~M_1 = M_1~M_0$.
 * Powers of $C$ modulo reduce:  $C^{k} = C^{k\bmod 32}$
 * Leading coefficients drop since we're working in $\mathbb{F}_2$:  $n~C^k$ = $\left(n \bmod 2\right) C^k$.  Or more simply even become zero and odd become one.
-
 
 <br>
 
@@ -208,7 +207,7 @@ Inverse Tables
 \\
 Since I tossed together a Mathematica script to mechanically perform the reductions mentioned above I might as well paste the 465 two rotation equations. This script does not attempt to generate a minimal inverse.  Check any results since I could have screwed-up in the cut/paste/mark-up phase (call it about 5 seconds to exhastively test one pair). 
 
-The tables entries ted as the power of $C$ to be summed.  Example: $\left(0,1,17\right) = I+C^1+C^{17}$.
+The tables entries are a list of the powers of $C$ to be summed.  Example: $\left(0,1,17\right) = I+C^1+C^{17}$.
 
 \\
 There are 15 self-inverses (involutions, so period is 2):
@@ -663,6 +662,7 @@ References and Footnotes
 [^qsymbol]:    Wikipedia: Q-Pochhammer ([page](http://en.wikipedia.org/wiki/Q-Pochhammer_symbol))
 [^arndt]:      *"Matters Computational"*, Jorg Arndt, 2010 ([page](http://www.jjj.de/fxt/))
 [^circulant]:  Wikipedia: Circulant matrix ([page](https://en.wikipedia.org/wiki/Circulant_matrix#Properties))
+[^composition]:  A composition of bijections is a bijection.
 
 
 <script>
