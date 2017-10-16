@@ -27,9 +27,10 @@ The table is intended to rather minimal.  Some forward notes:
 |$\mathbb{Z} $  | `x += x << k`     | `x *= mod_inverse(1+(1<<k))` | 1,2 |
 |$\mathbb{Z} $  | `x -= x << k`     | `x *= mod_inverse(1-(1<<k))` | 1,2 |
 |$\mathbb{F}_2$ | `x ^= x >> k`     |  --- see below               | 3 |
-|$\mathbb{F}_2$ | `x ^= x << k`     |  --- see below               | 3 |
+|$\mathbb{F}_2$ | `x ^= x << k`     |  --- see below               | 3,5 |
 |$\mathbb{F}_2$ | `x = rotl(x,k)`   | `x = rotr(x,k)`              | 4 |
 |$\mathbb{F}_2$ | `x = permute(x)`  |  --- see below               | 3,4 |
+|$\mathbb{F}_2$ | ---  various      |  --- see below               | 6   |
 
 <br>
 
@@ -37,6 +38,8 @@ The table is intended to rather minimal.  Some forward notes:
 2. Ok the forward operations are multiplication.
 3. See below for inverse function.
 4. Bit rotations are a special case of bit permutations. Other examples include byte-swaps and bit reversals.
+5. Special case of "carryless multiplication".
+6. See below.
 
 Since all of these operations are invertible[^bijection], any composition of them is likewise invertible.  So if we perform three in a row:
 
@@ -54,6 +57,9 @@ x &=& f^{-1}_0\left(f^{-1}_1\left(f^{-1}_2\left(x'\right)\right)\right) \\
    &=& \left(f^{-1}_0 \circ f^{-1}_1 \circ f^{-1}_2\right)\left(x'\right) \\
    &=& \left(f_2 \circ f_1 \circ f_0\right)^{-1}\left(x'\right)
 \end{eqnarray*} $$
+
+\\
+Numbers aside: The total number of invertible functions is equal to the number of permutations.  For a bit-width of $\beta$ there are $2^{\beta}!$ unique invertible functions.  A big number but most are boring and worse not fast to compute.
 
 <br>
 
@@ -90,9 +96,9 @@ $$ M^{-1}~M = M^n \implies M^{-1} = M^{n-1} $$
 
 
 \\
-Aside: If the dimensions of our matrix is $d$ (using example of $d=32$) then there are $2^{d^2}$ matrices (so example is $2^{1024}$).  The number of invertible matrices is: 
+Aside: If the dimensions of our matrix is $\beta$ (using example of $\beta=32$) then there are $2^{\beta^2}$ matrices (so example is $2^{1024}$).  The number of invertible matrices is: 
 
-$$\prod _{i=0}^{n-1} \left(2^d-2^i\right) = 2^{d^2}\text{QPochhammer}\left(2^{-d}, ~2, ~d\right)$$
+$$\prod _{i=0}^{n-1} \left(2^\beta-2^i\right) = 2^{\beta^2}\text{QPochhammer}\left(2^{-\beta}, ~2, ~\beta\right)$$
 
 \\
 The percentage of invertible matrices approaches a limit of 28.8788%. (Mathematica told me about the RHS above.  QPochhammer[^qsymbol] is news to me.)
@@ -102,7 +108,7 @@ The percentage of invertible matrices approaches a limit of 28.8788%. (Mathemati
 
 ### Bit permutations
 
-Bit permutations can be represented by, well, a permutation matrix[^permmatrix] which has exactly one '1' entry in each column and row and everything else is zero. Permutation matrices are orthogonal so if $P$ is a permutation matrix then $P^{-1} = P^{T}$.  The identity matrix $I$ qualifies.  Bit-twiddling resources are loaded with examples, like the public available *"Matters Computational"*[^arndt].  Since I mentioned numbers before, we have $d!$ of these (big, but very small compared to total number of invertible).  Some examples:
+Bit permutations can be represented by, well, a permutation matrix[^permmatrix] which has exactly one '1' entry in each column and row and everything else is zero. Permutation matrices are orthogonal so if $P$ is a permutation matrix then $P^{-1} = P^{T}$.  The identity matrix $I$ qualifies.  Bit-twiddling resources are loaded with examples, like the public available *"Matters Computational"*[^arndt].  Since I mentioned numbers before, we have $\beta!$ of these (big, but very small compared to total number of invertible).  Some examples:
 
 * Identity matrix
 <p align="center"><canvas id="ident" width="161" height="161"></canvas></p>
@@ -110,7 +116,7 @@ Bit permutations can be represented by, well, a permutation matrix[^permmatrix] 
 <p align="center"><canvas id="brev" width="161" height="161"></canvas></p>
 * Various other *swap* operations, notably *byteswap* (shown below), which are also involutions.
 <p align="center"><canvas id="bswap" width="161" height="161"></canvas></p>
-* Rotating left can be represented by a circulant matrix[^circulant], specifically the cyclic-permutation matrix let's call that $C$. Raising $C$ to a positive integer $k$ is a left rotate by $k$, negative $k$ becomes right rotate and $C^{d} = I$ (any $k \bmod d = 0$ as well, showing order). 
+* Rotating left can be represented by a circulant matrix[^circulant], specifically the cyclic-permutation matrix let's call that $C$. Raising $C$ to a positive integer $k$ is a left rotate by $k$, negative $k$ becomes right rotate and $C^{\beta} = I$ (any $k \bmod \beta = 0$ as well, showing order). 
 <p align="center"><canvas id="rot" width="161" height="161"></canvas></p>
 <p align="center"><code class="highlighter-rouge" id="rott">PDEP</code></p>
 
@@ -121,7 +127,7 @@ Bit permutations can be represented by, well, a permutation matrix[^permmatrix] 
 
 ### Bit shifts
 
-Given the stated conventions then a right shift of one bit is represented by an upper shift matrix[^shiftm] let's call that $R$ and a left shift of one bit by lower shift matrix $L$. These alone are not invertible since we have information loss of the shifted away bits.  Raise each to positive integer power `k` is a shift by `k` bit positions and if $k \geq d$ the result becomes zero (your computer language may not like this in code). These two matrices are mutual transposes.
+Given the stated conventions then a right shift of one bit is represented by an upper shift matrix[^shiftm] let's call that $R$ and a left shift of one bit by lower shift matrix $L$. These alone are not invertible since we have information loss of the shifted away bits.  Raise each to positive integer power `k` is a shift by `k` bit positions and if $k \geq \beta$ the result becomes zero (your computer language may not like this in code). These two matrices are mutual transposes.
 
 
 ### Xorshifts
@@ -131,7 +137,7 @@ The right xorshift: `x = x ^ (x>>k)` which RHS translates into $x + R^k~x = \lef
 $$ M = \left(I + R^k\right) $$
 
 \\
-if $k\geq d$ then $M=I$.
+if $k\geq \beta$ then $M=I$.
 
 <p align="center"><canvas id="xsr" width="161" height="161"></canvas></p>
 <p align="center"><code class="highlighter-rouge" id="xsrt">PDEP</code></p>
@@ -202,10 +208,82 @@ $$ \begin{eqnarray*}
 which give the 'bit-doubling' operation we used above for the inverse.  Combine this with the Cayley's theorem result and we can directly form the inverse.
 
 
- $$ M^{-1} = M^{n-1} = \left(I + R^k\right)\left(I + R^k\right)^2\left(I + R^k\right)^4\ldots $$
+ $$ M^{-1} = M^{n-1} = \left(I + R^k\right)\left(I + R^{2k}\right)\left(I + R^{4k}\right)\ldots $$
 
 \\
-Everything said about right xorshift apply to left.
+I go into the details a bit more in the companion XorRotate post[^xorrot].  Everything said about right xorshift apply to left.
+
+<br>
+
+### Carryless multiplies and their inverses
+
+\\
+Carryless multiplies opcodes are now[^lowlatency] fast enough to be usable on Intel-a-likes.  Let's just jump in with a quick foolishly naive software implementation for 32x32 mod 2^32:
+
+
+{% highlight c %}
+// Don't do this at home: intended for clarity
+// PCLMUL* opcodes
+uint32_t cl_mul_32(uint32_t a, uint32_t b)
+{
+  uint32_t r = 0;
+
+  while (b != 0) {
+    if (b & 1) { r ^= a; } a <<= 1; b >>= 1;
+  }
+
+  return r;
+}
+{% endhighlight %}
+
+\\
+If we were to change `r ^= a` to `r += a` we'd have a really bad integer product flipping to long multiplication in modulo $\mathbb{Z}$ from modulo $\mathbb{F}_2$ (where addition is XOR).  If we were to fix either to a constant (let's choose `b`) then we could expand this based on the bits of `b` which are set: `(x<<b0)^(x<<b1)...`  where `bn` is the position of the n<sup>th</sup> set bit.  You might be shocked to discover that if the lowest bit is set then this carryless product has a multiplicative inverse.  The forward transform in matrix would then look like:
+
+
+$$
+M = I + L^{b_1} + L^{b_2} + \ldots 
+$$
+
+\\
+are now old-friend the left xorshift. And to find a generic inverse we simply need to compute $M^{\beta-1}$.
+
+
+{% highlight c %}
+
+// slightly less painful forward version
+uint32_t cl_mul_32(uint32_t a, uint32_t b)
+{
+  __m128i v1 = _mm_cvtsi64_si128(a);
+  __m128i v2 = _mm_cvtsi64_si128(b);
+  __m128i r  = _mm_clmulepi64_si128(v1,v2, 0);
+  return (uint32_t)_mm_cvtsi128_si64(r);
+}
+
+// modulo multiplicative inverse of carryless multiplier 'k'
+// cl_mul_32(k, cl_mul_32_inv(k)) = 1 for all odd 'k'.
+uint32_t cl_mul_32_inv(uint32_t x)
+{
+  uint32_t r = x;             // M
+
+  // generate and compose: M^2,M^4,M^8,M^{16}
+  for (int i=0; i<4; i++) {
+    x = cl_mul_32(x,x);      // square previous power of M
+    r = cl_mul_32(r,x);      // compose
+  }
+
+  // returning M^{-1} = M^{31}
+  return r; 
+}
+{% endhighlight %}
+
+
+<br>
+
+### Others
+
+* Basics of XOR rotates are in another post[^xorrot].
+* AND XOR rotates (not motived yet)
+* CRC32-C (not motived yet..not even sure it's interesting)
 
 <br>
 
@@ -227,7 +305,8 @@ References and Footnotes
 [^qsymbol]:    Wikipedia: Q-Pochhammer ([page](http://en.wikipedia.org/wiki/Q-Pochhammer_symbol))
 [^arndt]:      *"Matters Computational"*, Jorg Arndt, 2010 ([page](http://www.jjj.de/fxt/))
 [^circulant]:  Wikipedia: Circulant matrix ([page](https://en.wikipedia.org/wiki/Circulant_matrix#Properties))
-
+[^xorrot]:     *Basic XOR-rotates and their inverse*, 2017 ([page]({{site.base}}/math/2017/10/13/XorRotate.html))
+[^lowlatency]: Carryless multiplies on Intel Haswell+ and AMD Jaguar+ microarchitecture. SEE: Fog's [tables](http://www.agner.org/optimize/instruction_tables.pdf)
 
 <script>
 
