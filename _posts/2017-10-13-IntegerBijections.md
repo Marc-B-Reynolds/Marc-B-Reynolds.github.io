@@ -245,7 +245,7 @@ M = I + L^{b_1} + L^{b_2} + \ldots
 $$
 
 \\
-are now old-friend the left xorshift. And to find a generic inverse we simply need to compute $M^{\beta-1}$.
+our now old-friend the left xorshift. And to find a generic inverse we simply need to compute $M^{\beta-1}$.
 
 
 {% highlight c %}
