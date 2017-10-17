@@ -13,7 +13,7 @@ This is a small table of reversible integer functions that can be implemented in
 The table is intended to rather minimal.  Some forward notes:
 
 * Mostly avoiding duplicate entries so no need to list the inverse functions seperately.
-* The *field* indicates the mathematical field were the operation is most easily expressed.  I'm using $\mathbb{Z}$ to indicate integers modulo some power of two[^integers] and $\mathbb{F_2}$ for informally bit-wise operations.
+* The *field* indicates the mathematical field where the operation is most easily expressed.  I'm using $\mathbb{Z}$ to indicate integers modulo some power of two[^integers] and $\mathbb{F_2}$ for informally bit-wise operations.
 
 <br>
 
@@ -372,8 +372,17 @@ function grid_draw_xsl(grid)
 
 function grid_clear(ctx,size)
 {
-  ctx.fillStyle = 'rgb(230,240,255)';
+  var e = (size-1)/5;
+  //ctx.fillStyle = 'rgb(230,240,255)';
+  //ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = 'rgb(255,255,255)';
   ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = 'rgb(230,240,255)';
+  for (var j=0; j<e; j++) {
+    for (var i=0; i<e; i++)  {
+      ctx.fillRect(5*i+1, 5*j+1, 4, 4);
+	}
+  }
 }
 
 function grid_draw(grid)
@@ -381,8 +390,9 @@ function grid_draw(grid)
   var ctx  = grid.ctx;
   var size = 5*grid.dim+1;
 
-  ctx.fillStyle = grid.bgfill;
-  ctx.fillRect(0, 0, size, size);
+  grid_clear(ctx,161);
+  //ctx.fillStyle = grid.bgfill;
+  //ctx.fillRect(0, 0, size, size);
   
   ctx.fillStyle = grid.fgfill;
   grid.fdraw(grid);
