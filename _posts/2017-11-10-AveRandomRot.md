@@ -22,8 +22,13 @@ Prelim
 ------
 
 \\
-Rehashing the same old stuff.  The set of all quaternions $\mathbb{H}$, excluding zero, can represent 3D rotations by the similarity transform.  The subset of quaternions representing the same rotation form a line through the origin (excluded).  Limiting ourselves to unit quaternions this line intersects the 4D sphere (3-sphere or $\mathbb{S}^3$) at two points $Q$ and $-Q$.  By further limiting ourselves to unit quaternions with positive (or zero) scalars then each point in this subset represents a unique 3D rotation.  So unit quaternions lie on $\mathbb{S}^3$ and we can represent all rotations by half of this sphere.  By a web-search or hitting up a math reference site we can finding the surface volume (or 3-dimensional cubic hyperarea if that's your thing) of the sphere which is $2\pi^2$, so the volume of our half sphere is $\pi^2$.  Gotta run through the math of this since we need the volume element.
+Rehashing the same old stuff.  The set of all quaternions $\mathbb{H}$, excluding zero, can represent 3D rotations by the similarity transform.  The subset of quaternions representing the same rotation form a line through the origin (excluded).  Limiting ourselves to unit quaternions this line intersects the 4D sphere (3-sphere or $\mathbb{S}^3$) at two points $Q$ and $-Q$.  By further limiting ourselves to unit quaternions with positive (or zero) scalars then each point in this subset represents a unique 3D rotation.  So unit quaternions lie on $\mathbb{S}^3$ and we can represent all rotations by half of this sphere.  By a web-search or hitting up a math reference site we can finding the surface volume (or 3-dimensional cubic hyperarea if that's your thing) of the sphere which is $2\pi^2$, so the volume of our half sphere is $\pi^2$.  Gotta run through the math of this since we need the volume element.  
 
+EDIT:
+* I should have checked [MathWorld](http://mathworld.wolfram.com/Hypersphere.html) for the volume element.
+* And searched [math.stackexchange](https://math.stackexchange.com/questions/464419/mean-value-of-the-rotation-angle-is-126-5%C2%B0) for average rotation.
+
+<br>
 
 ------
 
