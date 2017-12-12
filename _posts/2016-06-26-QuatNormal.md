@@ -224,7 +224,7 @@ $$
 \left( x,~y,~z \right) \rightarrow \frac{1}{1+z} \left(x,~y\right)
 $$
 
-$$ \left( x,~y \right) \rightarrow \left( \frac{2x}{1+x^2+y^2},~\frac{2y}{1+x^2+y^2},~\frac{2}{1+x^2+y^2}\right) $$
+$$ \left( x,~y \right) \rightarrow \left( \frac{2x}{1+x^2+y^2},~\frac{2y}{1+x^2+y^2},~\frac{2}{1+x^2+y^2}-1\right) $$
 
 <br>
 
