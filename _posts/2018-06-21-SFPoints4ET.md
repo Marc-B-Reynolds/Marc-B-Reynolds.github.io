@@ -11,9 +11,9 @@ plotly:       true
 I'm just tossing out some code for generating a *"Spherical Fibonacci point set"* on a spherical cap of height $h$ with some minimal notes:
 
 * Cap is oriented around $+\mathbf{z}$
-* Internal computation is incremental and performed in doubles to limit compounding of errors from skewing the distribution.
+* Internal computation is incremental and performed in doubles to limit compounding of errors from skewing the distribution. The assumption is $n$ is large.
 * Not generally suited for performance testing since the sequences of $z$ values is linear (assuming that matters)
-* The specific SFPS variant is skip logical element zero so doesn't produce $\bvec{0,0,1}$.
+* The specific SFPS variant is *NOT* skipping logical element zero which is typically the case.
 
 <br>
 
@@ -34,9 +34,9 @@ typedef struct {
 // h = height of cap (ex: half-sphere=1, full-sphere=2)
 void sf_walk_init(sf_walk_t* w, uint32_t n, float h)
 {
-  w->x = 1.0;
-  w->y = 0.0;
-  w->z = (n-1.0)/n;
+  w->x  = 1.0;
+  w->y  = 0.0;
+  w->z  = 1.0;
   w->dz = h/n;
 }
 
