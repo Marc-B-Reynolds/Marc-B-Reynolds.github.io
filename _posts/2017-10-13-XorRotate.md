@@ -3,11 +3,11 @@ layout:       post
 title:        Basic XOR-rotates and their inverse
 categories:   [math]
 tags:         [integer]
-description:  Simplified description of bijections formed only from XORs and shifts.
+description:  Simplified description of bijections formed only from XORs and bit rotations.
 ---
 
 \\
-A quick note on a class of invertible (bijective) integer functions composed solely from XOR and bit-shift operations. The handful of references I've run across seem to make things way more complicated than needed from my perspective.
+A quick note on a class of invertible (bijective) integer functions composed solely from XOR and bit-rotation operations. The handful of references I've run across seem to make things way more complicated than needed from my perspective.
 
 * Just assuming 32-bit integers but extends to other widths (but power-of-two only).
 * Using convention that a 32-bit integer `x` in matrix form is $x=\left(x_0,x_1,\ldots\right)^{T}$ where $x_0$ is the low bit.
@@ -145,7 +145,7 @@ with line-by-line commentary:
 This holds for the generalized version \eqref{genM}. By simply renaming the variables we can repeat this squaring process as much as we like.  So we have:
 
 $$ 
-M^{32} = I + C^{32a} + C^{32b} = M
+M^{32} = I + C^{32a} + C^{32b} = I
 $$
 
 \\
