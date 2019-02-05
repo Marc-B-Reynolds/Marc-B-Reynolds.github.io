@@ -59,7 +59,9 @@
       processEnvironments: false
     },
 
-    TeX: {
+   TeX: {
+      displayAlign: "left",
+       
       // show equation numbers
       equationNumbers: {
         autoNumber: "AMS"
@@ -68,7 +70,7 @@
       Macros: {
         abs:      ['\\left\\lvert #2 \\right\\rvert_{\\text{#1}}', 2, ""],
         abracket: ['{\\langle #1 \\rangle}', 1],
-        set:      ['{\\bigl #1 \\bigr}', 1],
+        pbracket: ['{\\bigl #1 \\bigr}', 1],
         bvec:     ['{\\lgroup #1 \\rgroup}', 1],
         func:     ['{#1 \\left( #2 \\right)}', 2]
       }
