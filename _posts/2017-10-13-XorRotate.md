@@ -62,7 +62,7 @@ M = I + \sum\limits_{i=1}^n C^{k_i} \label{genM}
 \end{equation} $$
 
 \\
-which is invertible if $i$ is even. Transforms like:
+which is invertible if $n$ is even. Transforms like:
 
 $$ \begin{equation} 
 C^a + C^b + C^c \label{rot3}
@@ -102,7 +102,7 @@ M = C^{k_0}\left(I + \sum\limits_{i=1}^n C^{k_i}\right)
 \\
 Some notes on equation manipulation:
 
-* Although working with matrix equations we limited to a commutative sub-algebra: $M_0~M_1 = M_1~M_0$.
+* Although working with matrix equations we are limited to a commutative sub-algebra: $M_0~M_1 = M_1~M_0$.
 * Powers of $C$ modulo reduce:  $C^{k} = C^{k\bmod 32}$
 * Leading coefficients drop since we're working in $\mathbb{F}_2$:  $n~C^k$ = $\left(n \bmod 2\right) C^k$.  Or more simply even become zero and odd become one.
 
@@ -144,18 +144,29 @@ with line-by-line commentary:
 \\
 This holds for the generalized version \eqref{genM}. By simply renaming the variables we can repeat this squaring process as much as we like.  So we have:
 
-$$ 
-M^{32} = I + C^{32a} + C^{32b} = I
-$$
+$$  \begin{eqnarray*}
+M^{32} &=& I + C^{32a} + C^{32b} \\
+       &=& 3I \\
+       &=& I
+\end{eqnarray*} $$
 
 \\
-which implies:
+By extension we now have a justifiction for the set of expressions with are invertible. Given $n$ terms we have:
+
+$$  \begin{eqnarray*}
+M^{32} &=& nI \\
+\end{eqnarray*} $$
+
+\\
+which reduces to $I$ if $n$ is odd and otherwise to zero and thus $n$ must be odd to be an invertible function. Returning to our example this implies:
 
 $$ \begin{eqnarray}
 M^{-1} & = & M^{31} \\
        & = & M~M^{2}~M^{4}~M^{8}~M^{16} \\
        & = & \left(I + C^a + C^b\right)\left(I + C^{2a} + C^{2b}\right)\left(I + C^{4a} + C^{4b}\right)\left(I + C^{8a} + C^{8b}\right)\left(I + C^{16a} + C^{16b}\right) \label{generic}
 \end{eqnarray} $$
+
+
 
 \\
 A generic inverse function (of `xor_rot2` above) is then:
