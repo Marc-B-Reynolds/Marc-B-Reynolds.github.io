@@ -151,7 +151,7 @@ M^{32} &=& I + C^{32a} + C^{32b} \\
 \end{eqnarray*} $$
 
 \\
-By extension we now have a justifiction for the set of expressions with are invertible. Given $n$ terms we have:
+By extension we now have a justifiction for the set of expressions which are invertible. Given $n$ terms we have:
 
 $$  \begin{eqnarray*}
 M^{32} &=& nI \\
