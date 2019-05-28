@@ -454,7 +454,8 @@ var etrace2 = { y: e3, x0:0, dx:1/100, name: 'Frisvad'};
 var edata   = [etrace0,etrace1,etrace2];
 
 var elayout = {
-  xaxis: {title: "RMS" }
+  xaxis: {title: "RMS" },
+  yaxis: {hoverformat: 'g', exponentformat: 'power' }
 };
 
 Plotly.newPlot('error', edata, elayout);

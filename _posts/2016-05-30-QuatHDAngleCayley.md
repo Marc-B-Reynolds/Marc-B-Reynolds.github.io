@@ -23,11 +23,11 @@ Preliminary stuff
 We generally work with quaternions $\left(\mathbb{H}\right)$ represented by four real values:
 
 $$ \begin{equation} \label{qxform}
-Q = a + \left(x,~y,~z\right) 
+Q = a + \bvec{x,~y,~z}
 \end{equation} $$
 
 \\
-Where I will call "$a$" the scalar part[^scalar] and $(x,y,z)$ the bivector part. For our purposes here we can consider a 3D bivector to be equivalent to a 3D vector.
+Where I will call "$a$" the scalar part[^scalar] and $\bvec{x,y,z}$ the bivector part. For our purposes here we can consider a 3D bivector to be equivalent to a 3D vector.
 
 We will also want to express a quaternion in terms of some implied unit bivector $\mathbf{u}$ $\left( \mathbb{S}^{2} \right) $ with implied magnitude $b$:
 
@@ -342,7 +342,7 @@ Bivector part
 {:#bivectorPart}
 
 \\
-None of these transforms effect the implied unit bivector $u$. Accounting for symmetry we can consider the unit bivector $u = (x,y,z)$ where $x\geq y\geq z \geq 0$, then we have:
+None of these transforms effect the implied unit bivector $u$. Accounting for symmetry we can consider the unit bivector $u = \bvec{x,y,z}$ where $x\geq y\geq z \geq 0$, then we have:
 <br>
 
 $$ \begin{eqnarray*}

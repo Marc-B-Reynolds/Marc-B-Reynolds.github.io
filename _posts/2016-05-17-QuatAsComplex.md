@@ -16,6 +16,7 @@ If you cannot follow the formalism or if it is making your eyes bleed too much, 
 $ \newcommand{\hcomplex}[1]{\mathbb{C}_{#1}} $
 $ \newcommand{\pwrap}[1]{\left( #1 \right)} $
 $ \newcommand{\set}[1]{\left\{ #1 \right\}} $
+$ \newcommand{\bvec}[1]{\lgroup #1 \rgroup} $
 
 ------
 
@@ -93,7 +94,7 @@ There is a plane that spans the line of reals and any non-real ($b\neq 0$) quate
 A quaternion can also be denoted as a coordinate in ${\mathbb{R}^4}$ :
 
 $$ \begin{equation} \label{qxform}
-Q = a + \left(x,~y,~z\right) 
+Q = a + \bvec{x,~y,~z}
 \end{equation} $$
 
 \\
