@@ -586,7 +586,7 @@ var traces3 = [trace2, trace5];
 
 var layout = {
   title:  'roundtrip angle error by rot angle',
-  yaxis: { range: [0.0, 0.00013] },
+  yaxis: { range: [0.0, 0.00013], hoverformat: 'g', exponentformat: 'power' },
   xaxis: { nticks: 20 },
   height: 500,
   width:  800
@@ -599,7 +599,7 @@ var layout2 = {
 };
 
 var layout3 = {
-  yaxis: { range: [0.0, 0.003] },
+  yaxis: { range: [0.0, 0.003], hoverformat: 'g', exponentformat: 'power' },
   xaxis: { nticks: 20 },
   height: 500,
   width:  800
