@@ -201,7 +201,32 @@ Possible solutions:
 * Don't care and structure the code to not deal with impossible situations.
 * Use a generator with larger $P$.
 * Don't use all the returned bits, such as XOR the top half with bottom half and use that half bit-width result.
-* Extension of previous: generate two values, XOR and use that result instead.
+
+<br>
+To add a pragmatic example let's look a hybrid method for binary32 using exactly one 64-bit random integer.
+
+{% highlight c %}
+// Given uniform 64-bit integer 'u' return a uniform float on [0,1)
+// * the interval [2^-40, 1) is dense (all representable values produced)
+// * the interval [0, 2^-40) is equidistantly (2^-64) populated
+
+float rng_pdense_f32(uint64_t u)
+{
+  uint32_t z = lzc_64(u);                   // change to (u|1) for intel pre LZCNT hardware
+
+  if (z <= 40) {
+    uint32_t e = 126-z;                     // compute the biased exponent
+    uint32_t m = ((uint32_t)u) & 0x7fffff;  // explict significand bits
+    return f32_from_bits(e<<23|m);          // construct the binary32
+  }
+  
+  // The probabilty of reaching here is 2^-40. There are as many points
+  // on this subinterval as the standard equidistance method produces
+  // across the entire output range.
+
+return 0x1.0p-64f*(float)((uint32_t)u);
+}
+{% endhighlight %}
 
 
 <br>
