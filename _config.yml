@@ -4,7 +4,7 @@ paginate: 10 # pagination based on number of posts
 paginate_path: "page:num"
 
 include:
-    extra
+    [extra]
 
 exclude:
   - "*/*~"
@@ -42,7 +42,9 @@ kramdown:
   input: GFM
   math_engine: mathjax
 
-plugins:
+gems: [jekyll-paginate]
+
+plugins_dir:
   - jekyll-mentions
   - jekyll-paginate
 
