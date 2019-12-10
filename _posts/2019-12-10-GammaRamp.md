@@ -3,7 +3,7 @@ layout:       post
 title:        Got Gamma?
 categories:   [math]
 tags:         [color, approximation]
-description:  A breakdown on my joke approximation of $x^2.2$
+description:  A breakdown on my joke approximation of $x^{2.2}$
 plotly:       true
 ---
 
