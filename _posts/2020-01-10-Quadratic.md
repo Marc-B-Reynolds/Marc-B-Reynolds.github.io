@@ -8,7 +8,7 @@ plotly:       false
 ---
 
 \\
-Mirco-post: Solve the [quadratic equation](https://en.wikipedia.org/wiki/Quadratic_equation) without [catastrophic cancellation](https://en.wikipedia.org/wiki/Loss_of_significance) using FMA and no branching.
+Micro-post: Solve the [quadratic equation](https://en.wikipedia.org/wiki/Quadratic_equation) without [catastrophic cancellation](https://en.wikipedia.org/wiki/Loss_of_significance) using FMA and no branching.
 
 Given $a$, $b$ and $c$ we want to find one or both roots $r_0$ and $r_1$:
 
@@ -92,6 +92,4 @@ void f32_quadratic(f32_pair_t* r, float a, float b, float c)
 }
 
 {% endhighlight %}
-
-
 
