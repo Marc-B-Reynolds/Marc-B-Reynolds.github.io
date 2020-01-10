@@ -142,6 +142,8 @@ Add a constant <small>1 FMA</small>
 ------
 
 \\
+Let me first note that this method **does not** help with [catastrophic cancellation](https://en.wikipedia.org/wiki/Loss_of_significance) since the source of that is the erroring error already present in $x$.
+
 We can add by an extended precision constant as follows:
 
 $$ K + x \approx \text{RN}\left(A \cdot B + x\right) $$
@@ -232,7 +234,7 @@ float add_inverse_phi(float x)
 
 
 \\
-Now let's look at $\pi$ for *binary32* (an example usage is a part of range reduction for one and two parameter arc-tangents). The initial integer isn't going to work out this time so we're going to look at a range of value. Our target integer rounded up so we want to inspect: $ \left\\{I,I-1,I+2,I-2...\right\\} $. If it had rounded down we'd flip the sign on the ordering.
+Now let's look at $\pi$ for *binary32* (an example usage is a part of range reduction for one and two parameter arc-tangents). The initial integer isn't going to work out this time so we're going to look at a range of value. Our target integer rounded up so we want to inspect: $ \left\\{I,I-1,I+1,I-2,I+2...\right\\} $. If it had rounded down we'd flip the sign on the ordering.
 
 {: .center }
 |     | $2^t$  | prime factorization         |
