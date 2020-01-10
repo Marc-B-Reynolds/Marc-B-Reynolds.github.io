@@ -142,7 +142,7 @@ Add a constant <small>1 FMA</small>
 ------
 
 \\
-Let me first note that this method **does not** help with [catastrophic cancellation](https://en.wikipedia.org/wiki/Loss_of_significance) since the source of that is the erroring error already present in $x$.
+Let me first note that this method **does not** help with [catastrophic cancellation](https://en.wikipedia.org/wiki/Loss_of_significance) since the source of that is the rounding error already present in $x$.
 
 We can add by an extended precision constant as follows:
 
