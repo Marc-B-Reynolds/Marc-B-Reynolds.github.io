@@ -20,7 +20,7 @@ Recall we have two sources of catastrophic cancellation:
 1. $b^2 \gg \left\\| 4ac \right\\| $ which we'll fix with an algebraic rewrite
 2. $b^2 \approx 4ac $   which we'll fix by computing in extended precision.
 
-Calling $r_1$ the larger and $r_2$ the smaller magnitude root we can rewrite the standard equation as follows:
+Calling $r_1$ the larger and $r_0$ the smaller magnitude root we can rewrite the standard equation as follows:
 
 $$ \begin{align*}
 r_1 & = \frac{-\left(b + \text{sgn}\left(b\right)\sqrt{b^2-4ac}\right) }{2a} \\
