@@ -3,7 +3,7 @@ layout:       post
 title:        Generating the log of a uniform random float
 categories:   [math]
 tags:         [random, distribution]
-description:  Sketches out some possible implementations of taking the logarithm of a uniform floating point value and mentions (in passing) normal distributions.
+description:  Sketches out some possible implementations of taking the logarithm of a uniform floating point value.
 ---
 
 \\
