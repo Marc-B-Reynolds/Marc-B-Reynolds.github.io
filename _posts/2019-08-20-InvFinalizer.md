@@ -247,7 +247,7 @@ Additionally three batteries of [TestU01](http://simul.iro.umontreal.ca/testu01/
 
 The reported numbers are how many statistics of the battery failed.
 
-For reference I've include 32-bit finalizer of MurmurHash3, xxHash and a pair by [Chris Wellons](https://github.com/skeeto/hash-prospector). All except *triple32* are two xorshift-multiplies followed by an xorshift and *triple32* add an additional xorshift-multiply. 
+For reference I've include 32-bit finalizer of MurmurHash3, xxHash and a pair by [Chris Wellons](https://github.com/skeeto/hash-prospector). All except *triple32* are two xorshift-multiplies followed by an xorshift and *triple32* adds an additional xorshift-multiply. 
 
 
 Clicking on the headers sorts the data.
@@ -255,7 +255,7 @@ Clicking on the headers sorts the data.
 <br>
 
 {: .center }
-| hash      | max bias (cn) | max bias (ss) | max bias (he) | GOF (cn)| GOF (ss) | GOF (he) | Rabbit| SmallCrush | Crush |
+| hash      | % max bias (cn) | % max bias (ss) | % max bias (he) | GOF (cn)| GOF (ss) | GOF (he) | Rabbit| SmallCrush | Crush |
 | :---:     |  ---:      |  ---:    |  ---:    |  ---:    |  ---:    | ---:    | ---:  | ---:       |---:       |
 | murmur3   |  0.229263  |  0.518417  |  0.207162  |  0.052966  |  0.092238  |  0.043021  |     1 |        2   | 24 |
 | xxhash32  |  0.377083  |  0.579166  |  0.433731  |  0.069322  |  0.090209  |  0.066725  |     1 |        2   | 39 |
@@ -269,7 +269,7 @@ Clicking on the headers sorts the data.
 The three inital functions are failures but here's their data as well (minus Crush since it's a waste of time).
 
 {: .center }
-| hash      | max bias (cn) | max bias (ss) | max bias (he) | GOF (cn)| GOF (ss) | GOF (he) | Rabbit| SmallCrush | 
+| hash      | % max bias (cn) | % max bias (ss) | % max bias (he) | GOF (cn)| GOF (ss) | GOF (he) | Rabbit| SmallCrush | 
 | :---:     |  ---:    |  ---:    |  ---:    |  ---:    |  ---:    | ---:    | ---:  | ---:       |
 | g0        |100.000000|100.000000|100.000000| 76.090304|82.050457 |76.090831|     7 |       15   |
 | f0        |100.000000|100.000000|100.000000| 23.667056|38.865972 |23.663481|     8 |       14   |
