@@ -1,6 +1,6 @@
 # visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
 
-paginate: 10 # pagination based on number of posts
+paginate: 20 # pagination based on number of posts
 paginate_path: "page:num"
 
 include:
@@ -37,6 +37,9 @@ author:
   twitter:   marc_b_reynolds
   linkedin:
   bio:       jack of no trades
+
+sass:
+  style: compressed
 
 kramdown:
   input: GFM

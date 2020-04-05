@@ -543,7 +543,7 @@ A lazy table of empirical numbers:  some ad-hoc cut points, probability and roun
 References and Footnotes
 ------
 
-[^day]: *"Converting a Rotation Matrix to a Quaternion"*, Mike Day, 2015 ([download page](http://www.insomniacgames.com/converting-a-rotation-matrix-to-a-quaternion/))
+[^day]: **"Converting a Rotation Matrix to a Quaternion"**, Mike Day, 2015 ([download page](http://www.insomniacgames.com/converting-a-rotation-matrix-to-a-quaternion/))
 
 <script>
 

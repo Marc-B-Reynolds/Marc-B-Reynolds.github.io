@@ -5,6 +5,8 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 Copyright (c) 2015 Daniel Eden
 */
 
+/*
+
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -170,7 +172,7 @@ Copyright (c) 2015 Daniel Eden
   animation-name: flash;
 }
 
-/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+// originally authored by Nick Pettit - https://github.com/nickpettit/glide
 
 @-webkit-keyframes pulse {
   0% {
@@ -449,7 +451,7 @@ Copyright (c) 2015 Daniel Eden
   animation-name: tada;
 }
 
-/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+ // originally authored by Nick Pettit - https://github.com/nickpettit/glide
 
 @-webkit-keyframes wobble {
   0% {
@@ -2609,7 +2611,7 @@ Copyright (c) 2015 Daniel Eden
   animation-name: hinge;
 }
 
-/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+ // originally authored by Nick Pettit - https://github.com/nickpettit/glide
 
 @-webkit-keyframes rollIn {
   0% {
@@ -2644,7 +2646,7 @@ Copyright (c) 2015 Daniel Eden
   animation-name: rollIn;
 }
 
-/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+ // originally authored by Nick Pettit - https://github.com/nickpettit/glide
 
 @-webkit-keyframes rollOut {
   0% {
@@ -3316,3 +3318,4 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp;
 }
+*/

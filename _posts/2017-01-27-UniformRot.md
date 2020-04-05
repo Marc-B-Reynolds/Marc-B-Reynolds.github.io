@@ -134,8 +134,8 @@ void uniform_quat(quat_t* q)
 References and Footnotes
 ------
 
-[^gm]:       *"Choosing a Point from the Surface of a Sphere"*, George Marsaglia, 1972 ([PDF](http://projecteuclid.org/euclid.aoms/1177692644))
-[^sdisc]:    *"Square/Disc mappings"*, ([local post]({{site.base}}/math/2017/01/08/SquareDisc.html))
-[^inormals]: *"Implied normals (unit bivectors as rotations)"*, ([local post]({{site.base}}/quaternions/2016/06/26/QuatNormal.html))
-[^uniform]:  *"Uniform points on disc, circle, sphere and caps"*, ([local post]({{site.base}}/distribution/2016/11/28/Uniform.html))
+[^gm]:       **"Choosing a Point from the Surface of a Sphere"**, George Marsaglia, 1972 ([PDF](http://projecteuclid.org/euclid.aoms/1177692644))
+[^sdisc]:    **"Square/Disc mappings"**, ([local post]({{site.base}}/math/2017/01/08/SquareDisc.html))
+[^inormals]: **"Implied normals (unit bivectors as rotations)"**, ([local post]({{site.base}}/quaternions/2016/06/26/QuatNormal.html))
+[^uniform]:  **"Uniform points on disc, circle, sphere and caps"**, ([local post]({{site.base}}/distribution/2016/11/28/Uniform.html))
 [^pervognsen]: Per Vognsen provides a simple justification in this gist: ([link](http://gist.github.com/pervognsen/32ec4841ef53346f65c5033c3bd262b6))

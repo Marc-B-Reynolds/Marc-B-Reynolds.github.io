@@ -367,7 +367,7 @@ References and Footnotes
 [^rotViz]: Quaternion rotation visualization: ([local post]({{site.base}}/quaternions/2016/05/17/VisualizeQuatRot.html))
 [^projLine]:    Projective line: [Wikipedia](http://en.wikipedia.org/wiki/Projective_line)
 [^cayleyWiki]:  Cayley transform: [Wikipedia](http://en.wikipedia.org/wiki/Cayley_transform)
-[^cayleyPaper]: *"Sur quelques propriétés des déterminants gauches."* Journal für die reine und angewandte Mathematik 32, 1846, Arthur Cayley. Reproduced in *"The collected mathematical papers of Arthur Cayley, Volume 1"*, 1889.
+[^cayleyPaper]: **"Sur quelques propriétés des déterminants gauches."** Journal für die reine und angewandte Mathematik 32, 1846, Arthur Cayley. Reproduced in *"The collected mathematical papers of Arthur Cayley, Volume 1"*, 1889.
 [^stereo]:      Stereographic projection: [Wikipedia](http://en.wikipedia.org/wiki/Stereographic_projection)
 [^Weierstrass]: Tangent half-angle substitution: [Wikipedia](http://en.wikipedia.org/wiki/Tangent_half-angle_substitution)
 [^mobius]:      Möbius transformation: [Wikipedia](https://en.wikipedia.org/wiki/M%C3%B6bius_transformation)

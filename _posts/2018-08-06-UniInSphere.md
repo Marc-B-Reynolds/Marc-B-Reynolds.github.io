@@ -88,6 +88,6 @@ void uniform_intersect_s2_cone(vec3_t* p, float h)
 References and Footnotes
 ------
 
-[^post]:    *Generating Random Points in a Sphere*, Karthik Karanth, 2018 [link](http://karthikkaranth.me/blog/generating-random-points-in-a-sphere/)
-[^uniform]: *Uniform points on disc, circle, sphere and caps*, 2016 [local post](http://marc-b-reynolds.github.io/distribution/2016/11/28/Uniform.html)
+[^post]:    **Generating Random Points in a Sphere**, Karthik Karanth, 2018 [link](http://karthikkaranth.me/blog/generating-random-points-in-a-sphere/)
+[^uniform]: **Uniform points on disc, circle, sphere and caps**, 2016 [local post](http://marc-b-reynolds.github.io/distribution/2016/11/28/Uniform.html)
 

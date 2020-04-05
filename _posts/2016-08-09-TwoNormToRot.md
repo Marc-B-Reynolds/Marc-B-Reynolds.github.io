@@ -103,6 +103,6 @@ Toy C code can be found: [HERE](http://github.com/Marc-B-Reynolds/Stand-alone-ju
 References and Footnotes
 ------
 
-[^mh99]:   *"Efficiently Building a Matrix to Rotate One Vector to Another"*, Tomas Moller, John F. Hughes, 1999, ([PDF](http://cs.brown.edu/~jfh/papers/Moller-EBA-1999/paper.pdf))
-[^iq]:     *"avoiding trigonometry"*, Inigo Quilez, 2013, ([PAGE](http://www.iquilezles.org/www/articles/noacos/noacos.htm))
-[^sh]: *"Beautiful maths simplification: quaternion from two vectors"*, Sam Hocevar, 2013 ([PAGE](http://lolengine.net/blog/2013/09/18/beautiful-maths-quaternion-from-vectors))
+[^mh99]:   **"Efficiently Building a Matrix to Rotate One Vector to Another"**, Tomas Moller, John F. Hughes, 1999, ([PDF](http://cs.brown.edu/~jfh/papers/Moller-EBA-1999/paper.pdf))
+[^iq]:     **"avoiding trigonometry"**, Inigo Quilez, 2013, ([PAGE](http://www.iquilezles.org/www/articles/noacos/noacos.htm))
+[^sh]: **"Beautiful maths simplification: quaternion from two vectors"**, Sam Hocevar, 2013 ([PAGE](http://lolengine.net/blog/2013/09/18/beautiful-maths-quaternion-from-vectors))

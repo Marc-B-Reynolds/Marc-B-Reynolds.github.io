@@ -526,21 +526,21 @@ References and Footnotes
 
 [^eps]:      A reasonable(ish) epsilon for the funcs here under generic usage is the smallest normal fp value (single: $2^{-126}$).
 
-[^jacobian]: *"Jacobian matrix and determinant"*, Wikipedia. ([link](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant))
+[^jacobian]: **"Jacobian matrix and determinant"**, Wikipedia. ([link](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant))
 
-[^shirley1997]: *"A Low Distortion Map Between Disk and Square"*, Peter Shirley, Kenneth Chiu, 1997. ([PDF](http://pdfs.semanticscholar.org/4322/6a3916a85025acbb3a58c17f6dc0756b35ac.pdf))
+[^shirley1997]: **"A Low Distortion Map Between Disk and Square"**, Peter Shirley, Kenneth Chiu, 1997. ([PDF](http://pdfs.semanticscholar.org/4322/6a3916a85025acbb3a58c17f6dc0756b35ac.pdf))
 
-[^shirley2011]: *"Improved code for concentric map"*, Peter Shirley's blog, 2011. ([link](http://psgraphics.blogspot.fr/2011/01/improved-code-for-concentric-map.html))
+[^shirley2011]: **"Improved code for concentric map"**, Peter Shirley's blog, 2011. ([link](http://psgraphics.blogspot.fr/2011/01/improved-code-for-concentric-map.html))
 
-[^fong2015]: *"Analytical Methods for Squaring the Disc"*, Chamberlain Fong, 2015. ([PDF](http://arxiv.org/abs/1509.06344))
+[^fong2015]: **"Analytical Methods for Squaring the Disc"**, Chamberlain Fong, 2015. ([PDF](http://arxiv.org/abs/1509.06344))
 
-[^fong2015a]: *"Analytical Methods for Squaring the Disc (presentation slides)"*, Chamberlain Fong, 2014. ([link](http://www.slideshare.net/chamb3rlain/analytical-methods))
+[^fong2015a]: **"Analytical Methods for Squaring the Disc (presentation slides)"**, Chamberlain Fong, 2014. ([link](http://www.slideshare.net/chamb3rlain/analytical-methods))
 
-[^lambers]:  *"Mappings between Sphere, Disc, and Square"*, Martin Lambers, 2016. ([link](http://jcgt.org/published/0005/02/01/))
+[^lambers]:  **"Mappings between Sphere, Disc, and Square"**, Martin Lambers, 2016. ([link](http://jcgt.org/published/0005/02/01/))
 
-[^nowell]:  *"Mapping a Square to a Circle"*, Philip Nowell, 2005. ([link](http://mathproofs.blogspot.fr/2005/07/mapping-square-to-circle.html))
+[^nowell]:  **"Mapping a Square to a Circle"**, Philip Nowell, 2005. ([link](http://mathproofs.blogspot.fr/2005/07/mapping-square-to-circle.html))
 
-[^ballcube]: *Cube/cylinder/ball mappings*, ([post]({{site.base}}/math/2017/01/27/CubeBall.html))
+[^ballcube]: **Cube/cylinder/ball mappings**, ([post]({{site.base}}/math/2017/01/27/CubeBall.html))
 
 
 <script>

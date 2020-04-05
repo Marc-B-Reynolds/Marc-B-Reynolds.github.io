@@ -1,21 +1,68 @@
+
+
+.page-header {
+  color: #e74c3c;
+  text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eee;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999;
+}
+
+.container {
+ width:100%;
+ padding-right:30px;
+ padding-left:30px;
+ margin-right:auto;
+ margin-left:auto
+}
+
+a.footnote:before { content: "["; }
+a.footnote:after  { content: "]"; }
+
+.badge { background: rgb(76,61,167); padding-bottom: 0.45em }
+
+.center-image { margin: 0 auto; display: block; }
+
+.mathjax-tooltip {
+  display:  none;
+  width:    100%;
+  position: absolute;
+}
+
+table.center {
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+th {
+  color:#FFF;
+  background-color:#88A;
+  border: 1px solid #e3e3ef;
+  padding:8px 15px 8px 15px
+}
+
+td {
+  padding:5px 15px 5px 15px;
+  border: 1px solid #e3e3ef;
+}
+
+tr:nth-child(even) {
+  background: #f5f5ff;
+}
+
+
+
+/*
+
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
 
-body {
-  color: #2c3e50;
-}
-a.footnote:before {   
- content: "[";
-}
-
-a.footnote:after {
-    content: "]";
-}
-
-.center-image
-{
-  margin: 0 auto;
-  display: block;
-}
+body { color: #2c3e50; }
 
 code {
   color: #2925C7;
@@ -42,11 +89,6 @@ code {
 .sidebar-header .title a{
   text-decoration: none;
   color: #fff;
-}
-
-a:visited {
-  text-decoration: none;
-  color: #614fcf;
 }
 
 a.nav-link {
@@ -87,9 +129,6 @@ article .share .twitter:hover {
 #contact-list li:hover .fa-envelope {
   color: #E93E30;
 }
-#contact-list li:hover .fa-pinterest {
-  color: #CC2127;
-}
 
 #contact-list li:hover .fa-rss {
   color: #e74c3c;
@@ -98,19 +137,11 @@ article .share .facebook:hover {
   color: #43609C;
   border-color: #43609C;
 }
-article .share .gplus:hover {
-  color: #C13929;
-  border-color: #C13929;
-}
 
 #contact-list-secondary {
   padding-bottom: 10px;
 }
 
-.page-header {
-  color: #e74c3c;
-  text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
-}
 
 article {
   margin-bottom: 40px;
@@ -176,7 +207,7 @@ footer {
   font-family: 'Ubuntu';
 }
 
-/* nav-vertical-tabs component */
+// nav-vertical-tabs component
 .nav-tabs-vertical {
   border-right: 1px solid #ddd;
 }
@@ -226,7 +257,6 @@ footer {
   background-color: rgb(76,61,167);
 }
 
-
 #nav-menu .dropdown-menu {
   left: inherit;
   right: 0px;
@@ -236,29 +266,5 @@ ul.dropdown-menu>li>a>i.fa {
   width: 1.3em;
 }
 
-.mathjax-tooltip {
-  display: none;
-  width: 100%;
-  position: absolute;
-}
 
-table.center {
-  margin-left:  auto;
-  margin-right: auto;
-}
-
-th {
-  color:#FFF;
-  background-color:#88A;
-  border: 1px solid #e3e3ef;
-  padding:8px 15px 8px 15px
-}
-
-td {
-  padding:5px 15px 5px 15px;
-  border: 1px solid #e3e3ef;
-}
-
-tr:nth-child(even) {
-  background: #f5f5ff;
-}
+*/

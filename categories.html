@@ -6,52 +6,55 @@ group:   navigation
 tagline: not as in <i>theory</i>
 ---
 
-<!-- Sidebar -->
-<div class="col-sm-3 col-xs-6">
-  <ul class="nav nav-tabs-vertical">
-    {% assign categories_list = site.categories %}
-    {% if categories_list.first[0] == null %}
-      {% for category in categories_list %}
-        <li>
-          <a href="{{ site.BASE_PATH }}/{{ site.categories_path }}#{{ category | replace:' ','-' }}-ref" data-toggle="tab">
-                   {{ category }} <span class="badge pull-right">{{ site.categories[category].size }}</span>
-          </a>
-        </li>
-      {% endfor %}
-    {% else %}
-      {% for category in categories_list %}
-        <li>
-          <a href="{{ site.BASE_PATH }}/{{ site.categories_path }}#{{ category[0] | replace:' ','-' }}-ref" data-toggle="tab">
-                   {{ category[0] }} <span class="badge pull-right">{{ category[1].size }}</span>
-          </a>
-        </li>
-      {% endfor %}
-    {% endif %}
-    {% assign categories_list = nil %}
-  </ul>
-</div>
+<style>
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 10px;
+  background: #F2756A;
+}
+.card-body { -ms-flex:1 1 auto; flex:1 1 auto; padding:1.0rem;}
+dl,ol,ul { margin-top:0; margin-bottom:0; }
+</style>
 
-<!-- Tab panes -->
-<div class="tab-content col-sm-9 col-xs-6">
-  {% for category in site.categories %}
-    <div class="tab-pane" id="{{ category[0] | replace:' ','-' }}-ref">
-      <h2 style="margin-top: 0px">Posts in {{ category[0] | capitalize }}</h2>
-      <ul class="list-unstyled">
+<div class="accordion" id="categories">
+{% for category in site.categories %}
+  <div class="card z-depth-0 bordered">
+    <div class="card-header" id="{{ category[0] }}-ref">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+          data-target="#{{ category[0] }}" aria-expanded="false" aria-controls="{{ category[0] }}">
+          <span class="badge">{{ category[1].size }}</span> {{ category[0] }} 
+        </button>
+      </h5>
+    </div>
+    <div id="{{ category[0] }}" class="collapse" aria-labelledby="{{ category[0] }}" >
+      <div class="card-body"><ul class="list-unstyled">
+	
         {% assign pages_list = category[1] %}
         {% for post in pages_list %}
           {% if post.title != null %}
             {% if group == null or group == post.group %}
-              <li style="line-height: 30px;">
+	        <li style="line-height: 20px;">
 		<span class="text-muted"> {{ post.date | date: "%Y%m%d" }} <i class="fa fa-caret-right"></i></span>
-                <a href="{{ site.baseurl }}{{post.url}}">{{post.title}}</a>
-              </li>
+		<a href="{{ site.baseurl }}{{post.url}}">{{post.title}}</a></li>
             {% endif %}
           {% endif %}
         {% endfor %}
         {% assign pages_list = nil %}
-      </ul>
+
+      </ul></div>
     </div>
+  </div>
   {% endfor %}
 </div>
+<br>
 
-<div class="clearfix"></div>

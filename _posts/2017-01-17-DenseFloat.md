@@ -241,4 +241,4 @@ References and Footnotes
 [^bprob]:   If language/compiler supports probability hints then adding the hint is reasonable.
 [^mask]:    Under the assumption of uniform in all bits, masking off the low bits is equivalent.
 [^anybits]: Likewise any for any choice of $n$ bits being all cleared or set.
-[^gdist]:   *"Geometric distribution"*, Wikipedia. ([link](https://en.wikipedia.org/wiki/Geometric_distribution))
+[^gdist]:   **"Geometric distribution"**, Wikipedia. ([link](https://en.wikipedia.org/wiki/Geometric_distribution))

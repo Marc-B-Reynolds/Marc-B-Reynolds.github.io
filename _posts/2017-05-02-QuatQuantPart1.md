@@ -417,9 +417,9 @@ References and Footnotes
 
 
 [^pos]:     Otherwise replace $w$ by $\abs{w}$ and add $\text{sgn}\left(w\right)$ to the final scale value.  In this case the inverse transform returns $-Q$ when $w$ is negative.
-[^hangle]: "Quaternion half/double angle and Cayley transforms" ([local post]({{site.base}}/quaternions/2016/06/06/QuatNormal.html))
+[^hangle]: **"Quaternion half/double angle and Cayley transforms"** ([local post]({{site.base}}/quaternions/2016/06/06/QuatNormal.html))
 [^rterror]: Measured using the toy C implemenations.
-[^tait]:    "Converting to Euler & Tait-Bryan" ([local post]({{site.base}}//math/2017/04/18/TaitEuler.html))
+[^tait]:    **"Converting to Euler & Tait-Bryan"** ([local post]({{site.base}}//math/2017/04/18/TaitEuler.html))
 <script>
 
 var mDef = {size:6, opacity:.75};

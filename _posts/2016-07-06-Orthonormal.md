@@ -427,16 +427,16 @@ References and Footnotes
 ------
 
 [^handed]: If you don't like "handedness" then $\mathbf{x}' \times \mathbf{y}' = -\mathbf{v}$ instead of $\mathbf{v}$.
-[^hm]:      *"Building an Orthonormal Basis from a Unit Vector"*, J. Hughes, T. Moller, Journal of Graphics Tools 4:4 (1999), 33-35.
-[^stark]:  *"Efficient Construction of Perpendicular Vectors without Branching"*, M. Stark, Journal of Graphics Tools 14:1 (2009)
-[^hill]:    *"Perpendicular Possibilities"*, Stephen Hill, 2011 [blog post](http://blog.selfshadow.com/2011/10/17/perp-vectors/)
-[^frisvad]: *"Building an orthonormal basis from a 3d unit vector without normalization"*, Jeppe Frisvad, Journal of Graphics Tools 16:33, (2012) [PDF/code page](http://www.imm.dtu.dk/~jerf/papers/abstracts/onb.html)
-[^lol]:      *"On picking an orthogonal vector (and combing coconuts)"*, Sam Hocevar, 2013 [blog post](http://lolengine.net/blog/2013/09/21/picking-orthogonal-vector-combing-coconuts)
-[^pixar]:    *"Building an Orthonormal Basis, Revisited"*, Tom Duff, James Burgess, Per Christensen, Christophe Hery, Andrew Kensler, Max Liani, and Ryusuke Villemin, Journal of Computer Graphics Techniques Vol. 6, No. 1, 2017 [JCGT](http://jcgt.org/published/0006/01/01/)
+[^hm]:      **"Building an Orthonormal Basis from a Unit Vector"**, J. Hughes, T. Moller, Journal of Graphics Tools 4:4 (1999), 33-35.
+[^stark]:  **"Efficient Construction of Perpendicular Vectors without Branching"**, M. Stark, Journal of Graphics Tools 14:1 (2009)
+[^hill]:    **"Perpendicular Possibilities"**, Stephen Hill, 2011 [blog post](http://blog.selfshadow.com/2011/10/17/perp-vectors/)
+[^frisvad]: **"Building an orthonormal basis from a 3d unit vector without normalization"**, Jeppe Frisvad, Journal of Graphics Tools 16:33, (2012) [PDF/code page](http://www.imm.dtu.dk/~jerf/papers/abstracts/onb.html)
+[^lol]:      **"On picking an orthogonal vector (and combing coconuts)"**, Sam Hocevar, 2013 [blog post](http://lolengine.net/blog/2013/09/21/picking-orthogonal-vector-combing-coconuts)
+[^pixar]:    **"Building an Orthonormal Basis, Revisited"**, Tom Duff, James Burgess, Per Christensen, Christophe Hery, Andrew Kensler, Max Liani, and Ryusuke Villemin, Journal of Computer Graphics Techniques Vol. 6, No. 1, 2017 [JCGT](http://jcgt.org/published/0006/01/01/)
 [^gcc]:      Instruction issue numbers are from x86-64 gcc 6.3 with -O3.  x86-64 clang 4.0.0 -O3 numbers appear to be the same.
 [^rms]:      Take with a grain-of-salt. My RMS measures are not in agreement with those reported by Pixar.
 [^stddiff]:  Computed the standard way:  $1-\frac{e}{e_0}$
-[^max]:      "Improved accuracy when building an orthonormal basis", Nelson Max, Journal of Computer Graphics Techniques Vol. 6, No. 1, 2017 [JCGT](http://jcgt.org/published/0006/01/02/)
+[^max]:      **"Improved accuracy when building an orthonormal basis"**, Nelson Max, Journal of Computer Graphics Techniques Vol. 6, No. 1, 2017 [JCGT](http://jcgt.org/published/0006/01/02/)
 
 <script>
 

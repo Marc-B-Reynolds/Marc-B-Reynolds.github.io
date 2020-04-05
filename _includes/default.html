@@ -13,21 +13,27 @@
   <!-- <meta property="og:description" content="" /> -->
   
   <!-- Enable responsive viewport -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- stylesheets -->
-  <link href="{{ site.baseurl }}/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="{{ site.baseurl }}/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="{{ site.baseurl }}/assets/resources/syntax/syntax.css" rel="stylesheet">
-  <link href="{{ site.baseurl }}/assets/css/style.css" rel="stylesheet">
+  {% if page.style %}
+  <link href="{{ site.baseurl }}/assets/css/{{ page.style }}/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ site.baseurl }}/assets/css/{{ page.style }}/style.css"         rel="stylesheet">
+  {% else %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="{{ site.baseurl }}/assets/css/style.css"  rel="stylesheet">
+  {% endif %}
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" id="hljs-theme">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.baseurl }}/feed.xml">
 
   <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/ico/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/ico/favicon-16x16.png" sizes="16x16" />
   
+
 {% if page.plotly %}
-  <script src="{{ site.baseurl }}/assets/js/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {% endif %}
 {% if page.threejs %}
   <script src="{{ site.baseurl }}/assets/js/three.js"></script>
@@ -50,9 +56,25 @@
 
   <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
-    showProcessingMessages: false,
-    messageStyle: 'none',
-
+   /* showProcessingMessages: false,
+    messageStyle: 'none', */
+      extensions: ["MathZoom.js"],
+    menuSettings:{
+      zoom: "Hover",
+      zscale: "150%"
+    },
+    MathEvents: {
+      hover: 100 
+    },
+      
+    MathZoom: {
+      styles: {
+        "#MathJax_Zoom": {
+          "background-color": "#ddd"
+        }
+      }
+    },
+      
     tex2jax: {
       inlineMath: [['$','$']],
       displayMath: [['$$','$$']],
@@ -101,37 +123,38 @@
 
 <body>
   <!-- nav-menu-dropdown -->
-  <div class="btn-group" id="nav-menu">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-bars"></i>
+
+	<style>
+#nav-menu {
+	position: fixed;
+	top:    25px;
+	right:  25px;
+	z-index: 2000;
+	padding: .0rem .0rem;
+}
+</style>
+	
+  <button type="button" class="btn btn-light" id="nav-menu">
+    <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-bars"></i></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ site.baseurl }}/"> <i class="fa fa-list"></i> posts</a>
+      <a class="dropdown-item" href="{{ site.baseurl }}/{{ 'bydate.html' }}"> <i class="fa fa-long-arrow-right"></i> compact by date</a>
+      <a class="dropdown-item" href="{{ site.baseurl }}/{{ site.categories_path }}"> <i class="fa fa-long-arrow-right"></i> categories</a>
+      <a class="dropdown-item" href="{{ site.baseurl }}/{{ site.tags_path }}"> <i class="fa fa-tag"></i> tags</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="https://github.com/Marc-B-Reynolds"> <i class="fa fa-github"></i>&nbsp;github</a>
+      <a class="dropdown-item" href="https://twitter.com/marc_b_reynolds"><i class="fa fa-twitter"></i>&nbsp;twitter</a>
+      <a class="dropdown-item" href="{{ site.baseurl }}/feed.xml"> <i class="fa fa-rss"></i>&nbsp;rss</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#"><i class="fa fa-arrow-up"></i> top</a>
     </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="{{ site.baseurl }}/"><i class="fa fa-list"></i>posts</a></li>
-      <li><a href="{{ site.baseurl }}/{{ "bydate.html" }}"><i class="fa fa-long-arrow-right"></i>compact by date</a></li>
-      <li><a href="{{ site.baseurl }}/{{ site.categories_path }}"><i class="fa fa-long-arrow-right"></i>categories</a></li>
-      <li><a href="{{ site.baseurl }}/{{ site.tags_path }}"><i class="fa fa-tag"></i>tags</a></li>
-      <li class="divider"></li>
-      <li><a href="https://github.com/Marc-B-Reynolds"> <i class="fa fa-github"></i>github</a></li>
-      <li><a href="https://twitter.com/marc_b_reynolds"><i class="fa fa-twitter"></i>twitter</a></li>
-      <li><a href="{{ site.baseurl }}/feed.xml"> <i class="fa fa-rss"></i>rss</a></li>
-      <li class="divider"></li>
-      <li><a href="#"><i class="fa fa-arrow-up"></i>top</a></li>
-    </ul>
   </div>
 
-  <div class="col-sm-10 col-sm-offset-1">
+	<div class="container">
     {{ content }}
-
-    <footer>
-      <p style="text-align: center">
-        &copy; {{ site.time | date: '%Y' }} {{ site.author.name }}.
-      </p>
-    </footer>
   </div>
-
-  <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="{{ site.baseurl }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="{{ site.baseurl }}/assets/js/app.js"></script>
+  
 
 {% if page.noTeX != true %}  
 {% if page.katex %}

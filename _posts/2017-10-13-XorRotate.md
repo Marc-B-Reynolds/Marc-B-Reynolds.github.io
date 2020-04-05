@@ -212,6 +212,81 @@ This inverse is in the form of $\eqref{rot3}$ which I dismissed as being uninter
 
 ------
 
+Added comments <small>20190910</small>
+------
+
+\\
+Since I now have a miminal data point[^invmix] to indicate this structure might be of practical interest I'm going to add a few points I skipped typing up originally. 
+
+$$
+M = I + C^a + C^b
+$$
+
+    t0 = x >> a       t0 = rot(x,a) t1 = rot(x,b)
+	return x ^ t0     t2 = t0 ^ t1
+                      return x ^ t2
+
+
+\\
+which we can rewrite into a nested form (with $d=b-a$):
+
+$$ \begin{equation} 
+M = I + C^a\left(I + C^d\right)  \label{HF}
+\end{equation} $$
+
+
+$$
+I + C^a\left(I + I\right) = I
+$$
+
+{% highlight c %}
+uint32_t xor_rot_period(uint32_t p, uint32_t a, uint32_t b)
+{
+  return (1<<p)>>__builtin_ctz(b-a);
+}
+{% endhighlight %}
+
+
+
+$$ 
+I + \left(I + C^d\right) = C^d
+$$
+
+
+<br>
+### number of choices
+
+$$
+\sum _i^{\beta -1} (\beta -1-i) = \frac{1}{2}\left(\beta-1\right)\left(\beta-2\right)
+$$
+
+xxx $\beta = 2^p$
+
+$$
+ \frac{1}{2}\left(2-3\cdot 2^p+4^p\right)
+$$
+
+
+<br>
+### period
+xxx
+Recall if the period of $M$ is $n$ then $n$ is the smallest integer where $M^n = I$ and we know that $M^\beta = I$
+xx
+<br>
+### fixed points
+
+The period defines
+
+
+The number of fixed points
+
+$$ 2 ^{2^z} $$
+
+
+<br>
+
+------
+
 Inverse Tables
 ------
 
@@ -661,9 +736,9 @@ References and Footnotes
 ------
 
 [^integers]:   Mentally replace that by $\mathbb{Z}_{2^b}$ or $\mathbb{Z}/2^{b}$ if you're offended.
-[^modinverse]: *"Integer multiplicative inverse via Newton's method*", 2017 ([page]({{site.base}}/math/2017/09/18/ModInverse.html))
-[^pscarab]:    *"Hash functions"*, Bret Mulvey ([page](http://papa.bretmulvey.com/post/124027987928/hash-functions))
-[^pixar]:      *"Correlated Multi-Jittered Sampling"*, Andrew Kensler 2013 ([PDF](http://graphics.pixar.com/library/MultiJitteredSampling/paper.pdf))
+[^modinverse]: **"Integer multiplicative inverse via Newton's method"**, 2017 ([page]({{site.base}}/math/2017/09/18/ModInverse.html))
+[^pscarab]:    **"Hash functions"**, Bret Mulvey ([page](http://papa.bretmulvey.com/post/124027987928/hash-functions))
+[^pixar]:      **"Correlated Multi-Jittered Sampling"**, Andrew Kensler 2013 ([PDF](http://graphics.pixar.com/library/MultiJitteredSampling/paper.pdf))
 [^permmatrix]: Wikipedia: Permutation matrix ([page](http://en.wikipedia.org/wiki/Permutation_matrix))
 [^simp]:       Well $\mathbb{F}_{2}$ is more general than math on bits...don't need any of that here.
 [^shiftm]:     Wikipedia: Shift Matrix ([page](http://en.wikipedia.org/wiki/Shift_matrix))
@@ -671,9 +746,10 @@ References and Footnotes
 [^exchange]:   Wikipedia: Exchange matrix ([page](http://en.wikipedia.org/wiki/Exchange_matrix))
 [^cayley]:     Wikipedia: Cayley's theorem ([page](http://en.wikipedia.org/wiki/Cayley%27s_theorem))
 [^qsymbol]:    Wikipedia: Q-Pochhammer ([page](http://en.wikipedia.org/wiki/Q-Pochhammer_symbol))
-[^arndt]:      *"Matters Computational"*, Jorg Arndt, 2010 ([page](http://www.jjj.de/fxt/))
+[^arndt]:      **"Matters Computational"**, Jorg Arndt, 2010 ([page](http://www.jjj.de/fxt/))
 [^circulant]:  Wikipedia: Circulant matrix ([page](https://en.wikipedia.org/wiki/Circulant_matrix#Properties))
 [^composition]:  A composition of bijections is a bijection.
+[^invmix]:      **"Can an involution be a competitive bit finalizer?"**, 2019 ([page]({{site.base}}/math/2019/08/20/InvFinalizer.html))
 
 
 <script>

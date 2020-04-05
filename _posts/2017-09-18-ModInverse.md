@@ -126,13 +126,13 @@ The Dumas version cannot drop any of the iteration steps, but all of the other c
 References and Footnotes
 ------
 
-[^nrmethod]:   *"Wikipedia: Newton's method"*, ([page](http://en.wikipedia.org/wiki/Newton%27s_method))
-[^newton]:     *"On Newton-Raphson iteration for multiplicative inverses modulo prime powers"*, Jean-Guillaume Dumas 2012 ([PDF](http://arxiv.org/pdf/1209.6626v2.pdf))
-[^hensel]:     *"Wikipdia: Hensel's lemma"*   ([page](https://en.wikipedia.org/wiki/Hensel%27s_lemma))
-[^lemire]:     *"Computing the inverse of odd integers"*, Daniel Lemire 2017 ([page](http://lemire.me/blog/2017/09/18/computing-the-inverse-of-odd-integers/))
+[^nrmethod]:   **"Wikipedia: Newton's method"**, ([page](http://en.wikipedia.org/wiki/Newton%27s_method))
+[^newton]:     **"On Newton-Raphson iteration for multiplicative inverses modulo prime powers"**, Jean-Guillaume Dumas 2012 ([PDF](http://arxiv.org/pdf/1209.6626v2.pdf))
+[^hensel]:     **"Wikipdia: Hensel's lemma"**   ([page](https://en.wikipedia.org/wiki/Hensel%27s_lemma))
+[^lemire]:     **"Computing the inverse of odd integers"**, Daniel Lemire 2017 ([page](http://lemire.me/blog/2017/09/18/computing-the-inverse-of-odd-integers/))
 [^looks]:      AKA I've spent zero time really thinking about performance here.
 [^quadradic]:  I just brute forced this in Mathematica.
-[^mmul]:       *"Efficient long division via Montgomery multiply"*, Ernst W. Mayer, 2016 ([PDF](http://arxiv.org/abs/1303.0328))
+[^mmul]:       **"Efficient long division via Montgomery multiply"**, Ernst W. Mayer, 2016 ([PDF](http://arxiv.org/abs/1303.0328))
 
 
 
