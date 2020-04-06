@@ -308,11 +308,13 @@ These figures use [plotly.js](http://plot.ly/javascript/). You can click on the 
 \\
 The first figure is a simply comparison of how the magnitude of the bivector behaves with respect to the implied angle.  The $x$-axis is the normalized angle, so in terms of the represented angle of rotation in 3D we would multiply by $\pi$.  The $y$-axis is normalized magnitude of bivector (maximum value of $b$ divided out).  If we were to put an upper limit on the implied angle then these plots would grow closer to that of $\log$.
 
+{: .center }
 <div id="fig1" style="width:100%"></div>
 
 \\
 The second figure is the same as the first with simply the linear part subtracted out.  If we were to put an upper limit on the implied angle then the shape of plots stay pretty much the same.
 
+{: .center }
 <div id="fig2" style="width:100%"></div>
 
 \\
@@ -320,6 +322,7 @@ We can think of the first figure as being plots of cumulative density where the 
 
 By taking the derivative we can examine localized density which gives a much better picture of how samples are distributed across the full range.  Like the second figure the shape of the plots do not change much when adding a cap to maximum implied angle.
 
+{: .center }
 <div id="fig3" style="width:100%"></div>
 
 The density plots show how the representations behaves locally (in the neighboorhood) of a given angle. For quantization if we linearly quantize the magnitude of the bivector these show the distribution of samples. 
@@ -328,6 +331,7 @@ Since $\log$ perfectly linearizes the angle we have a nice constant value of one
 
 To be able to "eyeball" how density values change if you place a cap on maximum angle the following show how the untransformed range behaves.  Notice the values at .5 vs the endpoints of "half-angle" above.  And the "half/half" and "half/Cayley" plots are more to give a feel for evolution of density than to suggest actual usage.
 
+{: .center }
 <div id="fig4" style="width:100%"></div>
 
 <br>
@@ -519,8 +523,8 @@ var layout = {
   title:  'magnitude of bivector',
   xaxis: { nticks: 10 },
   yaxis: { nticks: 20 },
-  height: 400,
-  width:  480
+  height: 476,
+  width:  826
 };
 
 Plotly.newPlot('fig1', data, layout, {displaylogo: false, autosizable: true});
@@ -997,8 +1001,8 @@ var layout = {
   title:  'magnitude of bivector vs. linear',
   xaxis: { nticks: 10 },
   yaxis: { nticks: 12 },
-  height: 400,
-  width:  600
+  height: 476,
+  width:  826
 };
 
 Plotly.newPlot('fig2', data, layout, {displaylogo: false, autosizable: true});
@@ -1280,7 +1284,10 @@ var layout = {
   xaxis: { nticks: 10 },
   yaxis: { nticks: 20 },
   height: 376,
-  width:  626
+  width:  626,
+  height: 476,
+  width:  826
+  
 };
 
 Plotly.newPlot('fig3', data, layout, {displaylogo: false, autosizable: true});
@@ -1349,8 +1356,8 @@ var layout = {
   title:  'untransform density range vs. max angle',
   xaxis: { nticks: 10 },
   yaxis: { nticks: 20 },
-  height: 376,
-  width:  626
+  height: 476,
+  width:  826
 };
 
 Plotly.newPlot('fig4', data, layout, {displaylogo: false, autosizable: true});

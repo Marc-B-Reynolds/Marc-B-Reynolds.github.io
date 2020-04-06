@@ -34,7 +34,7 @@ Tait-Bryan: ZYX <small></small>
 Seemly the most common choice is that of Tait-Bryan ZYX.  This wikipedia picture illustrates the parameterization (except negate the y-axis and reverse the direction of $\phi$...use your imagination):
 
 
-![rot](https://upload.wikimedia.org/wikipedia/en/3/30/Plane_with_ENU_embedded_axes.svg 'there you go'){: width="50%" .center-image }
+![rot](https://upload.wikimedia.org/wikipedia/commons/3/30/Plane_with_ENU_embedded_axes.svg 'there you go'){: width="50%" .center-image }
 
 
 First I'll walk through the basics from a quaternion perspective.  Define a standard basis set:

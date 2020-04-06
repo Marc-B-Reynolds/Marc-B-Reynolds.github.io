@@ -35,10 +35,12 @@ If $Q$ with magitude of $s$ is transformed by $\eqref{eq:rsxform}$ then the resu
 
 To create a matrix we need to apply the rotation to the basis set to form our three equations:
 
-$$
+$$ 
+\begin{eqnarray*}
 \mathbf{x} = \left(1,0,0\right) \\
 \mathbf{y} = \left(0,1,0\right) \\
 \mathbf{z} = \left(0,0,1\right) \\
+\end{eqnarray*}
 $$
 
 which expanded and reduced gives:
@@ -293,22 +295,26 @@ Given uniform random input then the (in code order) probabilities are: $\frac{2}
 
 Insomniac Games (Mike Day) presented a paper[^day] in 2015 which makes the following observations. The sign of diagonal components imply $\eqref{2matstd}$:
 
-$$
+$$ 
+\begin{eqnarray*}
 m_{00} < 0 \implies y^2+z^2 > \frac{1}{2} \\
 m_{11} < 0 \implies x^2+z^2 > \frac{1}{2} \\
 m_{22} < 0 \implies x^2+y^2 > \frac{1}{2}
+\end{eqnarray*}
 $$
 
 \\
 and the permutations of sum/difference of pairs of diagonal elements imply:
 
 $$
+\begin{eqnarray*}
 m_{00}+m_{11} < 0 \implies w^2 < z^2 \\
 m_{00}-m_{11} < 0 \implies x^2 < y^2 \\
 m_{00}+m_{22} < 0 \implies w^2 < y^2 \\
 m_{00}-m_{22} < 0 \implies x^2 < z^2 \\ 
 m_{11}+m_{22} < 0 \implies w^2 < x^2 \\
 m_{11}-m_{22} < 0 \implies y^2 < z^2
+\end{eqnarray*}
 $$
 
 They use the above to form a method that insures to choose a sufficiently large element.  The following is a slightly massaged version of Day:
