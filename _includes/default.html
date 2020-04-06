@@ -23,7 +23,7 @@
   <link href="{{ site.baseurl }}/assets/css/style.css"  rel="stylesheet">
   {% endif %}
   
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" id="hljs-theme">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css" id="hljs-theme">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.baseurl }}/feed.xml">
@@ -51,66 +51,61 @@
     <script src="{{ site.baseurl }}/assets/js/katex/contrib/auto-render.min.js" type="text/javascript"></script>
   {% endif %}
 
-{% else %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
+    {% else %}
 
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-   /* showProcessingMessages: false,
-    messageStyle: 'none', */
-      extensions: ["MathZoom.js"],
-    menuSettings:{
-      zoom: "Hover",
-      zscale: "150%"
+<script>
+window.MathJax = {
+  options: {
+    menuOptions: {
+      settings: {
+        zoom: "None",
+        zscale: "150%"
+      }
     },
-    MathEvents: {
-      hover: 100 
-    },
-      
-    MathZoom: {
-      styles: {
-        "#MathJax_Zoom": {
-          "background-color": "#ddd"
+
+    renderActions: {
+      findScript: [10, function (doc) {
+        for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+          const display = !!node.type.match(/; *mode=display/);
+          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+          const text = document.createTextNode('');
+          node.parentNode.replaceChild(text, node);
+          math.start = {node: text, delim: '', n: 0};
+          math.end = {node: text, delim: '', n: 0};
+          doc.math.push(math);
         }
-      }
+      }, '']
     },
       
-    tex2jax: {
-      inlineMath: [['$','$']],
-      displayMath: [['$$','$$']],
-      processEnvironments: false
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    inlineMath: [['$','$']],
+    displayMath: [['$$','$$']],
+    processEnvironments: false,
+    tags: "ams",
+    macros: {
+      abs: ['\\left\\lvert #2 \\right\\rvert_{\\text{#1}}', 2, ""],
+      abracket: ['{\\langle #1 \\rangle}', 1],
+      pbracket: ['{\\bigl #1 \\bigr}', 1],
+      bvec: ['{\\lgroup #1 \\rgroup}', 1],
+      func: ['{#1 \\left( #2 \\right)}', 2]
     },
-
-   TeX: {
-      displayAlign: "left",
-       
-      // show equation numbers
-      equationNumbers: {
-        autoNumber: "AMS"
-     },
-
-      Macros: {
-        abs:      ['\\left\\lvert #2 \\right\\rvert_{\\text{#1}}', 2, ""],
-        abracket: ['{\\langle #1 \\rangle}', 1],
-        pbracket: ['{\\bigl #1 \\bigr}', 1],
-        bvec:     ['{\\lgroup #1 \\rgroup}', 1],
-        func:     ['{#1 \\left( #2 \\right)}', 2]
-      }
+    autoload: {
+      color: [],
+      colorV2: ['color']
     },
+    packages: {'[+]': ['noerrors']}
+  },
+  loader: {
+    load: ['[tex]/noerrors']
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
 
-  MathMenu: {
-      showFontMenu: true
-    },
-
-    menuSettings:{
-      zoom: "None",
-      zscale: "150%"
-    },
-    'HTML-CSS': {
-      imageFont: null
-    }
-  });
-  </script>
+  
 {% endif %}
 {% endif %}    
   
@@ -173,49 +168,6 @@
   </script>
 {% else %}
   
-  <script type="text/javascript">
-/*
- * MathJax eqn preview for a tags
- *
- * Copyright (c) 2015 Mauricio Poppe
- * Licensed under the MIT license.
- */
-
-(function () {
-  var $container = $('.post-content');
-  var $tooltip = $('<div />').addClass('mathjax-tooltip');
-  $container.append($tooltip);
-
-  function onMouseOver(ev) {
-    console.log("over");
-    var a = ev.currentTarget;
-    var $number = $(a.hash);
-    var $root = $number.closest('.MathJax_Display');
-    var bounds = $(a).offset();
-    var containerBounds = $container.offset();
-
-    console.log("mj hover");
-    $tooltip.stop(true, true);
-    $tooltip.empty();
-    $tooltip.append($root.clone());
-    $tooltip.css({
-      top: bounds.top - containerBounds.top - $tooltip.height() - 5,
-      left: -1
-    });
-    $tooltip.addClass('active');
-  }
-
-  function onMouseOut(a) {
-    console.log("out");
-    $tooltip.removeClass('active');
-  }
-
-  MathJax.Hub.Queue(function () {
-    $container.on('mouseover', 'a[href*="mjx-eqn-"]', onMouseOver);
-    $container.on('mouseout', 'a[href*="mjx-eqn-"]', onMouseOut);
-  });
-
-})();
 </script>
 {% endif %}
 {% endif %}

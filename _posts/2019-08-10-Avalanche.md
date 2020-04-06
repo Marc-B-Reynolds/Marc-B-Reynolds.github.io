@@ -2,7 +2,7 @@
 layout:       post
 title:        Comments on the Avalanche Effect
 categories:   [math]
-tags:         [integer,hashing,random]
+tags:         [integer,hash,random]
 plotly: false
 description:  A quick overview of what "Avalanche Effect" properties are, why they can be used to test and search for PRNGs and overview of how to convert the property into a comparision measurement.
 ---

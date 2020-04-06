@@ -43,7 +43,7 @@ sass:
 
 kramdown:
   input: GFM
-  math_engine: mathjax
+  math_engine: nil
 
 gems: [jekyll-paginate]
 

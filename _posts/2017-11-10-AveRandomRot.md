@@ -2,7 +2,7 @@
 layout:       post
 title:        Volume element of SO(3) and average uniform random rotation angle
 categories:   [quaternions]
-tags:         [rotation, quantization, distribution, sampling, map]
+tags:         [rotations, quantization, distribution, sampling, map]
 description:  Find the expression of a volume element of rotations.
 plotly: true
 ---
