@@ -20,7 +20,22 @@
     {{ content }}
    </div>
 
-    <!--  -->
+
+<section id="post-comments">
+<script src="https://utteranc.es/client.js"
+        repo="https://github.com/Marc-B-Reynolds/Marc-B-Reynolds.github.io"
+	branch="master"
+        issue-term="pathname"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</section>
+
+
+   
+   <!--  -->
     {% unless page.categories == empty %}
     <ul class="tag_box list-unstyled list-inline">
       <li class="list-inline-item"><i class="fa fa-folder-open"></i></li>
@@ -71,6 +86,10 @@
 
     <hr>
 
+
+    <div class="clearfix"></div>
+
+    
     <!-- disable the share this post stuff for now -->
     <div>
       <section class="share col-sm-6">
@@ -92,9 +111,11 @@
     <div class="clearfix"></div>
     <hr>
 
+
+    <hr>
+    
    {% include footer.html %}
   </div>
-
 
   
   <div class="col-sm-2 sidebar-2"></div>
