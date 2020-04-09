@@ -33,9 +33,9 @@ tagline: jack of no trades
 
 
 <br>
-<nav aria-label="pages"><ul class="pagination list-inline"> 
-<div class="mx-auto">  {% if paginator.previous_page %}
-    <li class="page-item list-inline-item">
+<nav aria-label="pages"><ul class="pagination justify-content-center"> 
+    {% if paginator.previous_page %}
+    <li class="page-item">
     {% if paginator.previous_page == 1 %}
       <a class="page-link" href="{{ site.baseurl }}/">&larr; Newer</a>
     {% else %}
@@ -43,16 +43,16 @@ tagline: jack of no trades
     {% endif %}
   </li>
   {% else %}
-    <li class="page-item disabled list-inline-item" ><span class="page-link">&larr; Newer</span></li>
+    <li class="page-item disabled" ><span class="page-link">&larr; Newer</span></li>
   {% endif %}
   
-  <li class="page-item disabled list-inline-item"><span class="page-link">Page: {{ paginator.page }}/{{ paginator.total_pages }}</span></li>
+  <li class="page-item disabled"><span class="page-link">Page: {{ paginator.page }}/{{ paginator.total_pages }}</span></li>
 
   {% if paginator.next_page %}
-    <li class="page-item list-inline-item"><a class="page-link" href="{{ site.baseurl }}/{{ site.paginate_path | replace: ':num', paginator.next_page }}">Older &rarr;</a></li>
+    <li class="page-item"><a class="page-link" href="{{ site.baseurl }}/{{ site.paginate_path | replace: ':num', paginator.next_page }}">Older &rarr;</a></li>
   {% else %}
-    <li class="page-item disabled list-inline-item"><span class="page-link"> Older &rarr;</span></li>
+    <li class="page-item disabled"><span class="page-link"> Older &rarr;</span></li>
     {% endif %}
   </ul>
-</div></nav>
+</nav>
 
