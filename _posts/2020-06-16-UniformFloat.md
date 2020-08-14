@@ -3,7 +3,7 @@ layout:       post
 title:        Basic uniform random floating-point values
 categories:   [math]
 tags:         [random,distribution]
-description:  Micropost on uniform float generation on $\left(0,1\right]$, $\left[-1,1\right)$ and $\left[-1,1\right)$.
+description:  'Micropost on unbiased uniform float generation on $\left(0,1\right]$, $\left[-1,1\right)$ and $\left[-1,1\right)$. The latter two have twice the number of samples as the standard method.'
 plotly:       true
 ---
 
