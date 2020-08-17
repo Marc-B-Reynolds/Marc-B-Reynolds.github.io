@@ -38,12 +38,19 @@ author:
   linkedin:
   bio:       jack of no trades
 
+lsi:	     false
+safe:	     true
+incremental: false
+gist:
+  noscript:	false
+
 sass:
   style: compressed
 
 kramdown:
   input: GFM
-  math_engine: nil
+  math_engine: mathjax
+  syntax_highlighter: rouge
 
 gems: [jekyll-paginate]
 
