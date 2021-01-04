@@ -53,7 +53,7 @@
 
     {% else %}
 
-<script>
+<script type="text/javascript">
 window.MathJax = {
   options: {
     menuOptions: {
@@ -77,12 +77,11 @@ window.MathJax = {
       }, '']
     },
       
-    ignoreHtmlClass: 'tex2jax_ignore',
+    ignoreHtmlClass:  'tex2jax_ignore',
     processHtmlClass: 'tex2jax_process'
   },
   tex: {
     inlineMath: [['$','$']],
-    displayMath: [['$$','$$']],
     processEnvironments: false,
     tags: "ams",
     macros: {
