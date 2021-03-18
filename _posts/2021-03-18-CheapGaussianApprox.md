@@ -165,9 +165,14 @@ The most commonly used method to generate a normal distribution is to use the [B
 
 Although the scaling constants have been optimized they are not optimal. My search/testing method was a fast hack. They are, however, nearly optimal (famous last words) because the peak errors of each swing nearly to the same peak values.
 
+The plots of the produced distributions:
+
 {: .center }
 <div id="sum" style="width:100%"></div><br>
 
+<br>
+
+and the absolute error plots: 
 
 {: .center }
 <div id="err" style="width:100%"></div><br>
@@ -229,7 +234,6 @@ const pop32x_diff_data = {y: pop32x_diff, x0:-4, dx: 8./128., mode: 'lines', nam
 const options = {displaylogo: false};
 
 const elayout = {
-  title:  'absolute error',
   yaxis:  {showline:false, hoverformat: 'g', exponentformat: 'power' },
   xaxis:  {range:[-4.,4.], nticks:9, zeroline:false },
   height: 400,
