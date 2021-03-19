@@ -49,7 +49,7 @@ float dist_normal_approx_sum()
 {% endhighlight %}
 
 \\
-As for the scaling value $K$ we need to include the factor to take our fixed-point integer to floating point which is $2^{-32}$.   We can look up the variance for the sum of $n$ uniform values which is $\frac{n}{12}$ and the standard deviation is the square root of the variance.  Since the standard normal distribution we need an additional factor of the reciprocal of our sum's standard deviation: $\sqrt{3} \approx 1.732051$. The value of $K$ in the code is different from this because I ran an optimization to *minimize the maximum error* (for absolute error).
+As for the scaling value $K$ we need to include the factor to take our fixed-point integer to floating point which is $2^{-32}$.   We can look up the variance for the sum of $n$ uniform values which is $\frac{n}{12}$ and the standard deviation is the square root of the variance.  Since the standard normal distribution has a standard deviation of one we need an additional factor of the reciprocal of our sum's standard deviation: $\sqrt{3} \approx 1.732051$. The value of $K$ in the code is different from this because I ran an optimization to *minimize the maximum error* (aka *minimax* for absolute error).
 
 <br>
 
@@ -112,7 +112,7 @@ So the cost of the transform is now ~9 primitive ops (dropping two) on 64-bit ha
 ------
 
 \\
-In the case of hardware that either has 32-bit popcount (but not 64-bit) or the population count must be performed in software it seems worthwhile to toss out a variant for those cases. Adjust the centering of the triangle distribution and create new search for a new scaling constant...done:
+In the case of hardware that either has 32-bit popcount (but not 64-bit) or the population count must be performed in software it seems worthwhile to toss out a variant for those cases. Adjust the centering of the triangle distribution and perform a search for a new scaling constant...done:
 
 {% highlight c %}
 // in graphs: pop32
@@ -149,6 +149,25 @@ float dist_normal_approx()
 }
 {% endhighlight %}
 
+\\
+[Won Chun](https://twitter.com/won3d/status/1372639568076414991) tweeted an interesting alternate. Instead of using the spare 32-bits as an addition uniform create a second binomial distribution.
+
+{% highlight c %}
+// in graphs: pop32wc
+float dist_normal_approx()
+{
+  uint64_t u0 = rng_u64();
+  int64_t  bd = (int64_t)(__builtin_popcount((uint32_t)u0)-__builtin_popcount((uint32_t)(u0>>32)));
+  uint64_t u1 = rng_u64();
+  int64_t  a  = (int64_t)(u1 & 0xffffffff);
+  int64_t  b  = (int64_t)(u1 >> 32);
+  int64_t  td = a-b;
+  float    r  = (float)((bd<<30) + td);
+
+  return r *  0x1.d8328ap-33f;
+}
+{% endhighlight %}
+
 
 <br>
 
@@ -165,7 +184,7 @@ The most commonly used method to generate a normal distribution is to use the [B
 
 Although the scaling constants have been optimized they are not optimal. My search/testing method was a fast hack. They are, however, nearly optimal (famous last words) because the peak errors of each swing nearly to the same peak values.
 
-The plots of the produced distributions:
+The plots of the produced distributions (The plots are interactive. Notiably click on name in legend to toggle being displayed):
 
 {: .center }
 <div id="sum" style="width:100%"></div><br>
@@ -181,15 +200,16 @@ and the absolute error plots:
 {: .center }
 |method     | ops | range | error |
 |:---       |:---:| :---: |:---: |
+|box-muller | --  | $\pm5.768108 / \pm8.571674$ | --  |
 |sum        |  8  | $\pm3.4172022$ | $8.898866 \times 10^{-3}$  |
 |pop        |  9  | $\pm8.1768640$ | $9.249441 \times 10^{-4}$  |
-|pop32      | 10  | $\pm6.079518$  | $ 2.213490\times 10^{-3}$  |
-|pop32x     | 12  | $\pm4.611270$ | $ 1.391753\times 10^{-3}$  |
-|box-muller | --  | $\pm5.768108 / \pm8.571674$ | --  |
+|pop32wc    | 12  | $\pm6.455824$  | $1.022137\times 10^{-3}$   |
+|pop32x     | 12  | $\pm4.611270$  | $1.391753 \times 10^{-3}$  |
+|pop32      | 10  | $\pm6.079518$  | $2.213490 \times 10^{-3}$  |
 
 <br>
 
-* ops is the number of CPU operations ops needed for the transform on x64
+* ops is the number of CPU operations ops needed for the transform on x64 (for spitballing only)
 * range is the range of the output values. The Box-Muller numbers are for single/double precision respectively.
 * error is peak absolute error
 
@@ -215,20 +235,25 @@ const pop32 = [9.188919e-05,1.286961e-04,1.612651e-04,1.967607e-04,2.382169e-04,
 
 const pop32x = [9.157955e-05,1.228611e-04,1.646393e-04,2.178680e-04,2.824279e-04,3.643750e-04,4.610986e-04,5.971983e-04,7.731033e-04,9.784002e-04,1.228819e-03,1.526477e-03,1.910629e-03,2.383524e-03,2.961833e-03,3.627829e-03,4.400116e-03,5.335784e-03,6.477959e-03,7.834784e-03,9.397937e-03,1.115095e-02,1.321140e-02,1.565896e-02,1.844841e-02,2.162804e-02,2.518167e-02,2.917022e-02,3.370022e-02,3.879573e-02,4.445690e-02,5.072892e-02,5.755398e-02,6.502591e-02,7.321177e-02,8.215358e-02,9.169969e-02,1.020341e-01,1.128786e-01,1.244548e-01,1.367191e-01,1.495320e-01,1.629561e-01,1.769504e-01,1.911957e-01,2.056707e-01,2.204244e-01,2.354560e-01,2.506282e-01,2.656687e-01,2.802975e-01,2.944952e-01,3.084002e-01,3.219038e-01,3.346854e-01,3.463770e-01,3.570553e-01,3.666397e-01,3.752281e-01,3.825732e-01,3.885933e-01,3.930099e-01,3.959838e-01,3.974781e-01,3.974910e-01,3.959047e-01,3.930560e-01,3.885337e-01,3.826339e-01,3.752287e-01,3.666564e-01,3.570688e-01,3.463482e-01,3.346649e-01,3.219127e-01,3.083443e-01,2.944862e-01,2.801934e-01,2.655960e-01,2.506602e-01,2.354719e-01,2.203714e-01,2.056244e-01,1.911906e-01,1.769321e-01,1.629989e-01,1.495549e-01,1.366781e-01,1.244824e-01,1.128593e-01,1.019536e-01,9.172483e-02,8.207774e-02,7.323801e-02,6.505485e-02,5.756207e-02,5.067689e-02,4.448271e-02,3.879800e-02,3.369653e-02,2.917349e-02,2.518469e-02,2.161650e-02,1.844626e-02,1.566009e-02,1.321347e-02,1.115670e-02,9.396583e-03,7.833228e-03,6.487419e-03,5.333328e-03,4.392766e-03,3.623043e-03,2.954889e-03,2.383911e-03,1.905139e-03,1.525130e-03,1.230828e-03,9.852073e-04,7.762922e-04,6.009952e-04,4.620463e-04,3.633200e-04,2.830597e-04,2.200913e-04,1.652294e-04,1.216868e-04,9.118018e-05,9.118018e-05];
 
+const popwc = [1.092956e-04,1.410245e-04,1.931689e-04,2.504513e-04,3.076205e-04,4.001248e-04,5.287511e-04,6.620148e-04,7.958686e-04,1.049598e-03,1.328411e-03,1.615133e-03,1.956276e-03,2.510796e-03,3.087733e-03,3.655593e-03,4.476383e-03,5.565268e-03,6.653659e-03,7.780728e-03,9.470311e-03,1.141316e-02,1.333272e-02,1.549504e-02,1.858827e-02,2.181721e-02,2.501696e-02,2.889938e-02,3.389993e-02,3.887640e-02,4.391016e-02,5.041581e-02,5.762774e-02,6.483359e-02,7.243048e-02,8.184614e-02,9.162918e-02,1.013367e-01,1.119008e-01,1.241747e-01,1.364024e-01,1.487318e-01,1.621718e-01,1.764293e-01,1.906737e-01,2.049910e-01,2.200249e-01,2.352266e-01,2.502733e-01,2.653096e-01,2.799249e-01,2.944076e-01,3.089889e-01,3.221738e-01,3.342870e-01,3.465531e-01,3.582695e-01,3.672905e-01,3.753865e-01,3.834352e-01,3.902679e-01,3.933481e-01,3.962698e-01,3.991087e-01,3.992103e-01,3.962112e-01,3.933628e-01,3.902139e-01,3.833900e-01,3.752643e-01,3.671597e-01,3.583699e-01,3.464612e-01,3.343531e-01,3.221586e-01,3.089957e-01,2.944042e-01,2.799570e-01,2.653063e-01,2.503849e-01,2.352066e-01,2.200419e-01,2.050056e-01,1.906097e-01,1.764453e-01,1.621883e-01,1.487334e-01,1.364971e-01,1.241836e-01,1.119536e-01,1.014346e-01,9.159822e-02,8.183525e-02,7.245378e-02,6.480379e-02,5.764138e-02,5.039912e-02,4.390611e-02,3.889008e-02,3.389754e-02,2.891134e-02,2.499153e-02,2.182923e-02,1.860679e-02,1.550389e-02,1.335219e-02,1.141047e-02,9.470048e-03,7.778910e-03,6.653641e-03,5.561424e-03,4.463687e-03,3.665887e-03,3.095327e-03,2.511660e-03,1.953415e-03,1.615520e-03,1.331081e-03,1.051977e-03,8.010484e-04,6.581999e-04,5.258125e-04,4.014958e-04,3.044315e-04,2.511964e-04,1.954160e-04,1.391886e-04,1.088188e-04,1.088188e-04];
+
 const sum_diff    = array_op(ref,sum,   sub);
 const pop_diff    = array_op(ref,pop,   sub);
 const pop32_diff  = array_op(ref,pop32, sub);
+const popwc_diff  = array_op(ref,popwc, sub);
 const pop32x_diff = array_op(ref,pop32x,sub);
 
-const ref_data      = {y: ref,      x0:-4, dx: 8./128., mode: 'lines', name: 'reference'};
-const sum_data      = {y: sum,      x0:-4, dx: 8./128., mode: 'lines', name: 'sum'};
-const pop_data      = {y: pop,      x0:-4, dx: 8./128., mode: 'lines', name: 'pop'};
-const pop32_data    = {y: pop32,    x0:-4, dx: 8./128., mode: 'lines', name: 'pop32'};
-const pop32x_data   = {y: pop32x,   x0:-4, dx: 8./128., mode: 'lines', name: 'pop32x'};
+const ref_data      = {y: ref,    x0:-4, dx: 8./128., mode: 'lines', name: 'reference'};
+const sum_data      = {y: sum,    x0:-4, dx: 8./128., mode: 'lines', name: 'sum'};
+const pop_data      = {y: pop,    x0:-4, dx: 8./128., mode: 'lines', name: 'pop'};
+const pop32_data    = {y: pop32,  x0:-4, dx: 8./128., mode: 'lines', name: 'pop32'};
+const popwc_data    = {y: popwc,  x0:-4, dx: 8./128., mode: 'lines', name: 'pop32wc'};
+const pop32x_data   = {y: pop32x, x0:-4, dx: 8./128., mode: 'lines', name: 'pop32x'};
 
-const sum_diff_data = {y: sum_diff, x0:-4, dx: 8./128., mode: 'lines', name: 'sum'};
-const pop_diff_data = {y: pop_diff, x0:-4, dx: 8./128., mode: 'lines', name: 'pop'};
+const sum_diff_data    = {y: sum_diff, x0:-4, dx: 8./128., mode: 'lines', name: 'sum'};
+const pop_diff_data    = {y: pop_diff, x0:-4, dx: 8./128., mode: 'lines', name: 'pop'};
 const pop32_diff_data  = {y: pop32_diff,  x0:-4, dx: 8./128., mode: 'lines', name: 'pop32'};
+const popwc_diff_data  = {y: popwc_diff,  x0:-4, dx: 8./128., mode: 'lines', name: 'pop32wc'};
 const pop32x_diff_data = {y: pop32x_diff, x0:-4, dx: 8./128., mode: 'lines', name: 'pop32x'};
 
 const options = {displaylogo: false};
@@ -236,11 +261,11 @@ const options = {displaylogo: false};
 const elayout = {
   yaxis:  {showline:false, hoverformat: 'g', exponentformat: 'power' },
   xaxis:  {range:[-4.,4.], nticks:9, zeroline:false },
-  height: 400,
-  width:  630,
+  height: 600,
+  width:  945,
 };
 
-Plotly.newPlot('sum', [ref_data,sum_data,pop_data,pop32_data,pop32x_data], elayout, options);
-Plotly.newPlot('err', [sum_diff_data,pop_diff_data,pop32_diff_data,pop32x_diff_data], elayout, options);
+Plotly.newPlot('sum', [ref_data,sum_data,pop_data,popwc_data,pop32_data,pop32x_data], elayout, options);
+Plotly.newPlot('err', [sum_diff_data,pop_diff_data,popwc_diff_data,pop32_diff_data,pop32x_diff_data], elayout, options);
 
 </script>
