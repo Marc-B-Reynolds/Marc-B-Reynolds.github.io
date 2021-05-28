@@ -47,7 +47,7 @@ void sf_walk_next(sf_walk_t* w, float* v)
 
   // current disc to cap mapping values
   ct   = w->z; 
-  st   = sqrt(1-ct*ct);
+  st   = sqrt((1.0+ct)*(1.0-ct));
   
   // output current point on cap
   v[0] = (float)(st*x);

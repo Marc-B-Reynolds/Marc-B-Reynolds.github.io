@@ -293,4 +293,4 @@ References and Footnotes
 [^halfAngle]: Quaternion half/double angle and Cayley transforms ([local post]({{site.base}}quaternions/2016/05/30/QuatHDAngleCayley.html))
 [^qrot]: Quaternion rotation visualization ([local post]({{site.base}}/quaternions/2016/05/17/VisualizeQuatRot.html))
 [^uniform]: Uniform points on disc, circle and sphere ([local post]({{site.base}}/distribution/2016/11/28/Uniform.html))
-[^altForm]: This can also be expressed as: $$\mathbf{a}~f\left(\mathbf{a}^{*}\mathbf{b}\right)$$ since the product generally doesn't commute.
+[^altForm]: This can also be expressed as: $\mathbf{a}~f\left(\mathbf{a}^{*}\mathbf{b}\right)$ since the product generally doesn't commute.

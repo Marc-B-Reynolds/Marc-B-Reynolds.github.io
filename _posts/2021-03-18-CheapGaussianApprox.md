@@ -150,7 +150,7 @@ float dist_normal_approx()
 {% endhighlight %}
 
 \\
-[Won Chun](https://twitter.com/won3d/status/1372639568076414991) tweeted an interesting alternate. Instead of using the spare 32-bits as an addition uniform create a second binomial distribution.
+[Won Chun](https://twitter.com/won3d/status/1372639568076414991) tweeted an interesting alternate. Instead of using the spare 32-bits as an additional uniform instead create a second binomial distribution.
 
 {% highlight c %}
 // in graphs: pop32wc
@@ -168,6 +168,7 @@ float dist_normal_approx()
 }
 {% endhighlight %}
 
+EDIT: Saying a second binomial distribution is rather awkward on my part since summing any $n$ bits is a single binomial distribution.
 
 <br>
 
