@@ -288,8 +288,8 @@ void revision_1(vec3_t* v, quat_t* q)
 {
   double x=q->x, y=q->y, z=q->z, w=q->w;
 
-  double t0 = x*x-z*z;
-  double t1 = w*w-y*y;
+  double t0 = (x+z)*(x-z);        // x^2-z^2
+  double t1 = (w+y)*(w-y);        // w^2-y^2
   double xx = 0.5*(t0+t1);        // 1/2 x of x'
   double xy = x*y+w*z;            // 1/2 y of x'
   double xz = w*y-x*z;            // 1/2 z of x'
@@ -314,6 +314,57 @@ Bingo! Well beyond my target.  Okay here are the error plots of some examples in
 * Changing to singles for the majority of the range and using doubles for the remainder:  `rev_2 (5k)` is tight to my max peak error and `rev_2 (250k)` is roughly where the error start to otherwise explode (probability of ~.97 that the computation is in the common case of using singles).
 
 <div id="error" style="width:100%"></div>
+
+\\
+<small>(EDIT: 20210529)</small> The original version of this post was mean and didn't have a work version in post (required you dig through the toy code and figure it out). Here is the *fma* based solution including required helper functions:
+
+{% highlight c %}
+
+inline float  sgn(float x)   { return copysignf(1.f,x); }
+
+// ab+cd
+inline float f32_mma(float a, float b, float c, float d)
+{
+  float t = c*d;
+  float e = fmaf(c,d,-t);
+  float f = fmaf(a,b, t);
+  return f+e;
+}
+
+// ab-cd
+inline float f32_mms(float a, float b, float c, float d)
+{
+  float t = c*d;
+  float e = fmaf(c,d,-t);
+  float f = fmaf(a,b,-t);
+  return f-e;
+}
+
+// convert Tait-Bryan XYZ (commonly called Euler angles) to 
+// a quaternion. 'revision_1_fma_s' in toy code
+void xyz_to_quat(vec3_t* v, quat_t* q)
+{
+  float x=q->x, y=q->y, z=q->z, w=q->w;
+  
+  float t0 = (x+z)*(x-z);       // x^2-z^2
+  float t1 = (w+y)*(w-y);       // w^2-y^2
+  float xx = 0.5f*(t0+t1);
+  float xy = f32_mma(x,y,w,z);
+  float xz = f32_mms(w,y,x,z);
+  float yz = 2.f*(f32_mma(y,z,w,x));
+  float t  = xx*xx+xy*xy;
+
+  v->z = atan2f(xy, xx);
+  v->y = atanf(xz/sqrtf(t));
+
+  if (t != 0)
+    v->x = atan2f(yz, t1-t0);
+  else
+    v->x = 2.f*atan2f(x,w) - sgn(xz)*v->z;
+}
+{% endhighlight %}
+
+
 
 \\
 Extra credit:  the reverse transform is also a source of error.  My version is a direct translation of the math into code and isn't even bothering to pull out common sub-expressions that non-fast math optims cannot remove:
