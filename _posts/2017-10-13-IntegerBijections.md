@@ -259,9 +259,9 @@ uint32_t cl_mul_32(uint32_t a, uint32_t b)
   return (uint32_t)_mm_cvtsi128_si64(r);
 }
 
-// modulo multiplicative inverse of carryless multiplier 'k'
-// cl_mul_32(k, cl_mul_32_inv(k)) = 1 for all odd 'k'.
-uint32_t cl_mul_32_inv(uint32_t x)
+// modulo multiplicative inverse of carryless multiplier 'x'
+// cl_mul_32(k, cl_mul_inv_32(k)) = 1 for all odd 'x'.
+uint32_t cl_mul_inv_32(uint32_t x)
 {
   uint32_t r = x;             // M
 
@@ -274,6 +274,38 @@ uint32_t cl_mul_32_inv(uint32_t x)
   // returning M^{-1} = M^{31}
   return r; 
 }
+{% endhighlight %}
+
+
+\\ 
+The code above is structured for clarity and will produce unneeded operations. An actually implementation for current Intel intrinics would look like:
+
+{% highlight c %}
+
+uint64_t cl_mul_inv_32(uint32_t v)
+{
+  __m128i x = _mm_cvtsi32_si128(v);
+  __m128i r = x;
+
+  for(int i=0; i<4; i++) {
+    x = _mm_clmulepi64_si128(x,x, 0);
+    r = _mm_clmulepi64_si128(r,x, 0);
+  }
+  return _mm_cvtsi128_si64(r);
+}
+
+uint64_t cl_mul_inv_64(uint64_t v)
+{
+  __m128i x = _mm_cvtsi64_si128(v);
+  __m128i r = x;
+
+  for(int i=0; i<5; i++) {
+    x = _mm_clmulepi64_si128(x,x, 0);
+    r = _mm_clmulepi64_si128(r,x, 0);
+  }
+  return _mm_cvtsi128_si64(r);
+}
+
 {% endhighlight %}
 
 
