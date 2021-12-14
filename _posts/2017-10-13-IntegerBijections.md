@@ -276,8 +276,8 @@ uint32_t cl_mul_inv_32(uint32_t x)
 }
 {% endhighlight %}
 
+<br>
 
-\\ 
 The code above is structured for clarity and will produce unneeded operations. An actually implementation for current Intel intrinics would look like:
 
 {% highlight c %}
