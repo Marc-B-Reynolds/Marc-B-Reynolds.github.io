@@ -40,7 +40,7 @@ uint64_t rng_xf_parity_even(uint64_t u)  { u <<= 1; return u ^ (u >> 1); }
 
 
 \\
-and the Gray code in an invertiable function (aka [bijection/one-to-one map](https://en.wikipedia.org/wiki/Bijection)) so we're good for uniformity. The final question is: why does applying the Gray code map odd/even integers to odd/even parity? There's nothing about parity on the Wikipedia page ATM. Well the "action" is really happening in the space of the inverse function. 
+and the Gray code is an invertiable function (aka [bijection/one-to-one map](https://en.wikipedia.org/wiki/Bijection)) so we're good for uniformity. The final question is: why does applying the Gray code map odd/even integers to odd/even parity? There's nothing about parity on the Wikipedia page ATM. Well the "action" is really happening in the space of the inverse function. 
 
 The inverse of the Gray code is also the binary [prefix sum](https://en.wikipedia.org/wiki/Prefix_sum). As an aside this can be computed with a carryless product. I need to complete that blog post at some point..but anyway..we don't need to actually perform a prefix sum..just look at how it behaves.
 
