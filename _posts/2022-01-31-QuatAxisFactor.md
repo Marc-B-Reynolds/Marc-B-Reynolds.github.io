@@ -1,9 +1,9 @@
 ---
 layout: post
-title:      "Factor a quaterion into rotation about fixed axis and its complement"
+title:      "Factor a quaterion into a rotation about fixed axis and its orthogonal complement"
 categories: [quaternions]
 tags :      [rotations]
-description : 'Given a unit quaternion $Q$ factor into a pair such that $Q = QbQa$ where $a$ is a predefined axis and $b$ is an orthogonal axis'
+description : 'Given a unit quaternion $Q$ factor into a pair such that $Q = Q_rQ_a$ where $a$ is a predefined axis and $r$ is an orthogonal axis'
 plotly: true
 ---
 
