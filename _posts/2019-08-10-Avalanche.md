@@ -321,6 +321,7 @@ viz_bias('mh_4', mh_4, 32,32);
 viz_bias('mh_5', mh_5, 32,32);
 
 viz_bias('wang', wang, 32,32);
+viz_bias('oat',  oat,  32,32);
 
 var leg_32 = viz_legend('heat_map',2,32); 
 
