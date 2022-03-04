@@ -10,10 +10,19 @@ exclude:
   - "*/*~"
   - "*/.#*"
   - README.md
+  - LICENSE
   - src
+  - Gemfile
+  - Gemfile.lock
 
 highlighter: rouge
-markdown:    kramdown
+
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  
 disqus:      mbrjnt
 comments:    true
 
@@ -27,6 +36,9 @@ defaults:
       hide:        false
       plotly:      false
       noTeX:       false
+      bootstrap_ver: 4
+      mathjax_version: 4.3.1
+      
 
 description:  blog-a-like
 
@@ -34,15 +46,18 @@ author:
   name:      Marc B. Reynolds
   email:     marc.b.reynolds@gmail.com
   github:    Marc-B-Reynolds
-  twitter:   marc_b_reynolds
   linkedin:
   bio:       jack of no trades
-
+  
 lsi:	     false
 safe:	     true
 incremental: false
 gist:
-  noscript:	false
+noscript:	false
+
+twitter:
+ username: marc_b_reynolds
+ card:     summary
 
 sass:
   style: compressed
@@ -56,6 +71,10 @@ plugins:
   - jekyll-paginate
   - jekyll-gist
   - jekyll-coffeescript
+  - jekyll-mentions
+  - jekyll-sitemap
+  - jekyll-seo-tag
+# - jekyll-feed      # doing manually
   
 plugins_dir:
   - jekyll-mentions

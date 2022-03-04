@@ -1,0 +1,8 @@
+---
+permalink: /assets/css/local.min.css
+---
+{%- capture sitecss -%}
+  {% include_relative style.css %}
+  {% include_relative syntax.css %}
+{%- endcapture -%}
+{{- sitecss | strip_newlines | replace: "  ", "" -}}
