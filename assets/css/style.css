@@ -7,6 +7,13 @@
   border-bottom: 1px solid #eee;
 }
 
+.header {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0 1.5em black;
+}
+
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
   font-weight: normal;
   line-height: 1;
@@ -56,6 +63,13 @@ tr:nth-child(even) {
 }
 
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
+
+
+body {
+  font-size: 1.25rem;
+  font-weight: 200;
+  line-height: 1.125;
+}
 
 /*
 

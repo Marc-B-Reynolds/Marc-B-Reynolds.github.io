@@ -72,13 +72,9 @@ code { background: #f8f8f8; background-color: #f8f8f8; }
 }
 
 pre {
-}
-
-pre {
   display: block;
   padding: 9.5px;
   margin: 0 0 10px;
-  font-size: 13px;
   line-height: 1.428571429;
   color: #333;
   word-break: break-all;
@@ -98,7 +94,7 @@ code[data-lang]::after {
   min-width: 1.5em;
   padding: 0em 0.6em;
   text-align: center;
-  font-size: 0.75em;
+  font-size: 1.0em;
   line-height: 1.6;
   text-transform: uppercase;
   font-family: Monaco,Menlo,Consolas,"Courier New",monospace;

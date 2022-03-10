@@ -1,7 +1,27 @@
+
+<!---
 <div class="page-header">
   <h1>{{ page.title }} {% if page.tagline %}<small>{{page.tagline}}</small>{% endif %}</h1>
 </div>
-  
+--->
+
+<div class="page-header">
+
+  <style>
+.header-page {
+	background-color: #159957;
+	background-image: linear-gradient(120deg, #155799, #159957);
+	padding: 1.25em 0;
+}    
+    </style>
+<div class="jumbotron jumbotron-fluid header header-page">
+  <div class="container">
+    <h1>{{ page.title }}
+    {% if page.tagline %}<h4>{{page.tagline}}</h4>{% endif %}</h1>
+  </div>
+</div>
+</div>
+
 <article>
   <div class="col-sm-12">
    <span class="post-date">
@@ -23,6 +43,7 @@
 <p><br /></p>
 <hr />
 
+{% if jekyll.environment == 'production' %}
 <section id="post-comments">
 
   <h2 id="comments">Comments</h2>
@@ -36,8 +57,10 @@
         crossorigin="anonymous"
         async>
   </script>
+  
 </section>
 
+{% endif %}
 
 <p><br /></p>
 <hr />
