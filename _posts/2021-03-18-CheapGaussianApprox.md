@@ -9,7 +9,12 @@ plotly:       true
 
 Just about a year ago I tossed out a [standard normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) approximation in a tweet just for the fun factor. I ran across it recently and noticed I could make a couple of improvements. Per Vognsen thoughfully broke down the "how it works" in a pair of tweets:
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">BTW, an intuitive way to think about this is to remember that addition of random variables corresponds to convolution of their probability densities. So adding the two uniform variates is equivalent to box filtering the stair-stepped distribution twice.</p>&mdash; Per Vognsen (@pervognsen) <a href="https://twitter.com/pervognsen/status/1240900754052763649?ref_src=twsrc%5Etfw">March 20, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+{% comment %}
+HAD TO NUKE THE (AT USERNAME) has a hack to prevent the html from going to garbage.
+{% endcomment %}
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">BTW, an intuitive way to think about this is to remember that addition of random variables corresponds to convolution of their probability densities. So adding the two uniform variates is equivalent to box filtering the stair-stepped distribution twice.</p>&mdash; Per Vognsen <a href="https://twitter.com/pervognsen/status/1240900754052763649?ref_src=twsrc%5Etfw">March 20, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <br>
 
