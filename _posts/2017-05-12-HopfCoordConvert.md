@@ -286,22 +286,5 @@ void tmtwist_to_quat(quat_t* q, tmtwist_t* s)
 
 {% endhighlight %}
 
-
-<br>
-
-------
-
-References and Footnotes
-------
-
-[^pos]:     Otherwise replace $w$ by $\abs{w}$ and add $\text{sgn}\left(w\right)$ to the final scale value.  In this case the inverse transform returns $-Q$ when $w$ is negative.
-
-<script>
-
-// x-position for error traces
-var xpos = new Array(100);
-for (var i=0; i<100; i++) { xpos[i] = i*(1.0/99.0); };
-
-
-
-</script>
+\\
+A more recent post expands on this being a [*swing-twist decomposition*]({{site.base}}/quaternions/2022/01/31/QuatAxisFactor.html).

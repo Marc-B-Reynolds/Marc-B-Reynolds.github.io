@@ -25,7 +25,7 @@ The set up
 ------
 
 \\
-What got me thinking about this problem was a question on twitter by @paniq where he wanted to pack a 2D coordinate in a integer, perform an involution and unpack back to 2D. This would allow to "statelessly" swap the data between pairs of coordinates for an entire grid in a random manner. My suggested attempt at a solution was something like this:
+What got me thinking about this problem was a question on twitter by `paniq` where he wanted to pack a 2D coordinate in a integer, perform an involution and unpack back to 2D. This would allow to "statelessly" swap the data between pairs of coordinates for an entire grid in a random manner. My suggested attempt at a solution was something like this:
 
 {% highlight c %}
 // bad idea #1
@@ -46,7 +46,7 @@ uint32_t g0(uint32_t x)
 {% endhighlight %}
 
 \\
-This is a pair of bijections (one's the inverse of the other) in the same form as a [LCG](https://en.wikipedia.org/wiki/Linear_congruential_generator). These have the know property that they map odd to even and even to odd. By inspecting the value of the low bit (determine if odd or even) we can choose $f\left(x\right)$ for odd and $f^{-1}\left(x\right)$ for even inputs and this composite function is an involution. The "problem" of @paniq has two additional wrinkles. First we functions that work on the same size of the texture being manipulated and small sized make finding a good bit mixer harder. As an example if the texture were 256x256 we'd need an involution for a 16-bit integer. The second trick is the function needs to be parameterized so this swapping operation can been performed differently in some number of way...all of which need to be somewhat independent. These move the problem out of the territory of "fun little thing to think about" to "that sounds like a lot of work". So I'm going to blissfully ignore these extra requirements.
+This is a pair of bijections (one's the inverse of the other) in the same form as a [LCG](https://en.wikipedia.org/wiki/Linear_congruential_generator). These have the know property that they map odd to even and even to odd. By inspecting the value of the low bit (determine if odd or even) we can choose $f\left(x\right)$ for odd and $f^{-1}\left(x\right)$ for even inputs and this composite function is an involution. The "problem" of `paniq` has two additional wrinkles. First we functions that work on the same size of the texture being manipulated and small sized make finding a good bit mixer harder. As an example if the texture were 256x256 we'd need an involution for a 16-bit integer. The second trick is the function needs to be parameterized so this swapping operation can been performed differently in some number of way...all of which need to be somewhat independent. These move the problem out of the territory of "fun little thing to think about" to "that sounds like a lot of work". So I'm going to blissfully ignore these extra requirements.
 
 The visualization of the strict avalanche criterion (**SAC**) bias of the above function:
 

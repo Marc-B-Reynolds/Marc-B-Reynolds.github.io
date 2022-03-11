@@ -11,6 +11,8 @@ This post is pretty much automatically generated + copy-n-paste.
 
 In my last post I more or less assumed everyone is at least passingly familar with polymomial approximations of sine and cosine on a narrow range. And approximating concentric square to disc is only interesting if you don't have fast hardware sine and cosine.
 
+<br>
+
 ------
 
 Example of approximate concentric
@@ -221,14 +223,6 @@ static inline float cos4c(float x) {
 }
 {% endhighlight %}
 
-
-
-<br>
-
-------
-
-References and Footnotes
-------
 
 
 <script>

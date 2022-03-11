@@ -315,7 +315,7 @@ uint64_t cl_mul_inv_64(uint64_t v)
 
 * Basics of XOR rotates are in another post[^xorrot].
 * AND XOR rotates (not motived yet)
-* CRC32-C (not motived yet..not even sure it's interesting)
+* CRC32-C (not motived yet)
 
 <br>
 
