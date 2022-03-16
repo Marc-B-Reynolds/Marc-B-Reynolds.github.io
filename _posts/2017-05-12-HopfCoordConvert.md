@@ -22,7 +22,7 @@ Hopf map
 We can represent rotations by unit quaternions which we can associate with the 4D unit sphere $ \left( \mathbb{S}^3 \right) $.  The Hopf map $\left(h\right)$ sends a point on $\mathbb{S}^3 $ to a point on the 3D unit sphere $\left(\mathbb{S}^2\right)$.
 
 This section broken down into two parts.  The first is just a bullet-point list using geometry and rotations.  The second covers the same ground using algebra for brushstrokes of justification. 
-$$ \newcommand{\set}[1]{\left\{ #1 \right\}} $$
+
 
 ### Rotation brushstrokes
 
@@ -219,7 +219,7 @@ void hopf_to_quat(quat_t* q, vec3_t* v)
 
 ------
 
-Torque minimal factorization
+Torque minimal factorization <small>swing-twist decomposition</small>
 ------
 
 \\
@@ -250,20 +250,20 @@ typedef struct {
   float tz,ts;      // twist
 } tmtwist_t;
 
-#define THRESHOLD (ULP1*ULP1)
-
 void quat_to_tmtwist(tmtwist_t* d, quat_t* q)
 {
+  static const float THRESHOLD = 0x1.0p-24f;
+
   float x=q->x, y=q->y, z=q->z, w=q->w;
-  float t=w*w+z*z;
+  float sqrtf(t=w*w+z*z);
 
   // For the full sphere the numerically unstable
   // portion could be improved.
   if (t > THRESHOLD) {
-    float s = 1.f/sqrtf(t);
+    float s = 1.f/t;
     d->mx = s*(w*x-y*z);
     d->my = s*(w*y+x*z);
-    d->ms = s*t;
+    d->ms =   t;
     d->tz = s*z;
     d->ts = s*w;
   }
