@@ -13,6 +13,8 @@ At the same time it makes sense to show some practical implementations of conver
 
 For this post I'll be using angle measurements in $\mathbb{R}^3$ instead of my normally preferred in $\mathbb{H}$.
 
+<br>
+
 ------
 
 Hopf map
@@ -23,6 +25,7 @@ We can represent rotations by unit quaternions which we can associate with the 4
 
 This section broken down into two parts.  The first is just a bullet-point list using geometry and rotations.  The second covers the same ground using algebra for brushstrokes of justification. 
 
+<br>
 
 ### Rotation brushstrokes
 
