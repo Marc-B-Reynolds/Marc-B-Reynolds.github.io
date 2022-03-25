@@ -93,8 +93,8 @@ window.MathJax = {
       func: ['{#1 \\left( #2 \\right)}', 2]
     },
     autoload: {
-      color: [],
-      colorV2: ['color']
+	color: [],            // don't autoload the legacy color extension
+	colorV2: ['color']
     },
     packages: {'[+]': ['noerrors'], '[+]': ['color']}
   },
