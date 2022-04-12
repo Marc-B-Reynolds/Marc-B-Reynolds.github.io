@@ -71,15 +71,14 @@ code { background: #f8f8f8; background-color: #f8f8f8; }
     position: relative;
 }
 
-pre {
+.highlight pre {
   display: block;
-  padding: 9.5px;
+  padding: 9.6px;
   margin: 0 0 10px;
-  line-height: 1.428571429;
+  line-height: 1.2; !important;
   color: #333;
   word-break: break-all;
   word-wrap: break-word;
-  /* background-color: #f5f5f5; */
   border: 1px solid #ccc;
   border-radius: 4px;
   padding-top:    14px !important;
