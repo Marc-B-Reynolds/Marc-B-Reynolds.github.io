@@ -132,11 +132,11 @@ In April of 2022 Jeffrey Hurchalla released a paper[^hurchalla] which gives us b
 {% highlight c %}
 static inline uint32_t mod_inverse_h(uint32_t a)
 {
-  uint32_t x0 = (3*a)^2; 
-  uint32_t y  = 1 - a*x0;
-  uint32_t x1 = x0*(1+y); y *= y;
-  uint32_t x2 = x1*(1+y); y *= y;
-  uint32_t x3 = x2*(1+y);
+  uint32_t x = (3*a)^2; 
+  uint32_t y  = 1 - a*x;
+  x = x*(1+y); y *= y;
+  x = x*(1+y); y *= y;
+  x = x*(1+y);
   return x3;
 }
 {% endhighlight %}
@@ -153,7 +153,7 @@ The original version of this post didn't talk about performance at all. All of t
 #### Spitballing performance <small>ADDED: 20220407</small>
 
 \\
-All of these functions are small and fast in an absolute sense. So the only reason to look closely at various alternate choices is the super narrow case of computing tons of them and there is very little other work happening at the same time. So it's almost certainly a waste of time to read any further.
+All of these functions are small and fast in an absolute sense. So the only reason to look closely at various alternate choices is the case of computing tons of them when there is very little other work happening at the same time. So it's probably a waste of time to read any further.
 
 But if you're still here let's look at why I'm suggest Hurchualla as the general purpose choice. I'm using the intel family of processors for following:
 
@@ -247,7 +247,7 @@ In terms of both high level opcodes they are all close:
 | other         |  9            |  6            |  4            | latency of 1, ports {0,1,5,6} |
 
 \\
-OK. I really should have use 64-bit (each need one extra round) here but I'm too lazy to go back in modify. But anyway Hurchalla has the fewest number of uOps to issue. Compared to Dumas (only one more uOP) we're losing 2 multiplies (latency 3, tied to port 1) and a LEA. Few of Dumas ops can go through ports {0,1,5,6} adding to the probability of competition with surrounding code. Compared with the "classic" serial method: it needs to execute 3 more uOps, has one less LEA then Hurchalla and 3 more uOps can go through any of {0,1,5,6} (the same number of extra uOps to be issued). Bottom line is that any of these could end up being "fastest" at some specific site but Hurchalla on average will win out.
+OK. I really should have use 64-bit (each need one extra round) here but I'm too lazy to go back in modify. But anyway Hurchalla has the fewest number of uOps to issue. Compared to Dumas (only one more uOP) we're eliminating 2 multiplies (latency 3, tied to port 1) and a LEA. Few of Dumas ops can go through ports {0,1,5,6} adding to the probability of competition with surrounding code. Compared with the "classic" serial method: the classic needs to execute 3 more uOps, has one less LEA then Hurchalla and 3 more uOps can go through any of {0,1,5,6} (the same number of extra uOps to be issued). Bottom line is that any of these could end up being "fastest" at some specific site but Hurchalla on average will win out.
 
 Now back to the hypothetical problem of computing many inverses with little other work happening at the same time. In that case we can very likely afford to use a small look-up table. With a 256 byte table we can drop one round giving:
 
@@ -259,11 +259,11 @@ Now back to the hypothetical problem of computing many inverses with little othe
 // Hurchalla with 8-bit initial value from table
 inline uint32_t mod_inverse_th(uint32_t a)
 {
-  uint32_t x0 = (uint32_t)(mod_inverse_table_8[a & 0xff]);
-  uint32_t y  = 1-a*x0;
-  uint32_t x1 = x0*(1+y); y *= y;
-  uint32_t x2 = x1*(1+y);
-  return x2;
+  uint32_t x = (uint32_t)(mod_inverse_table_8[a & 0xff]);
+  uint32_t y = 1-a*x;
+  x = x*(1+y); y *= y;
+  x = x*(1+y);
+  return x;
 }
 {% endhighlight %}
 
