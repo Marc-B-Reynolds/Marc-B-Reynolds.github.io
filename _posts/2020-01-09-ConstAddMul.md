@@ -48,7 +48,7 @@ Multiply by a constant <small>1 FMA + 1 product</small>
 
 \\
  We can represent a number $\left(v\right)$ using more than one floating point value. I will call using the logical sum of two $\left(v = h+l\right)$ an *unevaluated pair*. We can build all kinds of tools out of them, but we need just one: multiply a pair with a single value and return a single value. A previous (and related) blog post ([*"Floating point division with known divisor"*](http://marc-b-reynolds.github.io/math/2019/03/12/FpDiv.html)) uses this and has a few more details.
-  
+ 
 {% highlight c %}
 typedef struct { float h,l; } f32_pair_t;
 
@@ -59,6 +59,7 @@ inline float f32_up_mul(const f32_pair_t* const p, float x)
 }
 
 {% endhighlight %}
+  
 
 \\
 So the multiply by constant of this post is just a special case of this. We need to factor our constant $\left(K\right)$ into a pair:
@@ -92,6 +93,7 @@ static const f32_pair_t pi = {.h = 3.1415927410125732421875f, .l=-8.742277657347
 inline float f32_mul_pi(float x) { return f32_up_mul(&pi, x); }
 {% endhighlight %}
 
+
 \\
 So we have our drop-in replacement for the function from the introduction. What's interesting is that our replacement returns:
 
@@ -104,16 +106,17 @@ which in English is: multiplies $x$ by $\pi$ as if in infinite precision and the
 
 Here's a sollya def to split out these constants as per this post:
 
-{% highlight c %}
-procedure f32_mul_k(name,x)
-{
-  var h,l,e;
-  h = single(x);
-  l = single(x-h);
-  print("const f32_pair_t f32_mul_k_" @ name @
-    " = {.h = " @ h @ "f, .l=" @ l @ "f};");
-};
-{% endhighlight %}
+    // computes a non overlapping pair out of input x
+    procedure f32_mul_k(name,x)
+    {
+      var h,l,e;
+      h = single(x);
+      l = single(x-h);
+      print("const f32_pair_t f32_mul_k_" @ name @
+        " = {.h = " @ h @ "f, .l=" @ l @ "f};");
+    };
+
+
 
 \\
 For your amusement here's a small table of some constants $\left(K \approx H+L\right)$, $CR$ indicates if always correctly round, ? = I don't know (I haven't implemented the testing methods) and '%' is percent of not correctly rounded when computed the normal way.
@@ -133,6 +136,152 @@ For your amusement here's a small table of some constants $\left(K \approx H+L\r
 \\
 Something I haven't gotten around to explicitly mentioning is that since scaling by a power-of-two is error free that these precomputed unevaluated pairs can be simply scaled as well.
 
+<br>
+
+------
+
+Carry it through...  <small>added: 20221022</small>
+------
+
+<br>
+
+<div class="alert alert-info" role="alert" markdown="1">
+**WARNING:** All of these are just examples. A good factorization depends on the range of input(s) and relative magnitudes of the individual quantities.
+</div>
+
+
+The previous by itself is mostly useless and just tightens up the final bit. However the real intent was for carrying through to rest of the computation.  Let's look at adding to it the subresult $c$ (the interesting case is when $c$ is significantly smaller than $Kx$):
+
+$$ \begin{align*}
+Kx + t &= \left(H+L\right)x+c \\
+       &= Hx + Lx + c         \\
+	   &= \left(Hx + \left(Lx + c\right)\right)
+\end{align*} $$
+
+\\
+which is simply a nested FMA structure:
+
+{% highlight c %}
+// compute a*b+c where 'a' is represented by an unevaluated pair
+static inline float f32_up_madd(const f32_pair_t* const a, float b, float c)
+{
+  return fmaf(a->h, b, fmaf(a->l, b, c));
+}
+{% endhighlight %}
+
+
+\\
+A more practical example usage when $c$ is a function of $x$ and we're computing a polynomial which is a minimax approximating of a function on some interval. Let's look at a polynomial in Horner's form (and without a constant term) example:
+
+$$ \begin{array}{c}
+x(c_1 + x(c_2 + \cdots ))  \\
+x((H+L) + x(c_2 + \cdots )) \\
+H~x + L~x + x^2(c_2 + \cdots ) \\
+H~x + x(L + x~\underbrace{(c_2 + \cdots ))}_r)
+\end{array} $$
+
+\\
+where $c_1$ is the unevaluated pair $H+L$, distribute the outer $x$, nest $L$ and denote a *tail* term $r$. So we have:
+
+$$
+H~x + x(r~x + L)
+$$
+
+which in translated into code give:
+
+{% highlight c %}
+  r = ...                      // previous terms like: 'r = fma(r,x,c2)' 
+//r = x*fmaf(r,x,c1)           // straight version: vs.
+  r = fmaf(H,x, x*fma(r,x,L))  //   pair version: +1 constant load, +1 fma
+{% endhighlight %}
+
+\\
+so this expansion has the same cost as adding one more term to our approximation.
+
+If our polynomial is *even* then we've precomputed $s=x^2$ and could just compute as the previous but let's consider another option. Replacing $s$ with $x^2$ and and reworking:
+
+$$ \begin{array}{c}
+x^2(c_1 + x^2(c_2 + \cdots ))  \\
+s(c_1 + s(c_2 + \cdots ))  \\
+\cdots \\
+H~s + s(r~s + L) \\
+H~x^2 + x^2(r~x^2 + L) \\
+x(H~x + x(r~x^2 + L)) \\
+x(H~x + x(r~s + L)) 
+\end{array} $$
+
+and in code:
+
+{% highlight c %}
+  r = ...                         // previous terms
+//r = s*fmaf(r,s,c1);             // straight version: vs.
+  r = fmaf(H,s, s*fma(r,s,L));    //   pair version 's':  +1 constant load, +1 fma  (as previous expansion)
+   or
+  r = x*fmaf(H,x, x*fmaf(r,s,L)); //   pair version 'x':  +1 constant load, +1 fma, +1 mul
+{% endhighlight %}
+
+\\
+so choosing this second form adds more more product. And let's rinse and repeat for *odd* polynomials:
+
+$$ \begin{array}{c}
+x(c_1 + x^2(c_2 + \cdots ))  \\
+x(c_1 + s(c_2 + \cdots ))  \\
+\cdots \\
+H~x + L~x + x^3 r  \\
+H~x + x(L + x^2 r) \\
+H~x + x(s~r + L) 
+\end{array} $$
+
+and again in code:
+
+{% highlight c %}
+  r = ...                        // previous terms & we've precomputed t=s*x
+//r = fmaf(c1,x,t*r);            // straight version (1): x*c1 + x^3*r     (t=x^3 & computed earlier)
+//r = x*fmaf(s,r,c1);            // straight version (2): x*(x^2*r + c1)
+  r = fmaf(H,x, x*fmaf(r,s,L));  //   pair version: vs. (1) +1 constant load, +1 fma, -1 mul (t)
+                                 //               : vs. (2) +1 constant load, +1 fma
+{% endhighlight %}
+
+which works out to be either an additional constant load (count fma & mul as equivalent in cost) or the cost of an extra term.
+
+<br>
+
+------
+
+Overlapping pairs <small>added: 20221022</small>
+------
+
+\\
+The constant factorization method given above produces a *non overlapping* pair which maximizes the precision of the constant. It can be desirable to produce a less accurate factorization. Here's a solla script that produces a pair where they both have the same sign.
+
+    // produces same signed constants. generally
+    // loses one bit of accuracy
+    procedure f32_mul_samesign_k(name,x)
+    {
+      var ha,la;
+      ha = round(x,24,RZ);
+      la = single(x-ha);
+    
+      print("const f32_pair_t f32_mul_k_" @ name @
+        " = {.h = " @ ha @ "f, .l=" @ la @ "f};");
+    };
+
+\\
+The motivation here is when wanting to handle returning a signed zero for "free".  Given: `fma(a,b,c)` where `a*b` is zero and `c` is zero then the result is `-0` if both are `-0` and otherwise postive zero.
+
+Another example is producing a $H$ with less than the maximum number of bit. FWIW: I've never used this...but I've never really tried either. But anyway this shrinks the magnitude gap between $H$ and $L$ (roughtly doubles for each bit) and the product $H*x$ requires fewer bits to be represented exactly. Why I think this could be interesting is because if we're bothering with extended precision for a polynomial approximaion then our coefficients are more than sufficient to hit a correctly rounded result and the problem has become managing the errors in performing the computation. The downside is we're losing some effectiveness of the *fma* with the $H$ term. 
+
+    // produces constants where H is a (24-g) bits
+    procedure f32_mul_p_k(name,x,g)
+    {
+      var ha,la;
+      ha = round(x,24-g,RN);
+      la = single(x-ha);
+  
+      print("const f32_pair_t f32_mul_k_" @ name @
+        " = {.h = " @ ha @ "f, .l=" @ la @ "f};");
+    };
+
 
 <br>
 
@@ -143,6 +292,8 @@ Add a constant <small>1 FMA</small>
 
 \\
 Let me first note that this method **does not** help with [catastrophic cancellation](https://en.wikipedia.org/wiki/Loss_of_significance) since the source of that is the rounding error already present in $x$.
+
+Like with the extended precision product this can be used as part of function approximations. Here's a [motivational example](https://forums.developer.nvidia.com/t/more-accurate-and-somewhat-faster-implementation-of-atanf/214453) implemenation of *atan* written by Norbert Juffa which needs to add $\frac{\pi}{2}$.
 
 We can add by an extended precision constant as follows:
 
@@ -271,8 +422,8 @@ static const f32_pair_t f32_mk_pi = {.h = (float)(61*256661), .l= (float)(13*73*
 
 float whatever(float x)
 {
-  float pi_a = f32_mk_pi.h;
-  float pi_b = f32_mk_pi.l;
+  const float pi_a = f32_mk_pi.h;
+  const float pi_b = f32_mk_pi.l;
 
   // do stuff like negate pi_b and/or maybe multiply it by 1/2,1/4...whatever
   // and probably some other stuff as well.
