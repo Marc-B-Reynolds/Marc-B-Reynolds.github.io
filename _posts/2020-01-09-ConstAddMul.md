@@ -106,12 +106,12 @@ which in English is: multiplies $x$ by $\pi$ as if in infinite precision and the
 
 Here's a sollya def to split out these constants as per this post:
 
-    // computes a non overlapping pair out of input x
-    procedure f32_mul_k(name,x)
+    // computes a non overlapping pair out of input v
+    procedure f32_mul_k(name,v)
     {
       var h,l,e;
-      h = single(x);
-      l = single(x-h);
+      h = single(v);
+      l = single(v-h);
       print("const f32_pair_t f32_mul_k_" @ name @
         " = {.h = " @ h @ "f, .l=" @ l @ "f};");
     };
@@ -256,11 +256,11 @@ The constant factorization method given above produces a *non overlapping* pair 
 
     // produces same signed constants. generally
     // loses one bit of accuracy
-    procedure f32_mul_samesign_k(name,x)
+    procedure f32_mul_samesign_k(name,v)
     {
       var ha,la;
-      ha = round(x,24,RZ);
-      la = single(x-ha);
+      ha = round(v,24,RZ);
+      la = single(v-ha);
     
       print("const f32_pair_t f32_mul_k_" @ name @
         " = {.h = " @ ha @ "f, .l=" @ la @ "f};");
@@ -272,11 +272,11 @@ The motivation here is when wanting to handle returning a signed zero for "free"
 Another example is producing a $H$ with less than the maximum number of bit. FWIW: I've never used this...but I've never really tried either. But anyway this shrinks the magnitude gap between $H$ and $L$ (roughtly doubles for each bit) and the product $H*x$ requires fewer bits to be represented exactly. Why I think this could be interesting is because if we're bothering with extended precision for a polynomial approximaion then our coefficients are more than sufficient to hit a correctly rounded result and the problem has become managing the errors in performing the computation. The downside is we're losing some effectiveness of the *fma* with the $H$ term. 
 
     // produces constants where H is a (24-g) bits
-    procedure f32_mul_p_k(name,x,g)
+    procedure f32_mul_p_k(name,v,g)
     {
       var ha,la;
-      ha = round(x,24-g,RN);
-      la = single(x-ha);
+      ha = round(v,24-g,RN);
+      la = single(v-ha);
   
       print("const f32_pair_t f32_mul_k_" @ name @
         " = {.h = " @ ha @ "f, .l=" @ la @ "f};");
