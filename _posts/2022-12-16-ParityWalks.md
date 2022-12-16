@@ -111,7 +111,7 @@ and the inverse function is pretty much the same song: top bit is the parity of 
 
 uint32_t eop_code_32(uint32_t n)
 {
-  return bit_parity_32(n) ^ (x<<n);
+  return bit_parity_32(n) ^ (n<<1);
 }
 
 uint32_t eop_code_inv_32(uint32_t n)
