@@ -33,7 +33,7 @@ produces the following:
     0 3 6 5 12 15 10 9 24 27 30 29 20 23 18 17 48 51 54 53 60 63 58 57 40 43 46 45 36 39 34 33 96
 
 \\
-For an in-order map we can adapt a simple closed form formula by Rémy Sigrist (from April 2022) posted on OEIS (SEE: [A000069](https://oeis.org/A000069) and [A001969](https://oeis.org/A001969)):
+For an in-order map we can adapt a simple closed form formula by RÃ©my Sigrist (from April 2022) posted on OEIS (SEE: [A000069](https://oeis.org/A000069) and [A001969](https://oeis.org/A001969)):
 
 {% highlight c %}
 
