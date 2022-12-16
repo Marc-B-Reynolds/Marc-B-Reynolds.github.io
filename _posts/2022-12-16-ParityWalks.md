@@ -39,7 +39,7 @@ For an in-order map we can adapt a simple closed form formula by Rémy Sigrist (
 
 // odious/evil partition: partitions 32-bit integers into:
 // * increasing order even parity subset OEIS: A000069 (aka evil   numbers) [0,    2^31)
-// * increasing order odd  parity subset OEIS: A001969 (aka odious numbers) [2^32, 2^32)
+// * increasing order odd  parity subset OEIS: A001969 (aka odious numbers) [2^31, 2^32)
 // sign bit selects the parity, lower 31 is 'n' for the given a(n) 
 uint32_t eop_code_32(uint32_t n)
 {
