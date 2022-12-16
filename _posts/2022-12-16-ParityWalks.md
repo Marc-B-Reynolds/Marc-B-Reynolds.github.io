@@ -33,14 +33,14 @@ produces the following:
     0 3 6 5 12 15 10 9 24 27 30 29 20 23 18 17 48 51 54 53 60 63 58 57 40 43 46 45 36 39 34 33 96
 
 \\
-For an in-order map we can adapt a simple closed form formula by RÃ©my Sigrist (from April 2022) posted on OEIS (SEE: [A000069](https://oeis.org/A000069) and [A001969](https://oeis.org/A001969)):
+For an in-order map we can adapt a simple closed form formula by Rémy Sigrist (from April 2022) posted on OEIS (SEE: [A000069](https://oeis.org/A000069) and [A001969](https://oeis.org/A001969)):
 
 {% highlight c %}
 
 // odious/evil partition: partitions 32-bit integers into:
 // * increasing order even parity subset OEIS: A000069 (aka evil   numbers) [0,    2^31)
 // * increasing order odd  parity subset OEIS: A001969 (aka odious numbers) [2^32, 2^32)
-// sign bit is selects parity, lower 31 is the given a(n) 
+// sign bit selects the parity, lower 31 is 'n' for the given a(n) 
 uint32_t eop_code_32(uint32_t n)
 {
   uint32_t r = bit_prefix_sum_32(n);   // cr_mul_32(r,-1) : inverse gray code
