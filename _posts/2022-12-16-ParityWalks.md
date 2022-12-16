@@ -4,7 +4,7 @@ title:        'An evil and odious map (partition into even/odd parity in increas
 categories:   [math]
 tags:         [integer,parity]
 plotly: false
-description:  'Presents a map that paritions integers into the even and odd parity subsets where each are in increasing ordering'
+description:  'Presents a map that paritions integers into the even and odd parity subsets where each are in increasing order'
 ---
 
 \\
