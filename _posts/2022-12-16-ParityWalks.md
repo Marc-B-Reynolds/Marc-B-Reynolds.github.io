@@ -105,7 +105,7 @@ Taking the matrix of `eop_code_32` (the left):
 * the top row is all ones and "row times column" so the low bit of the output is the sum of all the input bits which is the parity
 * all we have left is the first lower subdiagonal is all ones which corresponds to a left shift by one.
 
-and the inverse function is pretty much the same song: top bit is the parity of the input and a left shift by one. Updated code:
+and the inverse function is pretty much the same song: top bit is the parity of the input and a right shift by one. Updated code:
 
 {% highlight c %}
 
