@@ -157,7 +157,7 @@ The various constants for equations with the square root were produced in Mathem
 
 Which does the following:
 
-* $t$ is just an array of $\left(x,~x^2.4\right)$ values sample on $\left[0,~1\right]$.
+* $t$ is just an array of $\left(x,~x^{2.4}\right)$ values sample on $\left[0,~1\right]$.
 * $f$ defines the expression we want to optimize. 
 * $p$ is the result of the optimization: take the table $t$, expression $f$, $a$ and $b$ are the values to optimize, $x$ is the function input and use the supremum norm as error measure.
 
