@@ -203,87 +203,12 @@ M^{-1}
 \end{eqnarray} $$
 
 \\
-Equation $\eqref{x1_1}$ is simply expanding $\eqref{generic}$ and modulo reduction in $\eqref{x1_2}$. Here we have $C^0=I$ which gives us $2I$ in each of the last four product terms.  Recall any even coefficient reduces to zero and any odd to one bring us to $\eqref{x1_3}$. Equation $\eqref{x1_4}$ simply sums up and modulo reduces these terms.  Finally $\eqref{x1_5}$ is the final result which translates back into code as `rot(x,10)^rot(x,21)^rot(x,26)`.  
+Equation $\eqref{x1_1}$ is simply expanding $\eqref{generic}$ and modulo reduction in $\eqref{x1_2}$. Here we have $C^0=I$ which gives us $2I$ in each of the last four product terms.  Recall any even coefficient reduces to zero and any odd to one bring us to $\eqref{x1_3}$. Equation $\eqref{x1_4}$ simply sums up and modulo reduces these terms.  Finally $\eqref{x1_5}$ is the final result which translates back into code as `rot(x,10)^rot(x,21)^rot(x,26)`.
 
 \\
 This inverse is in the form of $\eqref{rot3}$ which I dismissed as being uninteresting from a math perspetive.  If this was the function we wanted to inverse then we could factor as per $\eqref{rot3f}$ which would give us $\eqref{x1_4}$, which we'd find the inverse of the left hand side (which ends up being identical to the original) then we'd have to compose that with the inverse of $C^{10}$ which is $C^{-10}$ and back to the original forward transform.
 
-<br>
 
-------
-
-Added comments <small>20190910</small>
-------
-
-\\
-Since I now have a miminal data point[^invmix] to indicate this structure might be of practical interest I'm going to add a few points I skipped typing up originally. 
-
-$$
-M = I + C^a + C^b
-$$
-
-    t0 = x >> a       t0 = rot(x,a) t1 = rot(x,b)
-	return x ^ t0     t2 = t0 ^ t1
-                      return x ^ t2
-
-
-\\
-which we can rewrite into a nested form (with $d=b-a$):
-
-$$ \begin{equation} 
-M = I + C^a\left(I + C^d\right)  \label{HF}
-\end{equation} $$
-
-
-$$
-I + C^a\left(I + I\right) = I
-$$
-
-{% highlight c %}
-uint32_t xor_rot_period(uint32_t p, uint32_t a, uint32_t b)
-{
-  return (1<<p)>>__builtin_ctz(b-a);
-}
-{% endhighlight %}
-
-
-
-$$ 
-I + \left(I + C^d\right) = C^d
-$$
-
-
-<br>
-### number of choices
-
-$$
-\sum _i^{\beta -1} (\beta -1-i) = \frac{1}{2}\left(\beta-1\right)\left(\beta-2\right)
-$$
-
-xxx $\beta = 2^p$
-
-$$
- \frac{1}{2}\left(2-3\cdot 2^p+4^p\right)
-$$
-
-
-<br>
-### period
-xxx
-Recall if the period of $M$ is $n$ then $n$ is the smallest integer where $M^n = I$ and we know that $M^\beta = I$
-xx
-<br>
-### fixed points
-
-The period defines
-
-
-The number of fixed points
-
-$$ 2 ^{2^z} $$
-
-
-<br>
 
 ------
 
