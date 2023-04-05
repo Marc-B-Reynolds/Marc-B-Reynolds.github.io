@@ -89,7 +89,7 @@ Let's run with a skeleton for 32-bit to 32-bit which is not so short:
 
       // update count indiviually: 
       for (uint32_t k=0; k<32; k++) {
-        uint32_t b = (bits >> j) & 1;
+        uint32_t b = (bits >> k) & 1;
         pop          += b;
         counts[j][k] += b;
       }
