@@ -137,7 +137,7 @@ static inline uint32_t mod_inverse_h(uint32_t a)
   x = x*(1+y); y *= y;
   x = x*(1+y); y *= y;
   x = x*(1+y);
-  return x3;
+  return x;
 }
 {% endhighlight %}
 
