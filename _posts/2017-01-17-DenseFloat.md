@@ -87,12 +87,12 @@ uint32_t rng_geometric()
   uint32_t u;
   do { u = rng_u32(); c++; } while(u==0);
   c--;
-  return 33*c + lzc(u);
+  return 32*c + lzc(u);                // orig had bug using 33 instead of correct 32 (see comments)
 }
 {% endhighlight %}
 
 \\
-The loop is ensured to terminate. On any given iteration the probabilty we fall through is $1-2^{-32} \approx 0.9999999998 $. Note that LZC on a 32-bit integer returns a value on $[0,32]$ which is 33 values..an easy thing to get tripped up on.
+The loop is ensured to terminate. On any given iteration the probabilty we fall through is $1-2^{-32} \approx 0.9999999998 $.
 
 We can rewrite[^bprob] to eliminate uneeded overhead for the statistically significant case:
 
@@ -108,7 +108,7 @@ uint32_t rng_geometric()
   // switched to a 64-bit generator it'd be ~5.4e-18%
   uint32_t c = 0;
   do { u = rng_u32(); c++; } while(u==0);
-  return 33*c+lzc(u);
+  return 32*c+lzc(u);
 }
 {% endhighlight %}
 
@@ -173,7 +173,8 @@ float rng_toy_2()
 
   // here:   2^-32 or ~2.33e-8%
   // 64-bit: 2^-64 or ~5.42e-18% 
-  e = 33 + rng_geometric();
+  e = 32 + rng_geometric();
+
   if (e > 148) e = 148;       // cut the distribution
 
   s = rng_u32() >> (e-(126-9));
