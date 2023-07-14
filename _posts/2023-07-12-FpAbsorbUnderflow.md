@@ -123,6 +123,30 @@ Recap of the `threshold` value and test:
 4. the above test doesn't capture all $a$ and $b$ considered legal. only those that can be determined by examining the result of the add/sub.
 5. as noted at the start the test *can* be used to catch special inputs and overflows
 
+
+Some comments on efficiency. If we're in the effective addition case then then we're performing an absolute measure vs. zero. Both our inputs need to be very small to fail the fast-path test. If we're in the effective subtraction case then we're performing a relative measure which we can consider to be from the smaller magnitude to the larger. Obviously we can get a zero result anywhere on our floating point number line so let's consider when the larger is just one ULP larger than the smaller.  Let's denote the threshold value as 
+
+$$T=2^t$$
+
+so for double precision we have $t=-969$. Next we need a power-of-two FP number $\left(2^e\right)$ such that it's ULP is $T$.  For doubles that gives us: $e-52 = t$ so $e = 52-969 = -917$. Additionally since we're performing a greater than comparison we need the number 2 ULP larger than $2^e$ to pass the test.  Let's call that $T_s$:
+
+$$
+\begin{align*}
+T_s & = 2^{e}\left(1+2\cdot2^{1-p}\right)     \\
+    & = 2^{t+p-1}\left(1+2\cdot2^{1-p}\right) \\
+    & = 2^{t+1}~2 + 2^{p+t-1}
+\end{align*}
+$$
+
+which for binary64 is:
+
+$$
+T_s = 2^{-968} + 2^{-917} = \text{0x1.0000000000002p-917} 
+$$
+
+\\
+So the efficiency worst case is effective subtraction but if the magnitude of the larger is greater than $T_s$ the threshold test will capture the result.
+
 <br>
 
 ------
@@ -138,6 +162,7 @@ First let's figure out the magic number for double-doubles. Briefly: each value 
 2. for the larger magnitude we need to allow space for it to not overlap giving an additional $2^{106}$ factor
 3. giving:  $T = 2^{106} \cdot 2^{53} \cdot 2^{-1022} = 2^{-863}$
 
+**EDIT**: I forgot to mention the above is assuming we're taking the double result of the double-double add/sub. Although the threshold is set up in the same way as a native floating-point format, set aside 106 bits at the bottom for the smaller and the next 106 bits for the larger which prevents set bits of either from overlapping in the limit case, this doesn't generally work for double-doubles. If both $a$ and $b$ are the double-double results of the product of two doubles then the bits of each will fit in a 106 bit window and the full result (if it passes T) cannot have lost any precision.  However in the general case there's no guarantee that all set bit will fit in the window since the low word can be arbitrarily small WRT the high word.  This allows the low word of $a$ to overlap with the high of $b$. However in that case there's at least one zero gap between the two words so the high result is still fine but the low result can be contributed to by a denormal.
 
 Next let's revert back to plain double computations and pretend the next operation (after the add or sub) is a square root and the sum/diff can be negative. Well we can obviously drop the `fabs` on the add/sum since a negative result doesn't need to be directed to the common case but let's pretend we have a good reason to want to include the root in the optimistic computation prior to the comparison. Well the square root is strictly increasing so if $r > T$ then $\sqrt{r} > \sqrt{T}$ over Reals.  Over floating point we might need to tweak $\sqrt{T}$ to account for how our magic cutoff rounds. On average square roots send two inputs to a given output map since the interval $\left[1,4\right)$ maps to $\left[1,2\right)$. Let's peek at the correctly rounded square of $T$ and a couple of its successors:
 
