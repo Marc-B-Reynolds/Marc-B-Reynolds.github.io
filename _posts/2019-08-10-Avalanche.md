@@ -69,7 +69,8 @@ Nice, short and simple estimation of SAC. Small values are good and big are bad.
 Let's run with a skeleton for 32-bit to 32-bit which is not so short:
 
 {% highlight c %}
-  // array to hold the counts initialized to zero
+  // array to hold the counts initialized to zero. written (hopefully)
+  // for clairity.
   counts[32][32] = { { 0 } };
 
   // array to hold popcount counts
@@ -88,11 +89,17 @@ Let's run with a skeleton for 32-bit to 32-bit which is not so short:
       uint32_t bits = h ^ f(x ^ (1<<j));
 
       // update count indiviually: 
+      // 'counts' is performing a positional popcount
+      // which can be computed much more efficiently
+      // than this example code.
       for (uint32_t k=0; k<32; k++) {
         uint32_t b = (bits >> k) & 1;
         pop          += b;
         counts[j][k] += b;
       }
+      
+      // instead of in-loop we could just directly
+      // compute the population count of 'bits'.
       popcount[pop]++;
     }
   }
@@ -103,6 +110,8 @@ The outer structure is pretty much the same. Bullet-point time:
 
 1. We're not brute forcing all input and are instead sampling $n$ values. There are various sampling strategies that can be used, but we're going to ignore that in this post. 
 2. The other change is that last loop. We're instead walking individually through the bits in our "which ones flipped" variable `bits` and updating a "matrix" of counts in we which track how output bits flip for each changed input bit position. Additionally this skeleton computes the population count and tracks how many of each we see.
+
+<small>added 20241009:</small> Since the original writting of this Christopher Wellons released [hash-prospector](https://github.com/skeeto/hash-prospector) which performs the above input/output bit SAC measurement. And there's been work on SIMDified [*positional popcounts*](https://github.com/mklarqvist/positional-popcount).
 
 Once this process is done we need to compute a measure of how well we're meeting the expected property.  Let's say we walk through each element of `counts` and divide by the number of samples $\left(n\right)$ we used. We'd have a number on $\left[0,1\right]$.  Zero if the given input bit never flipped the given output bit and one if it always flipped. Since our expectation result is $\frac{1}{2}$ let's subtract that and multiply by two to remap the range to $\left[-1,1\right]$ and call that value the **bias**. If we were to walk through all the bins of `counts` and track the maximum magnitude **bias** we could return that as our measure and we'll call that the **max bias** (this is the $\ell^{\infty}$ or [uniform/supremum/infinity/Chebyshev norm](https://en.wikipedia.org/wiki/Uniform_norm) of the **bias**). This gives us the magnitude of worst case bias (just to state the obvious).
 
@@ -211,10 +220,10 @@ function viz_fill(pix,x,y,w, r,g,b)
   for(var k=0; k<cell_w; k++) {
     for(var j=0; j<cell_w;j++) {
       pix[i+0] = r;
-  	  pix[i+1] = g;
+      pix[i+1] = g;
       pix[i+2] = b;
       pix[i+3] = 255;
-	  i += 4;
+      i += 4;
     }
     i += 4*(2+sx*w-sx);
   }
@@ -224,16 +233,16 @@ function color(v)
 {
   var r,g,b;
 
-  if (v == 0) { r=g=b=0; } else
+  if (v === 0) { r=g=b=0; } else
+  if (v === -1 || v === 1) { r=g=b=20; } else
   if (v >= 0) {
-     r = (v>>1) + 128; 
-     g = v>>2;
-     b = v>>1;
+     r = 128 - 65 + v; 
+     g = 128 - 90;
+     b = 128 - 90;
    } else {
-     v = -v;
-     b = (v>>1) + 128; 
-     r = v>>2;
-     g = v>>1;
+     r = 128 - 90;
+     g = 128 - 90;
+     b = 128 - 65 - v;
  }
 
   return [r,g,b];
@@ -252,12 +261,14 @@ function viz_bias(name,data,w,h)
   id.width  = cw;
   id.height = ch;
 
-  pix.fill(128);
+  for (var i = 0; i < pix.length; i += 4) {
+    pix[i] = pix[i+1] = pix[i+2] = 0, pix[i+3] = 255;
+  }
 
   for (var y=0; y<h; y++) {
     for (var x=0; x<w; x++)  {
-	  var c = color(data[si++]);
-	  viz_fill(pix, x, y, w, c[0],c[1],c[2]);
+      var c = color(data[si++]);
+      viz_fill(pix, x, y, w, c[0],c[1],c[2]);
     }
   }
 
@@ -279,21 +290,21 @@ function viz_legend(name,w,h)
     var ctx = id.getContext('2d');
     var img = ctx.createImageData(w,h);
     var pix = img.data;
-	
-	id.width  = 2*w;
+    
+    id.width  = 2*w;
     id.height = h;
     pix.fill(255);
 
     for (var y=0; y<=h; y++) {
       var c = color(Math.round(255.5*(1-s*y)));
-	  var i = 4*y*w;
-	  
+      var i = 4*y*w;
+      
       for (var x=0; x<w; x++)  {
         pix[i+0] = c[0];
-  	    pix[i+1] = c[1];
+        pix[i+1] = c[1];
         pix[i+2] = c[2];
         pix[i+3] = 255;
-	    i += 4;
+        i += 4;
       }
     }
 
@@ -326,4 +337,3 @@ viz_bias('oat',  oat,  32,32);
 var leg_32 = viz_legend('heat_map',2,32); 
 
 </script>
-
