@@ -28,6 +28,15 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small
  margin-left:auto
 }
 
+blockquote {
+  background-color: rgb(227, 227, 241);
+  border-left: 5px solid #4b93c3;
+  padding: 1rem;
+  font-style: normal;
+  border-left-width: 10px;
+  border-radius: 10px;
+}
+    
 a.footnote:before { content: "["; }
 a.footnote:after  { content: "]"; }
 
