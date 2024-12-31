@@ -183,7 +183,7 @@ Q = w + \left(x,~y,~z\right) \rightarrow \frac{1}{1+w} \left(x,~y,~z\right) = p
 $$
 
 $$
-p = \left(x,~y,~z\right) \rightarrow  \left(1-\frac{2}{1+p \cdot p}\right) +  \frac{2}{1+p \cdot p} \left(x,~y,~z\right) = Q
+p = \left(x,~y,~z\right) \rightarrow  \left(\frac{2}{1+p \cdot p}-1\right) +  \frac{2}{1+p \cdot p} \left(x,~y,~z\right) = Q
 $$
 
 \\
@@ -199,7 +199,7 @@ vec3 quat_fct(vec4 q)
 vec4 quat_ict(vec3 v)
 {
   float s = 2.0/(1.0+dot(v,v));
-  return vec4(s*v.xyz, 1.0-s);
+  return vec4(s*v.xyz, s-1.0);
 }
 {% endhighlight %}
 
