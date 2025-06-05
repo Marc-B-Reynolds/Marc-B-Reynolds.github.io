@@ -93,9 +93,9 @@ void ortho_basis_1(vec3_t* v, vec3_t* xp, vec3_t* yp)
   float x = -v->x;
   float y =  v->y;
   float z =  v->z; 
-  float a = y/(z+1.f);  // y/(z+1)
-  float b = y*a;        // y^2/(z+1)
-  float c = x*a;        // -xy/(z+1)
+  float a = y/(z+1.f);           // y/(z+1)
+  float b = y*a;                 // y^2/(z+1)
+  float c = x*a;                 // -xy/(z+1)
   
   vec3_set(xp, z+b, c,      x);  // {z+y/(z+1),   -xy/(z+1), -x}
   vec3_set(yp, c,   1.f-b, -y);  // {-xy/(z+1), 1-y^2/(z+1), -y}
