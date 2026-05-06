@@ -15,14 +15,11 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
+encoding: "utf-8"
 highlighter: rouge
 
 markdown: kramdown
 
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-  
 disqus:      mbrjnt
 comments:    true
 
@@ -66,6 +63,8 @@ kramdown:
   input: GFM
   math_engine: mathjax
   syntax_highlighter: rouge
+  span:
+    line_anchors: false
 
 plugins:
   - jekyll-paginate
