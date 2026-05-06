@@ -70,7 +70,7 @@ Stable version, defs and helper funcs
 Extending to stable computation for all normals requires sprinkling around some sign flips.
 
 The code style here is to show the flow of computations and not be concise nor optimized for
-any specific architecture. This listing can be found in [godbolt](). 
+any specific architecture. This listing can be found at [godbolt](https://godbolt.org/z/9jErq1dGa). 
 
 ```c?encoding=ascii
 
