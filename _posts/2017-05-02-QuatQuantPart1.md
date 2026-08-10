@@ -371,7 +371,7 @@ Now a sequence of error vs rotation angle plots for each mod n behavior:
 These plots still don't show the whole picture. The part we are ignoring (for ball maps) is the impact of the direction of the bivector (axis of rotation). Some things to note:
 
 * error plots of the ball maps are inversely related to density as expected and they behave the same regardless of bit-size
-* ZYZ in it's various position in the top three
+* ZYZ in its various position in the top three
 * I'm showing identity map projected to ball which is useless for full range input.  The point of including it is to compare with smallest-three. Specifically in the 32-bit case there's only mimimal impact to error on the range where they are the same transform. So sideline information can be effective espectially when they are replacing what would otherwise be less effective given the bit allocation.
 
 \\
