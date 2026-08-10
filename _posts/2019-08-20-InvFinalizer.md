@@ -7,7 +7,7 @@ description:  A feasibility study to determine if an involution can be competiti
 ---
 
 \\
-You know if someone had asked me this question a few months ago I would have responded that it's was very unlikely and my facial expression would have looked like the person was eating huge globs of mayonnaise straight out of the jar.  Let's jump backward and ballpark some defs:
+You know if someone had asked me this question a few months ago I would have responded that it was very unlikely and my facial expression would have looked like the person was eating huge globs of mayonnaise straight out of the jar.  Let's jump backward and ballpark some defs:
 
 * An [involution](https://en.wikipedia.org/wiki/Involution_(mathematics)) is a function that's its own inverse:  $f\left(f\left(x\right)\right) = f^2\left(x\right) = x$
 * A [bijection](https://en.wikipedia.org/wiki/Bijection) is a function that has an inverse:  $f^{-1}\left(f\left(x\right)\right) = f\left(f^{-1}\left(x\right)\right) = x$
@@ -84,7 +84,7 @@ Bullet point it time:
 
 * We're saying some function $ABA^{-1}$ is an involution which has a period of 2 so squaring it should yield the identity $I$. Start expanding.
 * $A$ is a bijection so it has an inverse $A^{-1}$, multipled together gives $I$ which reduces to a 70s Swedish pop group.
-* $B$ is an involution, squaring it reduces to $I$ and finally $A$ and it's inverse cancel each other out.
+* $B$ is an involution, squaring it reduces to $I$ and finally $A$ and its inverse cancel each other out.
 
 <br>
 
