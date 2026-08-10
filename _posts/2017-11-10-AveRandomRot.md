@@ -154,7 +154,7 @@ g = J^T J = \left(
 $$
 
 \\
-and it's determinate:
+and its determinate:
 
 $$ \det\left(g\right) = \sin\left(\theta\right)^4~\sin\left(\alpha\right)^2 $$
 
