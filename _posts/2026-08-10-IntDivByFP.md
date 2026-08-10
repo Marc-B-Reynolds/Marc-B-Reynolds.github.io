@@ -9,11 +9,11 @@ plotly:       false
 
 \\
 Integer division `q=(x/y)` and remainder (of Euclidean division) `r=(x%y)` hardware operations are very sad
-on current hardware. Typically very long latency and poor throughput. In contract floating-point division
+on current hardware. Typically very long latency and poor throughput. In contrast floating-point division
 is pretty happy: shorter latency, higher throughput and often more execution units to perform the
 operation. So there are cases it could be interesting to move some integer div/mod operations to floating point.
-But it's PITA right?  Actually I think it's easy.  Here I'll explain why I think this and if I'm wrong
-then somebody stronger number theory than me (we're barely on speaking terms) should spot any edge cases I've missed.
+But it's PITA right?  Actually I think it's easy. The math is pretty straightforward so if I've made a mistake
+I expect to find out rather soon.
 
 My claim is: for two integers `x` & `y` (signed or unsigned) that fit in 53/24 bits for double/single
 precision respectively, with both promoted to floating point then:
