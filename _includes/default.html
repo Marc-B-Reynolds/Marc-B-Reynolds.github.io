@@ -89,7 +89,8 @@ window.MathJax = {
       abracket: ['{\\langle #1 \\rangle}', 1],
       pbracket: ['{\\bigl #1 \\bigr}', 1],
       bvec: ['{\\lgroup #1 \\rgroup}', 1],
-      func: ['{#1 \\left( #2 \\right)}', 2]
+      func:  ['{#1 \\!\\left( #2 \\right)}', 2], 
+      tfunc: ["\\text{#1}\\!\\left(#2\\right)", 2]    // name is text
     },
     autoload: {
 	color: [],            // don't autoload the legacy color extension
