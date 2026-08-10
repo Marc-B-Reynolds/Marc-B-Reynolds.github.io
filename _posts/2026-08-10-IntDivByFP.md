@@ -22,6 +22,7 @@ precision respectively, with both promoted to floating point then:
 // floating-point:
 //   d is the same integer as integer divide    x / y
 //   m is the same integer as integer remainder x % y
+//   (in standard rounding mode: round-to-nearest, ties to even)
 
 d = trunc(x/y);     // floor works for unsigned
 m = -fma(d,y,-x);   // fma required
@@ -47,6 +48,8 @@ Some practical points:
   widths trivally work. Examples 32-bit integers in doubles ($p=53$) and 16-bit integers in singles ($p=24$). In this case it's
   possible that there's some "trickery" to side-step the int to float.
 * obviously the most promising case is for working in SIMD to amortize overhead.
+* for constant divisors your compiler should eliminate. for runtime known divisors that are going to be reused a small number of
+  times there's software solutions like [libdivide](https://github.com/ridiculousfish/libdivide).
 
 Note that there are proven methods (SEE: *[Formally verified 32- and 64-bit integer division using double-precision floating-point arithmetic](https://arxiv.org/abs/2207.08420)*)
 
