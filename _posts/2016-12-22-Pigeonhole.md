@@ -89,7 +89,7 @@ Equation $\eqref{cbias}$ is effectively superimposing all choices of $b$ and $n$
 <div id="phole" style="width:100%"></div>
 
 \\
-The function is zero when $x=\frac{1}{i}$ where $i$ is a positive integer since it is a factor of some $b$. We can rewrite $\eqref{cbias}$ as an infinite piecewise function, one per range of an integer $i$ and it's successor.  Each of these produces the $i^{th}$ lobe from the right ($i$ or $i+1$ balls/bin).  Example $i=2$ is second lobe from the right: $[\frac{1}{i+1}, \frac{1}{i}] = [\frac{1}{3}, \frac{1}{2}]$
+The function is zero when $x=\frac{1}{i}$ where $i$ is a positive integer since it is a factor of some $b$. We can rewrite $\eqref{cbias}$ as an infinite piecewise function, one per range of an integer $i$ and its successor.  Each of these produces the $i^{th}$ lobe from the right ($i$ or $i+1$ balls/bin).  Example $i=2$ is second lobe from the right: $[\frac{1}{i+1}, \frac{1}{i}] = [\frac{1}{3}, \frac{1}{2}]$
 
 
 $$  \begin{equation} \label{ibias}
