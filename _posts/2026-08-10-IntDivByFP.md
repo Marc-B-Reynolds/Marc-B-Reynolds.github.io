@@ -68,7 +68,7 @@ result is less than one but as close as possible to rounding up:
 <br>
 Prior to rounding the hardware computes three extra digits: *guard bit* (G), *round bit* (R) and *sticky bit* (S) but since
 the *tie* case is impossible we only need to know *G*.  Therefore in any format where the exact result has $r$ bits for the
-fractional part then for rounding to the next integer to occur requires the fractional part to have at least $f+1$ leading ones.
+fractional part then for rounding to the next integer to occur requires the fractional part to have at least $r+1$ leading ones.
 I'm claiming that this is impossible with legal inputs.
 
 \\
