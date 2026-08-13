@@ -161,5 +161,6 @@ Dividing by:
 
 And so on all possible divisors.
 
+Code that test worst case $a$,$b$ pairs: [godbolt](https://gcc.godbolt.org/z/7oG5ojnfx) for both *binary32* and *binary64*.
 
 
