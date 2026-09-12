@@ -29,15 +29,24 @@ $$
 
 <br>
 
+-----------------------------------
+<small>**20260819:** cleaned-up bit rot and added working code examples for realtime practical methods. Some *fun* papers that aren't useful for realtime (IMHO)
+
+* [Two Area Preserving Maps from the Square to the $\rho$-Ball](https://journals.vilniustech.lt/index.php/MMA/article/view/884)
+* [Equal-Area and Quasi-Conformal Mappings between Squares, Discs and Fernández-Guasti Squircles](https://jcgt.org/published/0015/02/02/)
+
+<br>
+
 ------
 
 Area distortion
 ------
 
 \\
-This shadertoy is intended to visualize how shapes and angles are transformed under the various maps.  Clicking through to the site allows interactivity.
+This shadertoy is intended to visualize how shapes and angles are transformed under the various maps.  Clicking through to the site allows interactivity. 
 
-<iframe width="600" height="400" src="https://www.shadertoy.com/embed/MtySRw?gui=true&t=10&paused=false&muted=false" frameborder="0" allowfullscreen></iframe>{: .center-image }
+
+EDIT: shadertoy doesn't work embedded anymore but it can be found here: [click-me](https://www.shadertoy.com/view/MtySRw)
 
 <br>
 
@@ -62,20 +71,6 @@ Radial Stretching
 Simplest square to disc map is to simply stretch (scale factor of $L_1$ over $L_2$ norm):
 
 $$ \left(u,~v \right) = \frac{\text{max}\left( \abs{x},~\abs{y} \right)}{\sqrt{x^2+y^2}}\left(x,~y\right) $$
-
-\\
-Fong followed by Lambers provide an alternate formulation intended to be computationally friendly.  Note that we can reformulate the scale factor $s$ applied to the input coordinate as the following pseudo-code:
-
-{% highlight c %}
-float x2 = x*x;
-float y2 = y*y;
-float m  = x2 >= y2 ? x : y;
-float s  = abs(m)*inversesqrt(x2+y2+epsilon);
-// return s*(x,y)
-{% endhighlight %}
-
-\\
-where $\text{epsilon}$ is some sufficiently small constant[^eps].  Formulated in this manner only needs a single select/cmov like operation and no branching to handle all cases including degenerate.
 
 \\
 A method to measure area distortion (growth/shrinkage) at infinitesimal around a point is to compute the Jacobian determinate[^jacobian] of the function. 
@@ -131,6 +126,7 @@ $$ \left(x,~y \right) = \frac{\sqrt{u^2+v^2}}{\text{max}\left( \abs{u},~\abs{v} 
 
 \\
 and like above all cases can be handled with no branches and a single select.
+
 
 <br>
 
@@ -450,16 +446,20 @@ $$
 We can rewrite the $x^2 \geq y^2$ case to eliminate division (which can be zero) as:
 
 $$
+\begin{array}{cc}
 t = \frac{2}{3}y \\
 \left( \text{sgn}\left(x\right) \sqrt{x^2-t^2}, ~t\right)
+\end{array}
 $$
 
 \\
 and re-express the $x^2<y^2$ case as:
 
 $$
+\begin{array}{cc}
 t = \frac{x}{3y} \\
 \left( x\sqrt{\frac{2}{3}-t^2}, ~y-xt\right)
+\end{array}
 $$
 
 \\
@@ -489,8 +489,10 @@ $$
 with the determinates:
 
 $$
+\begin{array}{cc}
 \frac{2}{\sqrt{9-\frac{4y^2}{x^2}}} \\
 \frac{2}{\sqrt{6-\frac{x^2}{y^2}}} 
+\end{array}
 $$
 
 \\
@@ -781,7 +783,7 @@ function buildPointSets()
 buildPointSets();
 
 
-Plotly.plot('graph', [{
+Plotly.newPlot('graph', [{
   x: frames[0].data[0].x,
   y: frames[0].data[0].y,
   mode: 'markers',
