@@ -37,7 +37,8 @@ dl,ol,ul { margin-top:0; margin-bottom:0; }
       </h5>
     </div>
     <div id="{{ category[0] }}" class="collapse" aria-labelledby="{{ category[0] }}" >
-      <div class="card-body"><ul class="list-unstyled">
+      <div class="card-body"; style="font-weight: initial;font-size: initial;">
+        <ul class="list-unstyled">
 	
         {% assign pages_list = category[1] %}
         {% for post in pages_list %}
