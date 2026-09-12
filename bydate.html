@@ -4,12 +4,12 @@ title:   Posts
 tagline: by date
 ---
 
+<div style="line-height: 20px;font-size: initial;font-weight: initial;">
 {% for post in site.posts %}
-  <div style="line-height: 20px;">
     <span class="text-muted"> {{ post.date | date: "%Y%m%d" }} <i class="fa fa-caret-right"></i></span>
-    <a href="{{ site.baseurl }}{{post.url}}">{{post.title}}</a>
-  </div>
+    <a href="{{ site.baseurl }}{{post.url}}">{{post.title}}</a><br>
 {% endfor %}
+</div>
 
 <div class="clearfix"></div>
 <div class="col-md-12"><hr/></div>
