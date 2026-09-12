@@ -284,7 +284,7 @@ The following is a shadertoy to illistrate the Cayley transform and some basic c
 
 <br>
 
-<iframe width="600" height="600" src="http://www.shadertoy.com/embed/XsGXDm" frameborder="0" allowfullscreen></i></iframe>
+Embeds don't work anymore so [CLICK](https://www.shadertoy.com/view/XsGXDm).
 
 <br>
 
