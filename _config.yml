@@ -33,7 +33,7 @@ defaults:
       hide:        false
       plotly:      false
       noTeX:       false
-      bootstrap_ver: 4
+      bootstrap_ver: 5
       mathjax_version: 4.3.1
       
 
