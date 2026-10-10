@@ -83,6 +83,7 @@ code { background: #f8f8f8; background-color: #f8f8f8; }
   border-radius: 4px;
   padding-top:    14px !important;
   padding-bottom: 14px !important;
+  font-size: 15px !important; 
 }
 
 code[data-lang]::after {
@@ -93,7 +94,6 @@ code[data-lang]::after {
   min-width: 1.5em;
   padding: 0em 0.6em;
   text-align: center;
-  font-size: 1.0em;
   line-height: 1.6;
   text-transform: uppercase;
   font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
