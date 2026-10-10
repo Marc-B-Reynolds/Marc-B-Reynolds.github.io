@@ -15,7 +15,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
-encoding: "utf-8"
+encoding: "UTF-8"
 highlighter: rouge
 
 markdown: kramdown
