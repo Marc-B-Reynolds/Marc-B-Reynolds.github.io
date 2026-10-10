@@ -208,7 +208,7 @@ static inline quatf_t quatf_iem_naive(vec3f_t v)
   
   s = (x != 0.f) ? s : 1.f;          // correct any limit case
   
-  return quatf_bs(s*v,w);            //   since this is not for real use
+  return quatf_bs(s*v,w);
 }
 ```
 
